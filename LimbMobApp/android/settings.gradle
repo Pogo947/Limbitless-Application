@@ -1,0 +1,3 @@
+rootProject.name = 'LimbMobApp'
+
+include ':app'
