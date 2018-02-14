@@ -1,6 +1,7 @@
 import { AppRegistry, Dimensions,Platform, StyleSheet } from 'react-native';
 
-//import App from './App';
+import App from './App';
+
 import {DrawerNavigator} from 'react-navigation';
 
 //components
@@ -39,6 +40,5 @@ let drawerNavigatorConfig = {
     }
 };
 
-const App = DrawerNavigator(routeConfigs, drawerNavigatorConfig);
-
+//const App = DrawerNavigator(routeConfigs, drawerNavigatorConfig);
 AppRegistry.registerComponent('LimbMobApp', () => App);

@@ -12,26 +12,72 @@ import {
   View
 } from 'react-native';
 
-const instructions = Platform.select({
-  ios: 'Press Cmd+R to reload,\n' +
-    'Cmd+D or shake for dev menu',
-  android: 'Double tap R on your keyboard to reload,\n' +
-    'Shake or press menu button for dev menu',
-});
+import firebase from 'react-native-firebase';
+
+const test ="haha"
+
 
 export default class App extends Component<{}> {
+
+  constructor() {
+    super();
+    this.state = {
+      isAuthenticated: false,
+    };
+  }
+
+  /*
+  componentDidMount() {
+    firebase.auth().signInAnonymously()
+      .then(() => {
+        this.setState({
+          isAuthenticated: true,
+        });
+      });
+  }
+  */
+
   render() {
+
+    if (!this.state.isAuthenticated) {
+      test = "not logged in"
+      //return null;
+    }
+    if (this.state.isAuthenticated){
+      test= "logged in "
+    }
+
+
     return (
       <View style={styles.container}>
+      <Text style= {{fontWeight : 'bold', fontSize: 22, color: 'black'}}
+           onPress={() => {
+            firebase.auth().signInAnonymouslyAndRetrieveData()
+            .then(() => {
+              this.setState({
+                isAuthenticated: true,
+              });
+            });
+               }}>
+              LOGIN </Text>
         <Text style={styles.welcome}>
-          Welcome to React Native!
+          {test}
         </Text>
         <Text style={styles.instructions}>
-          To get started, edit App.js
+          Hello to your own hell
         </Text>
-        <Text style={styles.instructions}>
-          {instructions}
-        </Text>
+
+        <Text style= {{fontWeight : 'bold', fontSize: 22, color: 'black'}}
+          onPress={() => {
+            firebase.auth().signOut()
+            .then(() => {
+              this.setState({
+                isAuthenticated: false,
+              });
+            });
+               }}>
+              LOGOUT </Text>
+
       </View>
     );
   }

@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "799796256120",
+    "firebase_url": "https://limbitless-solutions.firebaseio.com",
+    "project_id": "limbitless-solutions",
+    "storage_bucket": "limbitless-solutions.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:799796256120:android:9a71b40ea8d94529",
+        "android_client_info": {
+          "package_name": "com.limbmobapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "799796256120-pqk4t5udj1mq9bpf2cshkm10cu6q5ssm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAFIdzExA9EA7dqRpshlBSQlyNdAI7xcRE"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
