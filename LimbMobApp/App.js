@@ -1,83 +1,73 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- * @flow
- */
-
 import React, { Component } from 'react';
 import {
-  Platform,
-  StyleSheet,
-  Text,
-  View
+  Platform,StyleSheet, Text, View, Button, Alert
 } from 'react-native';
 
 import firebase from 'react-native-firebase';
+import Login from './app/screen/LoginScreen/Login.js'
 
 const test ="haha"
-
+const count = 0
 
 export default class App extends Component<{}> {
 
   constructor() {
     super();
+    this.unsubscriber = null;
     this.state = {
-      isAuthenticated: false,
+      user: null,
     };
   }
 
-  /*
-  componentDidMount() {
-    firebase.auth().signInAnonymously()
-      .then(() => {
-        this.setState({
-          isAuthenticated: true,
+  onLogoutPress() {
+    firebase.auth().signOut()
+        .then(() => {Alert.alert('You have signed out') })
+        .catch(() => {
+          Alert.alert('Failed to sign out')
         });
-      });
   }
-  */
+
+  componentDidMount() {
+    if(this.state.user == null){
+    this.authSubscription = firebase.auth().onAuthStateChanged((user) => {
+      this.setState({
+        user
+      });
+    
+      count = count + 1
+    });
+  }
+  }
+
+  componentWillUnmount() {
+    if (this.unsubscriber) {
+      this.unsubscriber();
+    }
+  }
 
   render() {
 
-    if (!this.state.isAuthenticated) {
-      test = "not logged in"
-      //return null;
-    }
-    if (this.state.isAuthenticated){
-      test= "logged in "
+    if (this.state.user == null) {
+      return <Login />
+     test = "User not active"
     }
 
+    if (!this.state.user == null){
+      test= "user active"
+    }
 
     return (
       <View style={styles.container}>
-      <Text style= {{fontWeight : 'bold', fontSize: 22, color: 'black'}}
-           onPress={() => {
-            firebase.auth().signInAnonymouslyAndRetrieveData()
-            .then(() => {
-              this.setState({
-                isAuthenticated: true,
-              });
-            });
-               }}>
-              LOGIN </Text>
         <Text style={styles.welcome}>
-          {test}
+          {test} User state has changed: {count} times
         </Text>
         <Text style={styles.instructions}>
-          Hello to your own hell
+          Hello to your own hell  
         </Text>
-
-        <Text style= {{fontWeight : 'bold', fontSize: 22, color: 'black'}}
-          onPress={() => {
-            firebase.auth().signOut()
-            .then(() => {
-              this.setState({
-                isAuthenticated: false,
-              });
-            });
-               }}>
-              LOGOUT </Text>
-
+        <Text style={styles.instructions}>
+          {this.state.user.email}
+        </Text>
+         <Button onPress={this.onLogoutPress.bind(this)} title="Log Out" />
       </View>
     );
   }
