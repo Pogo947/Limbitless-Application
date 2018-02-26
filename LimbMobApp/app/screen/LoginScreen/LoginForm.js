@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { View, Text, Button, Alert, TextInput } from 'react-native';
 import firebase from 'react-native-firebase';
+import { TabNavigator} from 'react-navigation';
 import { Home }  from '../screenNames';
 
 
@@ -31,6 +32,7 @@ export default class LoginForm extends Component {
             */
 			if(this.state.loggedIn == true){
 				navigate('HomeScreen');
+			}
     }
     renderButtonOrLoading() {
         if (this.state.loading) {
