@@ -5,6 +5,7 @@ import {
 
 import firebase from 'react-native-firebase';
 import Login from './app/screen/LoginScreen/Login.js'
+import Home from './app/screen/HomeScreen.js'
 
 const test ="haha"
 const count = 0
@@ -49,11 +50,7 @@ export default class App extends Component<{}> {
 
     if (this.state.user == null) {
       return <Login />
-     test = "User not active"
-    }
-
-    if (!this.state.user == null){
-      test= "user active"
+    
     }
 
     return (

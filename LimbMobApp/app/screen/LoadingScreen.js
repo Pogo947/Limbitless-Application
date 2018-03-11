@@ -1,15 +1,15 @@
 import React, { Component } from 'react';
 import {Platform, StyleSheet, Text,  View, TouchableHighlight, Image } from 'react-native';
 
-export default class GameScreen extends Component {
+export default class LoadingScreen extends Component {
     
     render(){
 
         return(
         <View style={styles.MainContainer}>
 
-        <Text style = {styles.titleText}>
-           GAMES
+        <Text style = {styles.loadingText}>
+           Loading
         </Text>
 
        </View>
@@ -22,11 +22,12 @@ const styles = StyleSheet.create({
     MainContainer: {
         alignItems: 'center',
         justifyContent: 'center',
+        backgroundColor: '#4F6D7A',
       },
-    titleText: {
+    loadingText: {
         fontWeight : 'bold',
         fontSize: 22, 
-        color: 'blue'
+        color: 'white'
     }
   });
   

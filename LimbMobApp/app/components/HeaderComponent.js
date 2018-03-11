@@ -1,4 +1,3 @@
-
 import React, { Component } from 'react';
 import {Platform, StyleSheet, Text,  View, TouchableHighlight, Image} from 'react-native';
 import {DrawerNavigator} from 'react-navigation';

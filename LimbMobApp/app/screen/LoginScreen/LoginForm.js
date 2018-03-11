@@ -1,16 +1,14 @@
 import React, { Component } from 'react';
 import { View, Text, Button, Alert, TextInput } from 'react-native';
 import firebase from 'react-native-firebase';
-import { TabNavigator} from 'react-navigation';
-import { Home }  from '../screenNames';
-
 
 export default class LoginForm extends Component {
-    state = { email: '', password: '', error: '', loading: false, loggedIn: false };
+    state = { email: '', password: '', error: '', loading: false};
+    
     onLoginPress() {
-        this.setState({ error: '', loading: true });
+        this.setState({ error: '', loading: true});
 
-        const { email, password } = this.state;
+        const { email, password} = this.state;
 
         if(this.state.email == '' || this.state.password == ''){
             return Alert.alert("Please fill in the text fields")
@@ -30,9 +28,6 @@ export default class LoginForm extends Component {
                  
             });
             */
-			if(this.state.loggedIn == true){
-				navigate('HomeScreen');
-			}
     }
     renderButtonOrLoading() {
         if (this.state.loading) {
@@ -50,7 +45,7 @@ export default class LoginForm extends Component {
                         autoCorrect = {false}
                         label='Email Address'
                         placeholder='Email Address'
-                        value={this.state.email}g
+                        value={this.state.email}
                         onChangeText={email => this.setState({ email })}
                         onSubmitEditing={() => this.passwordInput.focus()}
                     />
@@ -79,7 +74,6 @@ const styles = {
         paddingBottom: 10
     },
     formStyle: {
-        flex: 1,
         alignItems: 'stretch',
         justifyContent: 'center',
         paddingHorizontal: 25,
