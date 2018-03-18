@@ -3,7 +3,6 @@ import {Platform, StyleSheet, KeyboardAvoidingView, Text,  View, ImageBackground
 import firebase from 'react-native-firebase';
 import ProfileForm from './ProfileForm'
 import AvatarComponent from '../../components/AvatarComponent'
-import styles from '../../common/styles'
 
 export default class Profile extends Component  {
 
@@ -15,7 +14,7 @@ export default class Profile extends Component  {
             
             <ImageBackground 
             
-                style={BGsize.BGImage} 
+                style={styles.BGImage} 
                 imageStyle ={{resizeMode: 'cover'}}
                 source={require('../../resources/background/Background.png')}> 
                 
@@ -39,10 +38,29 @@ export default class Profile extends Component  {
 
              </ImageBackground>
 */
-const BGsize = {
 
+const styles = StyleSheet.create({
+    MainContainer: {
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
+      },
     BGImage:{
         width: Dimensions.get('window').width,
         height: Dimensions.get('window').height,
+    }, 
+    avatar:{
+        alignItems: 'center',
+        justifyContent: 'center',
+        height:128,
+        width: 128,
+        borderRadius: 64, 
     },
-}
+    titleText: {
+        alignItems: 'center',
+        justifyContent: 'center',
+        fontWeight : 'bold',
+        fontSize: 22, 
+        color: '#0b2c60'
+    }
+  });

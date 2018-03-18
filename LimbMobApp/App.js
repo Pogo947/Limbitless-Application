@@ -62,7 +62,7 @@ export default class App extends Component<{}> {
           Hello to your own hell  
         </Text>
         <Text style={styles.instructions}>
-          {this.state.user.email}
+          {this.state.user.uid}
         </Text>
          <Button onPress={this.onLogoutPress.bind(this)} title="Log Out" />
       </View>
