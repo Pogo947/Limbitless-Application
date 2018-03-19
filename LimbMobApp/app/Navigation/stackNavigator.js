@@ -3,32 +3,35 @@ import Login from '../screen/LoginScreen/Login.js'
 import Home from '../screen/HomeScreen.js'
 import DeviceScreen from '../screen/DeviceScreen.js'
 import Games from '../screen/GameScreen/Games.js'
-
+import Profile from '../screen/ProfileScreen/Profile.js'
 
 
 // Manifest of possible screens
-export const Tabs = StackNavigator({
+export const Tabs = TabNavigator({
     screenHome: {
 		screen: Home,
 		navigationOptions: {
 			tabBarLabel: "Home",
-			title: "Home"
+			header: null
+
 		}
 	},
 	screenDevice: {
 		screen: DeviceScreen,
 		navigationOptions: {
 			tabBarLabel: "Devices",
-			title: "Devices"
+			header: null
 		}
 	},
 	screenGames: {
 		screen: Games,
 		navigationOptions: {
 			tabBarLabel: "Games",
-			title: "Games"
+			header: null
 		}
 	}
+},{
+	tabBarPosition: 'bottom'
 });
 
 const navigator = StackNavigator({
@@ -44,7 +47,8 @@ const navigator = StackNavigator({
 		screen: Tabs,
 		navigationOptions: {
 			gesturesEnabled: false,
-			headerLeft: null
+			headerLeft: null,
+			header: null
 		}
 	}
 });

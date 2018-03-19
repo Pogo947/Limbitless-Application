@@ -31,7 +31,5 @@ export {
   decrementAction,
   login,
   logout,
-  register,
-  registerSuccess,
   navigateToLogoutScreen
 };

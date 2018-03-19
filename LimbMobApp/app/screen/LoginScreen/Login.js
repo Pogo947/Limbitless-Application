@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import {Platform, StyleSheet, KeyboardAvoidingView, Text,  View, ImageBackground, Dimensions} from 'react-native';
 import firebase from 'react-native-firebase';
 import LoginForm from './LoginForm'
+import {connect} from "react-redux";
+import { NavigationActions } from "react-navigation"
 
 export default class Login extends Component  {
 

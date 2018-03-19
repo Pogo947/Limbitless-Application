@@ -1,10 +1,14 @@
 import React, { Component } from 'react';
 import { View, Text, Button, Alert, TextInput } from 'react-native';
 import firebase from 'react-native-firebase';
-
-export default class LoginForm extends Component {
+import {login} from "../../Navigation/Actions/actionCreator";
+import {connect} from "react-redux"
+class LoginForm extends Component {
     state = { email: '', password: '', error: '', loading: false};
-    
+    static navigationOptions = {
+		title: "Login"
+	};
+	
     onLoginPress() {
         this.setState({ error: '', loading: true});
 
@@ -14,7 +18,8 @@ export default class LoginForm extends Component {
             return Alert.alert("Please fill in the text fields")
         }
 
-        firebase.auth().signInAndRetrieveDataWithEmailAndPassword(email, password)
+        firebase.auth().signInAndRetrieveDataWithEmailAndPassword(email, password);
+		this.props.Login();
         /*
             .then(() => { this.setState({ error: '', loading: false}); })
             .catch(() => {
@@ -86,3 +91,11 @@ const styles = {
         backgroundColor: 'rgba(0,0,0,0)',
     },
 };
+
+const mapDispatchToProps = {
+	login
+};
+
+const Login = connect(null, mapDispatchToProps)(LoginForm)
+
+export default Login;
