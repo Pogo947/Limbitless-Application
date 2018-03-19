@@ -1,0 +1,16 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\LimbMobApp",
+    "\\LimbMobApp\\android",
+    "\\LimbMobApp\\app",
+    "\\LimbMobApp\\app\\components",
+    "\\LimbMobApp\\app\\resources",
+    "\\LimbMobApp\\app\\resources\\background",
+    "\\LimbMobApp\\app\\resources\\drawerIcons",
+    "\\LimbMobApp\\app\\screen",
+    "\\LimbMobApp\\app\\screen\\LoginScreen"
+  ],
+  "SelectedNode": "\\LimbMobApp\\app\\TheReducer.js",
+  "PreviewInSolutionExplorer": false
+}

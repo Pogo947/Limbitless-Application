@@ -8,4 +8,4 @@ import Profile from './app/screen/ProfileScreen/Profile'
 import Games from './app/screen/GameScreen/Games'
 import LevelScreen from './app/screen/LevelScreen'
 
-AppRegistry.registerComponent('LimbMobApp', () => AddDeviceScreen);
+AppRegistry.registerComponent('LimbMobApp', () => App);
