@@ -59,6 +59,7 @@ export default class LevelScreen extends Component {
 
         <Text style = {{fontSize: 100, color: 'black'}}>{this.state.selectedLevel}</Text>
         <Button onPress={this.saveCurrentLevel.bind(this)} title="Save Current Level" />
+        <Text> Current User is Testuser@gmail.com </Text>
         <Text> Saved Level = {this.state.level} </Text>
         </View>
          )
