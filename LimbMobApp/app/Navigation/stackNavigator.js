@@ -33,7 +33,12 @@ export const Tabs = StackNavigator({
 
 const navigator = StackNavigator({
 	login: {
-		screen: Login
+		screen: Login,
+		navigationOptions: {
+			gesturesEnabled: false,
+			headerLeft: null,
+			header: null
+		}
 	},
 	mainScreens: {
 		screen: Tabs,
