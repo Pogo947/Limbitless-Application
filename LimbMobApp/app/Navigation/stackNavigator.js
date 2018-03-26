@@ -4,6 +4,7 @@ import Home from '../screen/HomeScreen.js'
 import DeviceScreen from '../screen/DeviceScreen.js'
 import Games from '../screen/GameScreen/Games.js'
 import Profile from '../screen/ProfileScreen/Profile.js'
+import LevelScreen from '../screen/LevelScreen.js'
 
 
 // Manifest of possible screens
@@ -20,6 +21,13 @@ export const Tabs = TabNavigator({
 		screen: DeviceScreen,
 		navigationOptions: {
 			tabBarLabel: "Devices",
+			header: null
+		}
+	},
+	screenLevel: {
+		screen: LevelScreen,
+		navigationOptions: {
+			tabBarLabel: "Level",
 			header: null
 		}
 	},

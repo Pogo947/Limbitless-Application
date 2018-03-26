@@ -58,24 +58,24 @@ export default class AddDeviceScreen extends Component {
           <View style = {{flexDirection: 'row'}}>
           <TouchableHighlight style={[styles.touchableIcon, { backgroundColor: this.state.buttonColorArm}]}
               onPress={() => this.selectToAddNewArm()} >
-              <Image style={{height: 100, width:100, margin: 10, borderRadius: 5, borderWidth: 5}} source={require('../resources/deviceIcons/armIcon.png')} />
+              <Image style={{height: 100, width:100, margin: 10, borderRadius: 5, borderWidth: 5}} source={require('../resources/device_icons/armIcon.png')} />
           </TouchableHighlight>
 
           <TouchableHighlight style={[styles.touchableIcon, { backgroundColor: this.state.buttonColorBand}]}
             onPress={() => this.selectToAddNewBand()}>
-              <Image style={{height: 100, width: 100, margin: 10, borderRadius: 5, borderWidth: 5}} source={require('../resources/deviceIcons/bandIcon.png')} />
+              <Image style={{height: 100, width: 100, margin: 10, borderRadius: 5, borderWidth: 5}} source={require('../resources/device_icons/bandIcon.png')} />
           </TouchableHighlight>
           </View>
 
           <View style = {{flexDirection: 'row'}}>
           <TouchableHighlight style={[styles.touchableIcon, { backgroundColor: this.state.buttonColorWheel}]}  
             onPress={() => this.selectToAddNewWheel()}>
-              <Image style={{height: 100, width: 100, margin: 10, borderRadius: 5, borderWidth: 5}} source={require('../resources/deviceIcons/wheelIcon.png')} />
+              <Image style={{height: 100, width: 100, margin: 10, borderRadius: 5, borderWidth: 5}} source={require('../resources/device_icons/wheelIcon.png')} />
           </TouchableHighlight>
 
           <TouchableHighlight style={[styles.touchableIcon, { backgroundColor: this.state.buttonColorHead}]}
             onPress={() => this.selectToAddNewHead()}>
-              <Image style={{height: 100, width: 100, margin: 10, borderRadius: 5, borderWidth: 5}} source={require('../resources/deviceIcons/headIcon.png')} />
+              <Image style={{height: 100, width: 100, margin: 10, borderRadius: 5, borderWidth: 5}} source={require('../resources/device_icons/headIcon.png')} />
           </TouchableHighlight>
           </View> 
           <Button onPress={this.confirmDevice.bind(this)} title="Confirm" />

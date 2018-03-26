@@ -3,11 +3,13 @@ const decrementCounter = "DECREMENT_COUNTER";
 const Login = "LOGIN";
 const Logout = "LOGOUT";
 const NavigateToLogoutScreen = "NAVIGATE_TO_LOGOUT_SCREEN";
+const Level = "LEVEL";
 
 export {
   incrementCounter,
   decrementCounter,
   Login,
   Logout,
-  NavigateToLogoutScreen
+  NavigateToLogoutScreen,
+  Level
 };

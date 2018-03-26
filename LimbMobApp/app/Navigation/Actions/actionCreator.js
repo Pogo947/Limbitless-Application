@@ -3,7 +3,8 @@ import {
   decrementCounter,
   Login,
   Logout,
-  NavigateToLogoutScreen
+  NavigateToLogoutScreen,
+  Level
 } from "./actionTypes";
 
 const incrementAction = () => ({
@@ -26,10 +27,15 @@ const navigateToLogoutScreen = () => ({
   type: NavigateToLogoutScreen
 });
 
+const level = () => ({
+  type: Level
+});
+
 export {
   incrementAction,
   decrementAction,
   login,
   logout,
-  navigateToLogoutScreen
+  navigateToLogoutScreen,
+  level
 };

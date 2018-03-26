@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {Platform, StyleSheet, Text,  View, TouchableHighlight, Image } from 'react-native';
+import {Platform, StyleSheet, Text,  View, TouchableHighlight, Image, ActivityIndicator } from 'react-native';
 
 export default class LoadingScreen extends Component {
     
@@ -9,7 +9,14 @@ export default class LoadingScreen extends Component {
         <View style={styles.MainContainer}>
 
         <Text style = {styles.loadingText}>
-           Loading
+            Syncing...
+        </Text>
+        
+
+        <ActivityIndicator size={150} color='white' style= {styles.loading} />
+
+        <Text style = {styles.loadingText}>
+            Please Wait...
         </Text>
 
        </View>
@@ -20,14 +27,20 @@ export default class LoadingScreen extends Component {
 
 const styles = StyleSheet.create({
     MainContainer: {
+        flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: '#4F6D7A',
+        backgroundColor: '#00acea',
       },
     loadingText: {
         fontWeight : 'bold',
-        fontSize: 22, 
+        fontSize: 30, 
         color: 'white'
-    }
+    },
+    loading: {
+        justifyContent: 'center',
+        alignItems: 'center',
+        height: 300
+     }
   });
   

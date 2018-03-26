@@ -4,10 +4,8 @@ import firebase from 'react-native-firebase';
 
 var database = firebase.database();
 
-
-
-export default class LevelScreen extends Component {
-    state = {selectedLevel: "1", level: "", currentUser: "5tHsvBfkfVWmt14amvgbkh6cLyW2"}
+class LevelScreen extends Component {
+    state = {selectedLevel: "", level: "", currentUser: "5tHsvBfkfVWmt14amvgbkh6cLyW2"}
 
     componentDidMount() {
         this.getLevel()
@@ -65,6 +63,32 @@ export default class LevelScreen extends Component {
          )
     }
 }
+  /*
+const mapStateToProps = (state) => {
+    return {
+      currentLevel: state.configuration.currentLevel
+    };
+  };
+  
+
+
+
+  const mapDispatchToProps = (dispatch) => {
+    return {
+      changeLevel: (level) => {
+        dispatch({
+          type: 'CHANGE_LEVEL',
+          payload: level,
+        });
+      },
+    };
+  };
+  */
+  
+  //const Level = connect(mapStateToProps)(LevelScreen)
+  
+  export default LevelScreen;
+
 
 const styles = StyleSheet.create({
     MainContainer: {
