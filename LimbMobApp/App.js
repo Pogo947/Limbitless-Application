@@ -8,6 +8,7 @@ import configureStore from "./store";
 
 const { store, persistor } = configureStore();
 
+
 export default class App extends Component {
   render() {
     return (

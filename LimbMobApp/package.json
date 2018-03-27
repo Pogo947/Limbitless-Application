@@ -10,7 +10,6 @@
 		"react": "16.0.0",
 		"react-native": "^0.50.3",
 		"react-native-firebase": "^3.2.4",
-		"react-native-google-signin": "^0.12.0",
 		"react-navigation": "^1.0.0-beta.23",
 		"react-redux": "^5.0.7",
 		"redux": "^3.7.2",
@@ -24,5 +23,10 @@
 	},
 	"jest": {
 		"preset": "react-native"
-	}
+	},
+	"rnpm": {
+		"assets": [
+	   "./assets/fonts/"
+		]
+	  }
 }

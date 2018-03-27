@@ -95,9 +95,9 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
       },
     titleText: {
-        fontWeight : 'bold',
+        fontFamily : "Klavika Bold",
         fontSize: 22, 
-        color: 'blue'
+        color: '#1c3d72'
     }
   });
   
