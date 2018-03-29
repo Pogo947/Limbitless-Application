@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import {Platform, StyleSheet, Text,  View, TouchableHighlight, Image, FlatList, Alert } from 'react-native';
-import gameListData from './GamesList'
+import firebase from 'react-native-firebase';
+//import gameListData from './GamesList'
 
 
 class FlatListItem extends Component {
@@ -10,12 +11,12 @@ class FlatListItem extends Component {
 
     render(){
       return(
-        <TouchableHighlight onPress={this._onPress}>  
+        
         <View style ={{
             flex: 1, 
             flexDirection: 'column'
         }}> 
-            
+            <TouchableHighlight onPress={this._onPress}>  
                 <View style = {{
                     flex:1, backgroundColor: '#00acea', flexDirection: 'row'
                 }}>
@@ -33,31 +34,47 @@ class FlatListItem extends Component {
                     </View>
 
                 </View>
-            
+            </TouchableHighlight>    
             <View style ={{
                  height: 10, 
                 backgroundColor: 'white'
             }}/>
 
         </View>
-        </TouchableHighlight>
+        
         )
     }
 }
 
 export default class Games extends Component {
 
+    constructor(){
+        super()
+        this.state = {
+            dataSource: []
+        }
+    }
+
+    componentDidMount(){
+
+        firebase.database().ref('games/').on("value", snapshot => {
+            this.setState({dataSource: snapshot.val()})
+             })
+
+    }
+
     render(){
 
         return(
         <View style={styles.MainContainer}>
 
+        <View style = {{alignItems: 'center'}}>
         <Text style = {styles.titleText}>
            GAMES
         </Text>
-
+        </View>
         <FlatList
-                data = {gameListData}
+                data = {this.state.dataSource}
                 renderItem ={({item,index})=>{
                     return(
                             <FlatListItem item ={item} index={index}/>
@@ -76,11 +93,10 @@ const styles = StyleSheet.create({
         flex: 1,
       },
     titleText: {
-        fontWeight : 'bold',
-        fontSize: 22, 
         alignItems: 'center',
-        justifyContent: 'center',
-        color: '#0b2959'
+        fontFamily : "Klavika Bold",
+        fontSize: 40, 
+        color: '#1c3d72'
     }
   });
   

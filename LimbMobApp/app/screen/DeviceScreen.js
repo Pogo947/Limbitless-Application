@@ -31,9 +31,10 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
       },
     titleText: {
-        fontWeight : 'bold',
-        fontSize: 22, 
-        color: '#0b2959'
+        alignItems: 'center',
+        fontFamily : "Klavika Bold",
+        fontSize: 40, 
+        color: '#1c3d72'
     }
   });
   

@@ -21,7 +21,11 @@ class ProfileView extends Component  {
                 style={styles.BGImage} 
                 imageStyle ={{resizeMode: 'cover'}}
                 source={require('../../resources/background/Background.png')}> 
-                
+                <View style = {{alignItems: 'center'}}>
+                <Text style = {styles.titleText}>
+                PROFILE
+                </Text>
+                </View>
                 <ProfileForm />
 
              </ImageBackground>
@@ -62,10 +66,10 @@ const styles = StyleSheet.create({
     },
     titleText: {
         alignItems: 'center',
-        justifyContent: 'center',
-        fontWeight : 'bold',
-        fontSize: 22, 
-        color: '#0b2c60'
+        fontFamily : "Klavika Bold",
+        fontSize: 40, 
+        color: '#1c3d72',
+        margin: 10
     }
   });
   

@@ -53,10 +53,11 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
       },
     titleText: {
-        fontWeight : 'bold',
-        fontSize: 22, 
-        color: 'blue'
-    }, 
+        alignItems: 'center',
+        fontFamily : "Klavika Bold",
+        fontSize: 40, 
+        color: '#1c3d72'
+    },
     avatar:{
         height:256,
         width: 256,

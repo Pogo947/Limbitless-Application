@@ -40,7 +40,6 @@ class ProfileFormView extends Component {
         return (
             
             <View style={styles.formStyle}>
-            <Text style = {styles.titleText}> Profile </Text>
             <AvatarComponent/>
                     <TextInput style = {styles.inputBox}
                         underlineColorAndroid='rgba(0,0,0,0.5)'
@@ -110,13 +109,6 @@ const styles = {
         paddingHorizontal: 10,
         color: '#ffffff',
         backgroundColor: 'rgba(200,200,200,1)',
-    },
-    titleText: {
-        alignItems: 'center',
-        justifyContent: 'center',
-        fontWeight : 'bold',
-        fontSize: 30, 
-        color: '#0b2c60'
     }
 };
 

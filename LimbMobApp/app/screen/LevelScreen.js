@@ -6,7 +6,16 @@ import {NavigationActions} from 'react-navigation';
 var database = firebase.database();
 
 class LevelScreen extends Component {
-    state = {selectedLevel: "", level: "", currentUser: "5tHsvBfkfVWmt14amvgbkh6cLyW2"}
+
+  constructor(){
+    super()
+      this.state = {
+        selectedLevel: "", 
+        level: "", 
+        currentUser: "5tHsvBfkfVWmt14amvgbkh6cLyW2" 
+      }
+  }
+
 	navigate = () => {
 		const navigateToHome = NavigationActions.navigate({
 			routeName: "home",
@@ -46,13 +55,16 @@ class LevelScreen extends Component {
 
     render(){
         return(
+
         
+
         <View style={styles.MainContainer}>
 
+        <View style = {{alignItems: 'center'}}>
         <Text style = {styles.titleText}>
            LEVELS
         </Text>
-
+        </View>
         <Picker selectedValue = {this.state.selectedLevel} onValueChange = {this.updateSelectedLevel} >
 
             <Picker.Item label = "Level 1" value = "1" />
@@ -99,11 +111,12 @@ const mapStateToProps = (state) => {
 
 const styles = StyleSheet.create({
     MainContainer: {
-        justifyContent: 'center',
+        justifyContent: 'center'
       },
     titleText: {
+        alignItems: 'center',
         fontFamily : "Klavika Bold",
-        fontSize: 22, 
+        fontSize: 40, 
         color: '#1c3d72'
     }
   });

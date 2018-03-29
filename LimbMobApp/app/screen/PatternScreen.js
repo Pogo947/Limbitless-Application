@@ -8,9 +8,11 @@ export default class PatternScreen extends Component {
         return(
         <View style={styles.MainContainer}>
 
+        <View style = {{alignItems: 'center'}}>
         <Text style = {styles.titleText}>
-           PATTERN
+           PATTERNS
         </Text>
+        </View>
 
        </View>
 
@@ -24,9 +26,10 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
       },
     titleText: {
-        fontWeight : 'bold',
-        fontSize: 22, 
-        color: 'blue'
+        alignItems: 'center',
+        fontFamily : "Klavika Bold",
+        fontSize: 40, 
+        color: '#1c3d72'
     }
   });
   
