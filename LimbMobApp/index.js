@@ -11,4 +11,4 @@ import Signup from './app/screen/SignupScreen/Signup'
 import LoadingScreen from './app/screen/LoadingScreen'
 import WheelChairScreen from "./app/screen/WheelChairScreen"
 
-AppRegistry.registerComponent('LimbMobApp', () => WheelChairScreen);
+AppRegistry.registerComponent('LimbMobApp', () => App);

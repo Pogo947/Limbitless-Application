@@ -5,8 +5,10 @@ import LoginForm from './LoginForm'
 import {connect} from "react-redux";
 import { NavigationActions } from "react-navigation"
 
-export default class Login extends Component  {
-
+class LoginView extends Component  {
+	    static navigationOptions = {
+		title: "Login"
+	};
    render(){
 
        return(
@@ -38,3 +40,7 @@ const styles = StyleSheet.create({
         height: Dimensions.get('window').height,
     }
   });
+  
+  const Login = connect(null, null)(LoginView);
+  
+  export default Login;

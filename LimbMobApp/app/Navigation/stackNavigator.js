@@ -8,10 +8,29 @@ import LevelScreen from '../screen/LevelScreen.js'
 
 
 // Manifest of possible screens
-export const Tabs = TabNavigator({
-    screenHome: {
+
+const HomeScreenNavigator = StackNavigator({
+	home: {
 		screen: Home,
 		navigationOptions: {
+			gesturesEnabled: false,
+			header: null
+		}
+	},
+	Profile: {
+		screen: Profile,
+		navigationOptions: {
+			gesturesEnabled: false,
+			header: null
+		}
+	}
+});
+
+export const Tabs = TabNavigator({
+    screenHome: {
+		screen: HomeScreenNavigator,
+		navigationOptions: {
+			gesturesEnabled: false,
 			tabBarLabel: "Home",
 			header: null
 
@@ -20,6 +39,7 @@ export const Tabs = TabNavigator({
 	screenDevice: {
 		screen: DeviceScreen,
 		navigationOptions: {
+			gesturesEnabled: false,
 			tabBarLabel: "Devices",
 			header: null
 		}
@@ -27,6 +47,7 @@ export const Tabs = TabNavigator({
 	screenLevel: {
 		screen: LevelScreen,
 		navigationOptions: {
+			gesturesEnabled: false,
 			tabBarLabel: "Level",
 			header: null
 		}
@@ -34,6 +55,7 @@ export const Tabs = TabNavigator({
 	screenGames: {
 		screen: Games,
 		navigationOptions: {
+			gesturesEnabled: false,
 			tabBarLabel: "Games",
 			header: null
 		}
@@ -41,6 +63,8 @@ export const Tabs = TabNavigator({
 },{
 	tabBarPosition: 'bottom'
 });
+
+
 
 const navigator = StackNavigator({
 	login: {

@@ -90,8 +90,9 @@ const navigationReducer = (state = initialState, action) => {
         ...state,
         stateForLoggedOut: AppNavigator.router.getStateForAction(
           NavigationActions.reset({
-            index: 0,
-            actions: [NavigationActions.init({ routeName: "login" })]
+            key: null,
+			index: 0,
+            actions: [NavigationActions.navigate({ routeName: "login" })]
           })
         )
       };
@@ -108,12 +109,12 @@ const navigationReducer = (state = initialState, action) => {
     case NavigateToLogoutScreen:
       return {
         ...state,
-        stateForLoggedIn: {
-          ...state.stateForLoggedIn,
-          routes: state.stateForLoggedIn.routes.map(
+        stateForLoggedOut: {
+          ...state.stateForLoggedOut,
+          routes: state.stateForLoggedOut.routes.map(
             route =>
-              route.routeName === "mainScreens"
-                ? { ...route, index: 2 }
+              route.routeName === "login"
+                ? { ...route, index: 1 }
                 : { ...route }
           )
         }

@@ -3,9 +3,13 @@ import {Platform, StyleSheet, KeyboardAvoidingView, Text,  View, ImageBackground
 import firebase from 'react-native-firebase';
 import ProfileForm from './ProfileForm'
 import AvatarComponent from '../../components/AvatarComponent'
+import { NavigationActions, withNavigation } from "react-navigation";
+import { connect } from "react-redux";
 
-export default class Profile extends Component  {
-
+class ProfileView extends Component  {
+	static navigationOptions = {
+		title: "Profile"
+	};
    render(){
 
        return(
@@ -64,3 +68,7 @@ const styles = StyleSheet.create({
         color: '#0b2c60'
     }
   });
+  
+  const Profile = connect(null, null)(ProfileView);
+  
+  export default withNavigation(Profile);

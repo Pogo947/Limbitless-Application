@@ -3,10 +3,10 @@ import { View, Text, Button, Alert, TextInput } from 'react-native';
 import firebase from 'react-native-firebase';
 import {login} from "../../Navigation/Actions/actionCreator";
 import {connect} from "react-redux"
-class LoginForm extends Component {
+class LoginFormView extends Component {
     state = { email: '', password: '', error: '', loading: false};
     static navigationOptions = {
-		title: "Login"
+		title: "LoginForm"
 	};
 	
     onLoginPress() {
@@ -19,7 +19,7 @@ class LoginForm extends Component {
         }
 
         firebase.auth().signInAndRetrieveDataWithEmailAndPassword(email, password);
-		this.props.Login();
+		this.props.login();
         /*
             .then(() => { this.setState({ error: '', loading: false}); })
             .catch(() => {
@@ -96,6 +96,6 @@ const mapDispatchToProps = {
 	login
 };
 
-const Login = connect(null, mapDispatchToProps)(LoginForm)
+const LoginForm = connect(null, mapDispatchToProps)(LoginFormView)
 
-export default Login;
+export default LoginForm;

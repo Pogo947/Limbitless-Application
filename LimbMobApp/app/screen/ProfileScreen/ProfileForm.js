@@ -2,11 +2,17 @@ import React, { Component } from 'react';
 import { View, Text, Button, Alert, TextInput } from 'react-native';
 import firebase from 'react-native-firebase';
 import AvatarComponent from '../../components/AvatarComponent'
+import { logout, navigateToLogoutScreen } from "../../Navigation/Actions/actionCreator";
+import { connect } from 'react-redux';
+import { withNavigation } from 'react-navigation';
 
-export default class ProfileForm extends Component {
+class ProfileFormView extends Component {
 
     state = {name: '', username:'', nickname: '', email: '', password: '', error: '', loading: false};
-
+	onLogOut() {
+		//firebase.auth.signOut();
+		this.props.logout;
+	}
     onChangePasswordPress() {
         /*
         const emailCred  = firebase.auth.EmailAuthProvider.credential(
@@ -79,7 +85,7 @@ export default class ProfileForm extends Component {
                     />
                     <Text style={styles.errorTextStyle}>{this.state.error}</Text>
                     {this.renderButtonOrLoading()}
-                    <Button onPress={firebase.auth().signOut} title= "sign out" />
+                    <Button onPress={this.props.logout} title= "sign out" />
             </View>
         );
     }
@@ -113,3 +119,14 @@ const styles = {
         color: '#0b2c60'
     }
 };
+
+const mapDispatchToProps = {
+	navigateToLogoutScreen,
+	logout
+};
+
+
+
+const ProfileForm = connect(null, mapDispatchToProps)(ProfileFormView);
+
+export default withNavigation(ProfileForm);
