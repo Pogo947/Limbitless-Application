@@ -1,12 +1,19 @@
 import React, { Component } from 'react';
 import {Platform, StyleSheet, Text,  View, TouchableHighlight, Image,Picker, Button } from 'react-native';
 import firebase from 'react-native-firebase';
+import {NavigationActions} from 'react-navigation';
 
 var database = firebase.database();
 
 class LevelScreen extends Component {
     state = {selectedLevel: "", level: "", currentUser: "5tHsvBfkfVWmt14amvgbkh6cLyW2"}
-
+	navigate = () => {
+		const navigateToHome = NavigationActions.navigate({
+			routeName: "home",
+			params: {}
+		});
+		this.props.navigation.dispatch(navigateToHome);
+	};
     componentDidMount() {
         this.getLevel()
     }
@@ -30,7 +37,7 @@ class LevelScreen extends Component {
         firebase.database().ref('user/'+ this.state.currentUser + '/currentLevel').on("value", snapshot => {
             this.setState({level: snapshot.val()})
              })
-        
+        this.navigate();
     }
 
     updateSelectedLevel = (selectedLevel) => {

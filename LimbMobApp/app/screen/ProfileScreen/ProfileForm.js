@@ -10,8 +10,8 @@ class ProfileFormView extends Component {
 
     state = {name: '', username:'', nickname: '', email: '', password: '', error: '', loading: false};
 	onLogOut() {
-		//firebase.auth.signOut();
-		this.props.logout;
+		firebase.auth().signOut();
+		this.props.logout();
 	}
     onChangePasswordPress() {
         /*
@@ -85,7 +85,7 @@ class ProfileFormView extends Component {
                     />
                     <Text style={styles.errorTextStyle}>{this.state.error}</Text>
                     {this.renderButtonOrLoading()}
-                    <Button onPress={this.props.logout} title= "sign out" />
+                    <Button onPress={this.onLogOut.bind(this)} title= "sign out" />
             </View>
         );
     }

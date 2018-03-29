@@ -1,5 +1,5 @@
 import { NavigationActions } from "react-navigation";
-
+import firebase from 'react-native-firebase';
 import AppNavigator, { Tabs } from "../stackNavigator";
 import {
   Login,
@@ -88,11 +88,17 @@ const navigationReducer = (state = initialState, action) => {
     case Logout:
       return {
         ...state,
+		
         stateForLoggedOut: AppNavigator.router.getStateForAction(
           NavigationActions.reset({
             key: null,
 			index: 0,
             actions: [NavigationActions.navigate({ routeName: "login" })]
+          }),
+		  NavigationActions.reset({
+            key: 1,
+			index: 0,
+            actions: [NavigationActions.navigate({ routeName: "home" })]
           })
         )
       };

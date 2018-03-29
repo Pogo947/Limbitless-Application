@@ -8,7 +8,13 @@ class HomeScreenView extends Component {
     static navigationOptions = {
 		title: "HomeScreen"
 	};
-	
+	navigate2 = () => {
+		const navigateToLevel = NavigationActions.navigate({
+			routeName: "screenLevel",
+			params: {}
+		});
+		this.props.navigation.dispatch(navigateToLevel);
+	};
 	navigate = () => {
 		const navigateToProfile = NavigationActions.navigate({
 			routeName: "Profile",
@@ -26,9 +32,11 @@ class HomeScreenView extends Component {
         <Text style = {styles.titleText}>
              NAME HERE
         </Text>
+		<TouchableHighlight onPress={this.navigate2}>
         <Text style = {styles.titleText}>
              LEVEL HERE
         </Text>
+		</TouchableHighlight>
         <Text style = {styles.titleText}>
              NICKNAME HERE
         </Text>

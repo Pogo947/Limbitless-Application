@@ -5,6 +5,7 @@ import DeviceScreen from '../screen/DeviceScreen.js'
 import Games from '../screen/GameScreen/Games.js'
 import Profile from '../screen/ProfileScreen/Profile.js'
 import LevelScreen from '../screen/LevelScreen.js'
+import AddDeviceScreen from '../screen/AddDeviceScreen.js'
 
 
 // Manifest of possible screens
@@ -21,11 +22,37 @@ const HomeScreenNavigator = StackNavigator({
 		screen: Profile,
 		navigationOptions: {
 			gesturesEnabled: false,
+			header: null,
+			tabBarVisible: false
+		}
+	},
+	screenLevel: {
+		screen: LevelScreen,
+		navigationOptions: {
+			gesturesEnabled: false,
 			header: null
 		}
-	}
+	},
 });
 
+const DeviceScreenNavigator = StackNavigator({
+	screenDevice: {
+		screen: DeviceScreen,
+		navigationOptions: {
+			gesturesEnabled: false,
+			header: null
+		}
+	},
+	screenAddDevice: {
+		screen: AddDeviceScreen,
+		navigationOptions: {
+			gesturesEnabled: false,
+			header: null,
+			tabBarVisible: false
+		}
+	},
+});
+			
 export const Tabs = TabNavigator({
     screenHome: {
 		screen: HomeScreenNavigator,
@@ -37,18 +64,10 @@ export const Tabs = TabNavigator({
 		}
 	},
 	screenDevice: {
-		screen: DeviceScreen,
+		screen: DeviceScreenNavigator,
 		navigationOptions: {
 			gesturesEnabled: false,
 			tabBarLabel: "Devices",
-			header: null
-		}
-	},
-	screenLevel: {
-		screen: LevelScreen,
-		navigationOptions: {
-			gesturesEnabled: false,
-			tabBarLabel: "Level",
 			header: null
 		}
 	},
