@@ -1,13 +1,23 @@
 import React, { Component } from 'react';
 import {Platform, StyleSheet, Text,  View, TouchableHighlight, Image } from 'react-native';
+import firebase from 'react-native-firebase';
 import {logout} from "../Navigation/Actions/actionCreator";
 import {connect} from "react-redux"
 import { NavigationActions } from "react-navigation";
 
 class HomeScreenView extends Component {
+    constructor() {
+        super();
+        this.state = {
+          user: null
+        };
+      }
+
     static navigationOptions = {
 		title: "HomeScreen"
-	};
+    };
+
+
 	navigate2 = () => {
 		const navigateToLevel = NavigationActions.navigate({
 			routeName: "screenLevel",
@@ -23,7 +33,6 @@ class HomeScreenView extends Component {
 		this.props.navigation.dispatch(navigateToProfile);
 	};
     render(){
-
         return(
         <View style={styles.MainContainer}>
         <TouchableHighlight onPress={this.navigate}>
@@ -40,7 +49,8 @@ class HomeScreenView extends Component {
         <Text style = {styles.titleText}>
              NICKNAME HERE
         </Text>
-
+        <Text>
+        </Text>
        </View>
 
          )

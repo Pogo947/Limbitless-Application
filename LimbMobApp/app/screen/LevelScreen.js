@@ -55,9 +55,6 @@ class LevelScreen extends Component {
 
     render(){
         return(
-
-        
-
         <View style={styles.MainContainer}>
 
         <View style = {{alignItems: 'center'}}>

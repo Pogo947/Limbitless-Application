@@ -35,18 +35,6 @@ class ProfileView extends Component  {
    }
 }
 
-/* If background, use this
-<ImageBackground 
-            
-                style={styles.BGImage} 
-                imageStyle ={{resizeMode: 'cover'}}
-                source={require('../../resources/background/LoginBackground_Dark.png')}> 
-                <Text style ={styles.titleText}> Settings </Text>
-                <ProfileForm />
-
-             </ImageBackground>
-*/
-
 const styles = StyleSheet.create({
     MainContainer: {
         flex: 1,

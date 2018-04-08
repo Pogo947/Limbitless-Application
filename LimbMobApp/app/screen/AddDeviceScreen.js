@@ -1,48 +1,53 @@
 import React, { Component } from 'react';
 import {Platform, StyleSheet, Text,  View, TouchableHighlight, Image, Alert, Button } from 'react-native';
+import LoadingScreen from './LoadingScreen'
 
 
 export default class AddDeviceScreen extends Component {
 
-    state = {buttonColorArm: '#00acea', buttonColorBand: '#00acea', buttonColorHead: '#00acea', 
-              buttonColorWheel: '#00acea', selectedArm: "false", selectedBand: "false", selectedHead: "false", selectedWheel: "false",device: ""}
+    constructor(){
+      super()
+        this.state = {selectedColor: '#00acea', device: "", loading: "false"}
+    }
+
     confirmDevice(){
 
+      this.setState({loading:"true"})
+      
+    }
+    loadingAnim(){
+      return <LoadingScreen/>
     }
     selectToAddNewArm(){
-      if(this.state.selectedArm == "false"){
-      this.setState({buttonColorArm: "black", selectedArm: "true", device: "arm"})
+      if(this.state.selectedArm == "arm"){
+        this.setState({device: ""})
       }
-
-      if(this.state.selectedArm == "true"){
-      this.setState({buttonColorArm: "#00acea", selectedArm: "false", device: "" })
+      else{
+        this.setState({device: "arm"})
       }
     }
     selectToAddNewBand(){
-      if(this.state.selectedBand == "false"){
-        this.setState({buttonColorBand: "black", selectedBand: "true", device: "band"})
+      if(this.state.selectedArm == "band"){
+        this.setState({device: ""})
         }
-  
-        if(this.state.selectedBand == "true"){
-        this.setState({buttonColorBand: "#00acea", selectedBand: "false", device: "" })
+        else{
+          this.setState({device: "band"})
         }
     }
     selectToAddNewWheel(){
-      if(this.state.selectedWheel == "false"){
-        this.setState({buttonColorWheel: "black", selectedWheel: "true", device: "wheel"})
+      if(this.state.selectedArm == "wheel"){
+        this.setState({device: ""})
         }
-  
-        if(this.state.selectedWheel == "true"){
-        this.setState({buttonColorWheel: "#00acea", selectedWheel: "false" , device: ""})
+        else{
+          this.setState({device: "wheel"})
         }
     }
     selectToAddNewHead(){
-      if(this.state.selectedHead == "false"){
-        this.setState({buttonColorHead: "black", selectedHead: "true", device: "head"})
+      if(this.state.selectedArm == "head"){
+        this.setState({device: ""})
         }
-  
-        if(this.state.selectedHead == "true"){
-        this.setState({buttonColorHead: "#00acea", selectedHead: "false", device: "" })
+        else{
+          this.setState({device: "head"})
         }
     }
 
@@ -50,35 +55,36 @@ export default class AddDeviceScreen extends Component {
 
         return(
         <View style={styles.MainContainer}>
-
+        
+        <View style = {{alignItems: 'center'}}>
         <Text style = {styles.titleText}>
-          SELECT TO ADD DEVICES
+           SELECT TO ADD DEVICE
         </Text>
-
+        </View>
           <View style = {{flexDirection: 'row'}}>
-          <TouchableHighlight style={[styles.touchableIcon, { backgroundColor: this.state.buttonColorArm}]}
+          <TouchableHighlight underlayColor = {'#8DD0F0'} style={[styles.touchableIcon, { backgroundColor:this.state.device == "arm" ? this.state.selectedColor : "white"}] }
               onPress={() => this.selectToAddNewArm()} >
               <Image style={{height: 100, width:100, margin: 10, borderRadius: 5, borderWidth: 5}} source={require('../resources/device_icons/armIcon.png')} />
           </TouchableHighlight>
 
-          <TouchableHighlight style={[styles.touchableIcon, { backgroundColor: this.state.buttonColorBand}]}
+          <TouchableHighlight underlayColor = {'#8DD0F0'} style={[styles.touchableIcon, {backgroundColor:this.state.device == "band" ? this.state.selectedColor : "white"}]}
             onPress={() => this.selectToAddNewBand()}>
               <Image style={{height: 100, width: 100, margin: 10, borderRadius: 5, borderWidth: 5}} source={require('../resources/device_icons/bandIcon.png')} />
           </TouchableHighlight>
           </View>
 
           <View style = {{flexDirection: 'row'}}>
-          <TouchableHighlight style={[styles.touchableIcon, { backgroundColor: this.state.buttonColorWheel}]}  
+          <TouchableHighlight underlayColor = {'#8DD0F0'} style={[styles.touchableIcon, { backgroundColor:this.state.device == "wheel" ? this.state.selectedColor : "white"}]}  
             onPress={() => this.selectToAddNewWheel()}>
               <Image style={{height: 100, width: 100, margin: 10, borderRadius: 5, borderWidth: 5}} source={require('../resources/device_icons/wheelIcon.png')} />
           </TouchableHighlight>
 
-          <TouchableHighlight style={[styles.touchableIcon, { backgroundColor: this.state.buttonColorHead}]}
+          <TouchableHighlight underlayColor = {'#8DD0F0'} style={[styles.touchableIcon, { backgroundColor:this.state.device == "head" ? this.state.selectedColor : "white"}]}
             onPress={() => this.selectToAddNewHead()}>
               <Image style={{height: 100, width: 100, margin: 10, borderRadius: 5, borderWidth: 5}} source={require('../resources/device_icons/headIcon.png')} />
           </TouchableHighlight>
           </View> 
-          <Button onPress={this.confirmDevice.bind(this)} title="Confirm" />
+          {this.state.loading == "false" ? <Button onPress={this.confirmDevice.bind(this)} title="Confirm" /> : this.loadingAnim()}
        </View>
 
          )
@@ -99,7 +105,7 @@ const styles = StyleSheet.create({
     touchableIcon: {
         margin: 10, 
         borderRadius: 5, 
-        borderWidth: 5, 
+        borderWidth: 5
     }
   });
   

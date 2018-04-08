@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import {Platform, StyleSheet, KeyboardAvoidingView, Text,  View, ImageBackground, Dimensions, Image} from 'react-native';
+import {Platform, StyleSheet, KeyboardAvoidingView, Text,  View, ImageBackground, Dimensions, 
+    Image, TouchableWithoutFeedback, Keyboard} from 'react-native';
 import firebase from 'react-native-firebase';
 import SignupForm from './SignupForm'
 
@@ -9,6 +10,7 @@ export default class Signup extends Component  {
 
        return(
 
+        <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
         <KeyboardAvoidingView style={styles.MainContainer}>
             
             <ImageBackground 
@@ -22,6 +24,7 @@ export default class Signup extends Component  {
              </ImageBackground>
 
            </KeyboardAvoidingView>
+           </TouchableWithoutFeedback>
         )
    }
 }

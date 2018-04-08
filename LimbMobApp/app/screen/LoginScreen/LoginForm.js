@@ -18,21 +18,25 @@ class LoginFormView extends Component {
             return Alert.alert("Please fill in the text fields")
         }
 
-        firebase.auth().signInAndRetrieveDataWithEmailAndPassword(email, password);
-		this.props.login();
-        /*
-            .then(() => { this.setState({ error: '', loading: false}); })
+        firebase.database
+
+        firebase.auth().signInAndRetrieveDataWithEmailAndPassword(email, password)
+            .then(() => { this.setState({ error: '', loading: false});
+                check = firebase.auth().currentUser.emailVerified
+                if(!check){
+                    this.setState({ error: 'Account is not verified.', loading: false });
+                    firebase.auth().signOut()
+                }
+                else{
+                    //Alert.alert("Verified")
+                    this.props.login(); 
+                }
+
+                
+            })
             .catch(() => {
-                //this.setState({ error: 'Authentication failed.', loading: false });
-             //Login was not successful, let's create a new account
-                firebase.auth().createUserWithEmailAndPassword(email, password)
-                    .then(() => { this.setState({ error: '', loading: false }); })
-                    .catch(() => {
-                        this.setState({ error: 'Authentication failed.', loading: false });
-                    });
-                 
+                this.setState({ error: 'Authentication failed.', loading: false });
             });
-            */
     }
     renderButtonOrLoading() {
         if (this.state.loading) {

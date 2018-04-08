@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
-import { View, Text, Button, Alert, TextInput } from 'react-native';
+import { View, Text, Button, Alert, TextInput} from 'react-native';
 import firebase from 'react-native-firebase';
 import AvatarComponent from '../../components/AvatarComponent'
 
 export default class ProfileForm extends Component {
 
-    state = {name: '', username:'', email: '', password: '', confirmPassword: '', loading: false, error: ''};
+    state = {name: '', nickname:'', email: '', password: '', confirmPassword: '', loading: false, error: ''};
 
     createAccountPress() {
 
@@ -17,18 +17,58 @@ export default class ProfileForm extends Component {
 
             const email = this.state.email
             const password = this.state.password
+            const name = this.state.name
+            const nickname = this.state.nickname
 
             firebase.auth().createUserAndRetrieveDataWithEmailAndPassword(email, password)
-                    .then(() => { this.setState({ error: '', loading: false }); })
-                    .catch(() => {
-                        this.setState({ error: 'Account creation failed', loading: false });
-                    });
+                .then((user) => {
+                    if (firebase.auth().currentUser) {
+                        const userId = firebase.auth().currentUser.uid;
+
+                        if (userId) {
+                            firebase.database().ref().child("users").child(userId).set({
+                                uid: userId,
+                                name: name,
+                                email: email,
+                                nickname: nickname,
+                                devices: [],
+                                currentlevel: 1,
+                                maxlevel: 5
+                         })
+                        }
+                    }
+                })
+                .catch(() => {
+                    this.setState({ error: 'Account creation failed', loading: false });
+                    return
+                });
+            //quickly logs onto user and sends email verfication, then logs off
+            this.sendmail();
+                
         }
         else{
            return this.setState({error: 'Account creation failed, please recheck the information and password'})
         }
-            
     }
+
+    sendmail=()=>{
+        const LogEmail = this.state.email
+        const LogPassword = this.state.password
+        setTimeout(function(){
+            firebase.auth().signInAndRetrieveDataWithEmailAndPassword(LogEmail, LogPassword)
+            .then(firebase.auth().currentUser.sendEmailVerification())
+            .catch(() => { Alert.alert("Email verfication was not sent")});
+
+            Alert.alert("Verfication Email has been sent! Please check your email.")
+        }, 5000);
+
+        setTimeout(function(){
+           firebase.auth().signOut()
+           // Alert.alert("Signed Out")
+        }, 10000);
+
+    }
+
     render() {
         return (
             
@@ -43,16 +83,19 @@ export default class ProfileForm extends Component {
                         placeholder= 'Name'
                         value={this.state.name}
                         onChangeText={name => this.setState({ name })}
+                        onSubmitEditing={() => this.nickname.focus()}
                     />
                     <TextInput style = {styles.inputBox}
                         underlineColorAndroid='white'
                         placeholderTextColor='white'
                         autoCapitalize="none"
                         autoCorrect = {false}
-                        label='Username'
-                        placeholder='Username'
-                        value={this.state.username}
-                        onChangeText={username => this.setState({ username })}
+                        label='Nickname'
+                        placeholder='Nickname'
+                        value={this.state.nickname}
+                        ref={(input)=> this.nickname = input}
+                        onChangeText={nickname => this.setState({ nickname })}
+                        onSubmitEditing={() => this.email.focus()}
                     />
                     <TextInput style = {styles.inputBox}
                         underlineColorAndroid='white'
@@ -62,7 +105,9 @@ export default class ProfileForm extends Component {
                         label='Email'
                         placeholder='Email'
                         value={this.state.email}
+                        ref={(input)=> this.email = input}
                         onChangeText={email => this.setState({ email })}
+                        onSubmitEditing={() => this.passwordInput.focus()}
                     />
                     <TextInput style = {styles.inputBox}
                         underlineColorAndroid='white'
@@ -73,6 +118,7 @@ export default class ProfileForm extends Component {
                         ref={(input)=> this.passwordInput = input}
                         placeholder='Password'
                         onChangeText={password => this.setState({ password })}
+                        onSubmitEditing={() => this.confirmPassword.focus()}
                         secureTextEntry
                     />
                     <TextInput style = {styles.inputBox}
@@ -81,7 +127,7 @@ export default class ProfileForm extends Component {
                         autoCapitalize="none"
                         autoCorrect = {false}
                         label='Confirm Password'
-                        ref={(input)=> this.passwordInput = input}
+                        ref={(input)=> this.confirmPassword = input}
                         placeholder='Confirm Password'
                         onChangeText={confirmPassword => this.setState({ confirmPassword })}
                         secureTextEntry
@@ -108,6 +154,7 @@ const styles = {
         paddingBottom: 10,
     },
     inputBox: {
+        color: '#ffffff',
         paddingVertical: 8,
         paddingHorizontal: 10,
         fontSize: 16
@@ -118,6 +165,6 @@ const styles = {
         justifyContent: 'center',
         fontWeight : 'bold',
         fontSize: 30, 
-        color: '#0b2c60'
+        color: '#ffffff'
     }
 };
