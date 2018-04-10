@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, Button, Alert, TextInput } from 'react-native';
+import { View, Text, Button, Alert, TextInput, AsyncStorage } from 'react-native';
 import firebase from 'react-native-firebase';
 import {login} from "../../Navigation/Actions/actionCreator";
 import {connect} from "react-redux"
@@ -18,17 +18,30 @@ class LoginFormView extends Component {
             return Alert.alert("Please fill in the text fields")
         }
 
-        firebase.database
-
         firebase.auth().signInAndRetrieveDataWithEmailAndPassword(email, password)
             .then(() => { this.setState({ error: '', loading: false});
-                check = firebase.auth().currentUser.emailVerified
-                if(!check){
+
+                user = firebase.auth().currentUser
+
+                if(!user.emailVerified){
                     this.setState({ error: 'Account is not verified.', loading: false });
                     firebase.auth().signOut()
                 }
                 else{
+                    
                     //Alert.alert("Verified")
+
+                    var userData = {
+                        name : user.displayName,
+                        email : user.email,
+                        photoUrl : user.photoURL,
+                        emailVerified : user.emailVerified,
+                        uid : user.uid,  
+                    }
+
+                    AsyncStorage.setItem('userData', JSON.stringify(userData))
+                    
+
                     this.props.login(); 
                 }
 

@@ -25,6 +25,8 @@ export default class ProfileForm extends Component {
                     if (firebase.auth().currentUser) {
                         const userId = firebase.auth().currentUser.uid;
 
+                        firebase.auth().currentUser.updateProfile({displayName: this.state.name})
+
                         if (userId) {
                             firebase.database().ref().child("users").child(userId).set({
                                 uid: userId,
@@ -47,7 +49,7 @@ export default class ProfileForm extends Component {
                 
         }
         else{
-           return this.setState({error: 'Account creation failed, please recheck the information and password'})
+           return this.setState({error: 'Account creation failed, please recheck the information or connection'})
         }
     }
 

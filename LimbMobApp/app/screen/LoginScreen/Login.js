@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {Platform, StyleSheet, KeyboardAvoidingView, Text,  View, ImageBackground, Dimensions} from 'react-native';
+import {Platform, StyleSheet, KeyboardAvoidingView, Text,  View, ImageBackground, Keyboard, Dimensions, TouchableWithoutFeedback} from 'react-native';
 import firebase from 'react-native-firebase';
 import LoginForm from './LoginForm'
 import {connect} from "react-redux";
@@ -12,7 +12,7 @@ class LoginView extends Component  {
    render(){
 
        return(
-
+        <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
         <KeyboardAvoidingView behavior="padding" style={styles.container}>
 
             <ImageBackground 
@@ -24,6 +24,7 @@ class LoginView extends Component  {
 
              </ImageBackground>
            </KeyboardAvoidingView>
+           </TouchableWithoutFeedback>
         )
    }
 }

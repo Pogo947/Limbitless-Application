@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import {Platform, StyleSheet, Text,  View, TouchableHighlight, Image } from 'react-native';
+import {Platform, StyleSheet, ActivityIndicator, Text,  View, TouchableHighlight, Image, AsyncStorage, Alert } from 'react-native';
 import firebase from 'react-native-firebase';
+import AvatarComponent from '../components/AvatarComponent'
 import {logout} from "../Navigation/Actions/actionCreator";
 import {connect} from "react-redux"
 import { NavigationActions } from "react-navigation";
@@ -9,14 +10,41 @@ class HomeScreenView extends Component {
     constructor() {
         super();
         this.state = {
-          user: null
+          user: {
+            name : "",
+            email : "",
+            photoUrl : "",
+            emailVerified : true,
+            uid : "",  
+        },
+          loading: false,
+          test: "fk you"
         };
       }
+
+    fetchData = async ()=> {
+        try{
+            let userData = await AsyncStorage.getItem('userData');
+            
+            userData = JSON.parse(userData)
+
+            this.setState({
+                user: userData, loading: false, test: "luv you"});
+        }
+        catch(error) {
+            alert(error);
+        }
+    }
+
+    async componentWillMount(){
+
+        this.fetchData().done()
+        
+    }
 
     static navigationOptions = {
 		title: "HomeScreen"
     };
-
 
 	navigate2 = () => {
 		const navigateToLevel = NavigationActions.navigate({
@@ -33,28 +61,28 @@ class HomeScreenView extends Component {
 		this.props.navigation.dispatch(navigateToProfile);
 	};
     render(){
+
         return(
         <View style={styles.MainContainer}>
         <TouchableHighlight onPress={this.navigate}>
-        <Image style = {styles.avatar} source={require('../resources/testAvatar.png')}/>
+            <View>
+                <AvatarComponent/>
+            </View>
 		</TouchableHighlight>
+
         <Text style = {styles.titleText}>
-             NAME HERE
+           WELCOME 
+        </Text>
+        <Text style = {styles.titleText}>
+           {this.state.user.name}
         </Text>
 		<TouchableHighlight onPress={this.navigate2}>
         <Text style = {styles.titleText}>
-             LEVEL HERE
+             Navigate to Level
         </Text>
 		</TouchableHighlight>
-        <Text style = {styles.titleText}>
-             NICKNAME HERE
-        </Text>
-        <Text>
-        </Text>
        </View>
-
-         )
-    }
+    )}
 }
 
 const styles = StyleSheet.create({

@@ -152,6 +152,8 @@ dependencies {
     compile "com.google.firebase:firebase-database:11.8.0"
     compile "com.google.firebase:firebase-auth:11.8.0"
     compile "com.google.firebase:firebase-storage:11.8.0"
+
+    compile project(':react-native-prompt-android')
 }
 
 // Run this once to be able to run the application with BUCK

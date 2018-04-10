@@ -12,7 +12,7 @@ class LevelScreen extends Component {
       this.state = {
         selectedLevel: "", 
         level: "", 
-        currentUser: "5tHsvBfkfVWmt14amvgbkh6cLyW2" 
+        currentUser: "" 
       }
   }
 
@@ -28,7 +28,7 @@ class LevelScreen extends Component {
     }
 
     getLevel(){
-        firebase.database().ref('user/'+ this.state.currentUser + '/currentLevel').on("value", snapshot => {
+        firebase.database().ref('users/'+ this.state.currentUser + '/currentLevel').on("value", snapshot => {
             this.setState({selectedLevel: snapshot.val(), level: snapshot.val()})
              })
     }
@@ -73,7 +73,7 @@ class LevelScreen extends Component {
 
         <Text style = {{fontSize: 100, color: 'black'}}>{this.state.selectedLevel}</Text>
         <Button onPress={this.saveCurrentLevel.bind(this)} title="Save Current Level" />
-        <Text> Current User is Testuser@gmail.com </Text>
+        <Text> Current User is {this.state.currentUser} </Text>
         <Text> Saved Level = {this.state.level} </Text>
         </View>
          )

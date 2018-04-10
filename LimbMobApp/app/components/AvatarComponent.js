@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import {Platform, StyleSheet, Text,  View, TouchableHighlight, Image} from 'react-native';
 
-const avatarSize = 156
+const avatarSize = 256
 
 export default class AvatarComponent extends Component {
 
