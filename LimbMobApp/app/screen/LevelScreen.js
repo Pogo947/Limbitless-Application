@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {Platform, StyleSheet, Text,  View, TouchableHighlight, Image,Picker, Button } from 'react-native';
+import {Platform, StyleSheet, Text,  View, TouchableHighlight, Image, Picker, Button, AsyncStorage, Alert} from 'react-native';
 import firebase from 'react-native-firebase';
 import {NavigationActions} from 'react-navigation';
 
@@ -11,31 +11,65 @@ class LevelScreen extends Component {
     super()
       this.state = {
         selectedLevel: "", 
-        level: "", 
-        currentUser: "" 
+        level: "",
+        maxlevel: "", 
+        user: null 
       }
   }
 
 	navigate = () => {
-		const navigateToHome = NavigationActions.navigate({
-			routeName: "home",
-			params: {}
-		});
-		this.props.navigation.dispatch(navigateToHome);
-	};
-    componentDidMount() {
-        this.getLevel()
+    const navigateToDevice = NavigationActions.navigate({
+      routeName: "screenDevice",
+      params: {}
+    });
+    this.props.navigation.dispatch(navigateToDevice);
+  };
+    async componentWillMount() {
+        await this.fetchDataLocal()
+        await this.fetchLevel()
     }
 
-    getLevel(){
-        firebase.database().ref('users/'+ this.state.currentUser + '/currentLevel').on("value", snapshot => {
-            this.setState({selectedLevel: snapshot.val(), level: snapshot.val()})
-             })
+    fetchDataLocal = async ()=> {
+      try{
+
+          let userData = await AsyncStorage.getItem('userData');
+          let maxlevel = await AsyncStorage.getItem('maxlevel')
+          let level = await AsyncStorage.getItem('level');
+
+          userData = JSON.parse(userData)
+          level = JSON.parse(level)
+
+          this.setState({
+              user: userData,
+              level: level,
+              maxlevel: maxlevel});
+      }
+      catch(error) {
+          alert(error);
+      }
+    }
+
+    fetchLevel = async ()=> {
+      try{
+        await firebase.database().ref('users/'+ this.state.user.uid + '/currentlevel').on("value", snapshot => 
+              {this.setState({selectedLevel: snapshot.val(), level: snapshot.val()})})
+      
+        await firebase.database().ref('users/'+ this.state.user.uid + '/maxlevel').on("value", snapshot => 
+              {this.setState({maxlevel: snapshot.val()})})
+        }
+      catch(error) {
+            alert(error);
+        }
+        
     }
 
     saveCurrentLevel() {
 
-      firebase.database().ref('user/'+ this.state.currentUser + '/currentLevel').set(this.state.selectedLevel)
+      if(this.state.selectedLevel > this.state.maxlevel){
+        return alert("Max level is too low")
+      }
+
+      firebase.database().ref('users/'+ this.state.user.uid + '/currentlevel').set(this.state.selectedLevel)
       .then(function() {
         console.log('Synchronization succeeded');
       })
@@ -43,9 +77,11 @@ class LevelScreen extends Component {
         console.log('Synchronization failed');
       });
       
-        firebase.database().ref('user/'+ this.state.currentUser + '/currentLevel').on("value", snapshot => {
-            this.setState({level: snapshot.val()})
-             })
+      firebase.database().ref('users/'+ this.state.user.uid + '/currentlevel').on("value", snapshot => {
+            this.setState({level: snapshot.val()})})
+
+      AsyncStorage.setItem('level', (this.state.selectedLevel))
+        
         this.navigate();
     }
 
@@ -73,8 +109,8 @@ class LevelScreen extends Component {
 
         <Text style = {{fontSize: 100, color: 'black'}}>{this.state.selectedLevel}</Text>
         <Button onPress={this.saveCurrentLevel.bind(this)} title="Save Current Level" />
-        <Text> Current User is {this.state.currentUser} </Text>
         <Text> Saved Level = {this.state.level} </Text>
+        <Text> Max Level = {this.state.maxlevel} </Text>
         </View>
          )
     }
@@ -85,9 +121,6 @@ const mapStateToProps = (state) => {
       currentLevel: state.configuration.currentLevel
     };
   };
-  
-
-
 
   const mapDispatchToProps = (dispatch) => {
     return {

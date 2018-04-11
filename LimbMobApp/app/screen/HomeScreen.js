@@ -17,8 +17,6 @@ class HomeScreenView extends Component {
             emailVerified : true,
             uid : "",  
         },
-          loading: false,
-          test: "fk you"
         };
       }
 
@@ -29,7 +27,7 @@ class HomeScreenView extends Component {
             userData = JSON.parse(userData)
 
             this.setState({
-                user: userData, loading: false, test: "luv you"});
+                user: userData});
         }
         catch(error) {
             alert(error);
@@ -46,13 +44,6 @@ class HomeScreenView extends Component {
 		title: "HomeScreen"
     };
 
-	navigate2 = () => {
-		const navigateToLevel = NavigationActions.navigate({
-			routeName: "screenLevel",
-			params: {}
-		});
-		this.props.navigation.dispatch(navigateToLevel);
-	};
 	navigate = () => {
 		const navigateToProfile = NavigationActions.navigate({
 			routeName: "Profile",
@@ -69,7 +60,6 @@ class HomeScreenView extends Component {
                 <AvatarComponent/>
             </View>
 		</TouchableHighlight>
-
         <Text style = {styles.titleText}>
            WELCOME 
         </Text>

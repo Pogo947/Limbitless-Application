@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { Platform, StyleSheet, Text, View } from "react-native";
 import { Provider } from "react-redux";
 import { PersistGate } from "redux-persist/es/integration/react";
-// import store from './store'
 import AppNavigation from "./app/Navigation";
 import configureStore from "./store";
 

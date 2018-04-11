@@ -26,13 +26,6 @@ const HomeScreenNavigator = StackNavigator({
 			tabBarVisible: false
 		}
 	},
-	screenLevel: {
-		screen: LevelScreen,
-		navigationOptions: {
-			gesturesEnabled: false,
-			header: null
-		}
-	},
 });
 
 const DeviceScreenNavigator = StackNavigator({
@@ -49,6 +42,13 @@ const DeviceScreenNavigator = StackNavigator({
 			gesturesEnabled: false,
 			header: null,
 			tabBarVisible: false
+		}
+	},
+	screenLevel: {
+		screen: LevelScreen,
+		navigationOptions: {
+			gesturesEnabled: false,
+			header: null
 		}
 	},
 });

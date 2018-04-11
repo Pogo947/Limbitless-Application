@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, Button, Alert, TextInput} from 'react-native';
+import { View, Text, Button, Alert, TextInput, AsyncStorage} from 'react-native';
 import firebase from 'react-native-firebase';
 import AvatarComponent from '../../components/AvatarComponent'
 
@@ -37,6 +37,9 @@ export default class ProfileForm extends Component {
                                 currentlevel: 1,
                                 maxlevel: 5
                          })
+
+                        AsyncStorage.setItem('level', 1)
+                        AsyncStorage.setItem('maxlevel', 5)
                         }
                     }
                 })

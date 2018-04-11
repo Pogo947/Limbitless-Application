@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {Platform, StyleSheet, Text,  View, TouchableOpacity, Image } from 'react-native';
+import {Platform, StyleSheet, Text,  View, TouchableWithoutFeedback, Image } from 'react-native';
 
 export default class WheelChairScreen extends Component {
     state = {direction: ""}
@@ -48,28 +48,28 @@ export default class WheelChairScreen extends Component {
             </View> 
             <View style = {{flexDirection: 'row', alignItems: 'center', }}>
 
-                <TouchableOpacity onPress={() => this.pressLeft()}>
+                <TouchableWithoutFeedback onPress={() => this.pressLeft()}>
                 <Image style={{height: 100, width: 100}} source={ this.state.direction == "left" ? require('../resources/wc_img/arrow_left.png') : require('../resources/wc_img/arrow_left_off.png')} />
-                </TouchableOpacity>
+                </TouchableWithoutFeedback>
 
                   <View style = {{flexDirection: "column", alignItems: 'center', justifyContent: 'center',}}>
 
-                    <TouchableOpacity onPress={() => this.pressForward()}>
+                    <TouchableWithoutFeedback onPress={() => this.pressForward()}>
                     <Image style={{height: 100, width: 100}} source={ this.state.direction == "forward" ? require('../resources/wc_img/arrow_up.png') : require('../resources/wc_img/arrow_up_off.png')} />
-                    </TouchableOpacity>
+                    </TouchableWithoutFeedback>
 
-                    <TouchableOpacity onPress={() => this.pressStop()}>
+                    <TouchableWithoutFeedback onPress={() => this.pressStop()}>
                     <Image style={{height: 150, width: 180}} source={this.state.direction == "" ? require('../resources/wc_img/stop.png') : require('../resources/wc_img/stop_off.png')} />
-                    </TouchableOpacity>
+                    </TouchableWithoutFeedback>
 
-                    <TouchableOpacity onPress={() => this.pressBackward()}>
+                    <TouchableWithoutFeedback onPress={() => this.pressBackward()}>
                     <Image style={{height: 100, width: 100}} source={ this.state.direction == "backward" ? require('../resources/wc_img/arrow_down.png') : require('../resources/wc_img/arrow_down_off.png')} />
-                    </TouchableOpacity>
+                    </TouchableWithoutFeedback>
 
                   </View>
-                <TouchableOpacity onPress={() => this.pressRight()}>
+                <TouchableWithoutFeedback onPress={() => this.pressRight()}>
                 <Image style={{height: 100, width: 100}} source={ this.state.direction == "right" ? require('../resources/wc_img/arrow_right.png') : require('../resources/wc_img/arrow_right_off.png')} />
-                </TouchableOpacity>
+                </TouchableWithoutFeedback>
             </View>
 
 
