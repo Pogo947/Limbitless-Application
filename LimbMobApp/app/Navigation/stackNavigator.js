@@ -6,7 +6,11 @@ import Games from '../screen/GameScreen/Games.js'
 import Profile from '../screen/ProfileScreen/Profile.js'
 import LevelScreen from '../screen/LevelScreen.js'
 import AddDeviceScreen from '../screen/AddDeviceScreen.js'
+<<<<<<< HEAD
 import Signup from '../screen/SignupScreen/Signup.js'
+=======
+import EmgScreen from '../screen/EmgScreen.js';
+>>>>>>> 83966ba068bd42927e247957e453ffac6f59d11a
 
 
 // Manifest of possible screens
@@ -52,6 +56,13 @@ const DeviceScreenNavigator = StackNavigator({
 			header: null
 		}
 	},
+	screenEMG: {
+		screen: EmgScreen,
+		navigationOptions: {
+			gesturesEnabled: false,
+			header:null,
+		}
+	}
 });
 			
 export const Tabs = TabNavigator({

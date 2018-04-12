@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import {Platform, StyleSheet, Text,  View, TouchableHighlight, Image} from 'react-native';
 
-const avatarSize = 256
+const avatarSize = 128
 
 export default class AvatarComponent extends Component {
 
@@ -15,7 +15,7 @@ export default class AvatarComponent extends Component {
 
         <Image
                 style ={{height:avatarSize, width: avatarSize, borderRadius: avatarSize/2, borderColor:'#0b2c60', 
-                        borderWidth: 7}}
+                        borderWidth: 4}}
                 source={require('../resources/testAvatar.png')}/>
          
         </View>

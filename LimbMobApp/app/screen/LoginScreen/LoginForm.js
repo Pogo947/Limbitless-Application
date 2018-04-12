@@ -9,7 +9,7 @@ class LoginFormView extends Component {
 		title: "LoginForm"
 	};
 	
-    onLoginPress() {
+    async onLoginPress() {
         this.setState({ error: '', loading: true});
 
         const { email, password} = this.state;
@@ -18,7 +18,7 @@ class LoginFormView extends Component {
             return Alert.alert("Please fill in the text fields")
         }
 
-        firebase.auth().signInAndRetrieveDataWithEmailAndPassword(email, password)
+        await firebase.auth().signInAndRetrieveDataWithEmailAndPassword(email, password)
             .then(() => { this.setState({ error: '', loading: false});
 
                 user = firebase.auth().currentUser

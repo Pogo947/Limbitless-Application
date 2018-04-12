@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {Platform, StyleSheet, ActivityIndicator, Text,  View, TouchableHighlight, Image, AsyncStorage, Alert } from 'react-native';
+import {Platform, StyleSheet, ActivityIndicator, Text,  View, TouchableOpacity, Image, AsyncStorage, Alert } from 'react-native';
 import firebase from 'react-native-firebase';
 import AvatarComponent from '../components/AvatarComponent'
 import {logout} from "../Navigation/Actions/actionCreator";
@@ -20,7 +20,7 @@ class HomeScreenView extends Component {
         };
       }
 
-    fetchData = async ()=> {
+    fetchDataLocal = async ()=> {
         try{
             let userData = await AsyncStorage.getItem('userData');
             
@@ -28,6 +28,14 @@ class HomeScreenView extends Component {
 
             this.setState({
                 user: userData});
+
+            firebase.auth().onAuthStateChanged(function(user) {
+                    if (user) {
+                      // User is signed in.
+                    } else {
+                      // No user is signed in.
+                    }
+                });
         }
         catch(error) {
             alert(error);
@@ -36,7 +44,7 @@ class HomeScreenView extends Component {
 
     async componentWillMount(){
 
-        this.fetchData().done()
+        this.fetchDataLocal().done()
         
     }
 
@@ -52,36 +60,43 @@ class HomeScreenView extends Component {
 		this.props.navigation.dispatch(navigateToProfile);
 	};
     render(){
-
         return(
+        
         <View style={styles.MainContainer}>
-        <TouchableHighlight onPress={this.navigate}>
-            <View>
+
+        <View style = {{alignItems: 'center'}}>
+            <Text style = {styles.titleText}>
+            HOME 
+            </Text>
+        </View>
+        <View>
+        <TouchableOpacity onPress={this.navigate}>
+            <View style = {{justifyContent: 'center'}}>
                 <AvatarComponent/>
             </View>
-		</TouchableHighlight>
-        <Text style = {styles.titleText}>
-           WELCOME 
-        </Text>
-        <Text style = {styles.titleText}>
-           {this.state.user.name}
-        </Text>
-		<TouchableHighlight onPress={this.navigate2}>
-        <Text style = {styles.titleText}>
-             Navigate to Level
-        </Text>
-		</TouchableHighlight>
+		</TouchableOpacity>
+
+        <View style = {{ alignItems: 'center', justifyContent: 'center'}}> 
+            <Text style = {styles.titleText}>
+                WELCOME!
+            </Text>
+            <Text style = {styles.titleText}>
+                {this.state.user.name}
+            </Text>
+        </View>
+        </View>
        </View>
     )}
 }
 
 const styles = StyleSheet.create({
     MainContainer: {
-        alignItems: 'center',
-        justifyContent: 'center',
+        flex: 1,
+     
       },
     titleText: {
         alignItems: 'center',
+        justifyContent: 'center',
         fontFamily : "Klavika Bold",
         fontSize: 40, 
         color: '#1c3d72'
