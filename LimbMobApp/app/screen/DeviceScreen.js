@@ -3,7 +3,6 @@ import {Platform, StyleSheet, Text,  View, TouchableHighlight, Image, Button, Fl
 import {NavigationActions} from 'react-navigation';
 import firebase from 'react-native-firebase';
 
-
 headIcon = require('../resources/device_icons/headIcon.png')
 bandIcon = require('../resources/device_icons/bandIcon.png')
 wheelIcon = require('../resources/device_icons/wheelIcon.png')
@@ -17,10 +16,34 @@ export default class DeviceScreen extends Component {
         super()
         this.state = {
             user: null,
-            dataSource: []
+            dataSource: [],
+            deletedDeviceRow: null,
         }
     }
 
+    navigate = () => {
+		const navigateToAddDevice = NavigationActions.navigate({
+			routeName: "screenAddDevice",
+			params: {}
+		});
+		this.props.navigation.dispatch(navigateToAddDevice);
+    };
+
+    navigateLevel = () => {
+		const navigateToLevel = NavigationActions.navigate({
+			routeName: "screenLevel",
+			params: {}
+		});
+		this.props.navigation.dispatch(navigateToLevel);
+    }; 
+
+    navigateEMG = (emgvalue, thresholds) => {
+        const navigateToEMG = NavigationActions.navigate({
+			routeName: "screenEMG",
+			params: {emgvalue, thresholds}
+		});
+		this.props.navigation.dispatch(navigateToEMG);
+    }
     
     fetchData = async ()=> {
 
@@ -43,24 +66,53 @@ export default class DeviceScreen extends Component {
         this.fetchData().done()
     }
 
-    navigate = () => {
-		const navigateToAddDevice = NavigationActions.navigate({
-			routeName: "screenAddDevice",
-			params: {}
-		});
-		this.props.navigation.dispatch(navigateToAddDevice);
-    };
-    navigate1 = () => {
-		const navigateToLevel = NavigationActions.navigate({
-			routeName: "screenLevel",
-			params: {}
-		});
-		this.props.navigation.dispatch(navigateToLevel);
-    };
-
-    deleteDevice(){
-        showDeletion();
+    chooseDeviceDeletion(name, key){
+        Alert.alert(
+            'Delete device ' + name,
+            'Are you sure?',
+            [
+              {text: 'No', onPress: () => console.log('Canceled deletion')},
+              {},
+              {text: 'Yes', onPress: () => this.confirmDelete(key)},
+            ],
+            { cancelable: true }
+          )
     }
+
+    confirmDelete(key){
+
+        this.setState({dataSource: this.state.dataSource.filter(item => item.key != key)});
+
+        var savedDevices = this.state.dataSource
+
+        AsyncStorage.removeItem('savedDevices').then(() => {
+            AsyncStorage.setItem('savedDevices', JSON.stringify(savedDevices))});
+        
+        firebase.database().ref().child("users").child(this.state.user.uid).child("devices").set(savedDevices)
+        
+    }
+
+    levelButton(type){
+        if(type == 'arm'){
+            return <Button onPress={() => this.navigateLevel()} title="Level" />
+        }
+    }
+
+    gotoEMGSettingsButton(item){
+        if(item.type == 'arm' || item.type == 'band' || item.type == 'head'){
+            return <Button onPress={() => this.navEMG(item)} title="EMG setting" />
+        }
+     }
+ 
+
+    navEMG = async (item)=> {
+
+        await AsyncStorage.setItem('currentDevice', JSON.stringify(item))
+            
+        this.navigateEMG()
+            
+    }
+        
 
     render(){
 
@@ -74,80 +126,45 @@ export default class DeviceScreen extends Component {
         <View>
             <View style={{flexDirection: 'row', justifyContent: 'space-between', margin: 10}}>
                 <Button onPress={this.navigate} title="Add New Device" />
-                <Button onPress={this.deleteDevice.bind(this)} title="Delete Device" />
             </View>
        </View>
         <FlatList
                 data = {this.state.dataSource}
-                renderItem ={({item,index})=>{
-                    return(
-                            <FlatListItem item ={item} index={index} navigation={this.props.navigation} extraData = {this.state}/>
-                    );
-                }}
+                contentContainerStyle={{paddingBottom:200}}
+                renderItem={({ item, index}) => (
+                
+                    <View style ={{flex: 1, flexDirection: 'column'}}> 
+    
+                        <View style = {{flex: 1, backgroundColor: '#ffffff', flexDirection: 'row'}}>
+                            <TouchableHighlight>
+                                <View style={{flex: 1,flexDirection: 'column'}}>
+                                    <Text style ={{marginLeft: 20}}> {item.name} </Text>
+                    
+                                    <Image
+                                        source = {deviceImages[item.iconPath]}
+                                        style= {{width: 120, height: 120, margin: 5, borderRadius:10, borderColor: 'black', borderWidth: 2}}/>
+
+                                    <Button color = '#E09999' onPress={()=> this.chooseDeviceDeletion(item.name, item.key)} title="Delete Device" />
+
+                                </View>
+                            </TouchableHighlight>
+
+                            <View style={{flexDirection: 'column', justifyContent: 'space-between', margin: 10}}> 
+                                {this.levelButton(item.type)}
+                                {this.gotoEMGSettingsButton(item)}
+                                
+                            </View> 
+                        </View>
+
+                    <View style ={{height: 20}}>
+                    </View>
+                 </View> 
+                )}
         />
        </View> 
          )
     }
 }
-
-class FlatListItem extends Component {
-
-    _onPress = () => {
-        Alert.alert("You have pressed " + this.props.item.name)
-     };
-    
-     levelButton(){
-        if(this.props.item.type == 'arm'){
-            return <Button onPress={this.navigate1} title="Level" />
-        }
-     }
-     navigate1 = () => {
-		const navigateToLevel = NavigationActions.navigate({
-			routeName: "screenLevel",
-			params: {}
-		});
-		this.props.navigation.dispatch(navigateToLevel);
-    };
-     gotoDeviceSettings(){
-        if(this.props.item.type == 'arm' || this.props.item.type == 'band' || this.props.item.type == 'head'){
-            return <Button onPress={this.gotoDeviceSettings.bind(this)} title="EMG setting" />
-        }
-        
-     }    
-    render(){
-
-      return(
-        
-        <View style ={{flex: 1, flexDirection: 'column'}}> 
-
-             
-
-                <View style = {{flex: 1, backgroundColor: '#ffffff', flexDirection: 'row'}}>
-
-                    <View style={{flex: 1,flexDirection: 'column'}}>
-
-                    <Image
-                        source = {deviceImages[this.props.item.iconPath]}
-                        style= {{width: 120, height: 120, margin: 5, borderRadius:2, borderColor: 'black', borderWidth: 2}}/>
-                    <Text style ={{marginLeft: 20}}> {this.props.item.name} </Text>
-
-                    </View>
-                    <View style={{flexDirection: 'column', justifyContent: 'space-between', margin: 10}}> 
-                        {this.levelButton()}
-                        {this.gotoDeviceSettings()}
-                    </View> 
-                </View>
-
-              
-
-            <View style ={{height: 20}}/>
-
-        </View>
-        
-        )
-    }
-}
-
 
 const styles = StyleSheet.create({
     MainContainer: {

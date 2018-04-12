@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import {Platform, StyleSheet, KeyboardAvoidingView, Text,  View, ImageBackground, Dimensions, Image} from 'react-native';
+import {Platform, StyleSheet, KeyboardAvoidingView, Text,  View, ImageBackground, Dimensions, Image, TouchableWithoutFeedback, 
+        Keyboard} from 'react-native';
 import firebase from 'react-native-firebase';
 import ProfileForm from './ProfileForm'
 import AvatarComponent from '../../components/AvatarComponent'
@@ -13,8 +14,8 @@ class ProfileView extends Component  {
    render(){
 
        return(
-
-        <KeyboardAvoidingView behavior="padding" style={styles.MainContainer}>
+        <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
+        <KeyboardAvoidingView  style={styles.MainContainer}>
             
             <ImageBackground 
             
@@ -31,6 +32,7 @@ class ProfileView extends Component  {
              </ImageBackground>
 
            </KeyboardAvoidingView>
+           </TouchableWithoutFeedback> 
         )
    }
 }
@@ -45,13 +47,6 @@ const styles = StyleSheet.create({
         width: Dimensions.get('window').width,
         height: Dimensions.get('window').height,
     }, 
-    avatar:{
-        alignItems: 'center',
-        justifyContent: 'center',
-        height:128,
-        width: 128,
-        borderRadius: 64, 
-    },
     titleText: {
         alignItems: 'center',
         fontFamily : "Klavika Bold",

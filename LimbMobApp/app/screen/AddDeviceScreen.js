@@ -63,15 +63,16 @@ export default class AddDeviceScreen extends Component {
 
       prompt(
         'Enter Access code',
-        'Access codes are 5 digits/letters long',
+        'Access codes are 5 digits long, only numbers are allowed',
         [
          {text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
          {text: 'OK', onPress: code => this.confirmCode(code)},
         ],
         {   
+            type: 'numeric',
             cancelable: true,
             defaultValue: this.state.accessCode,
-            placeholder: 'a2b4c'
+            placeholder: '12345',
         }
       )
 
@@ -113,7 +114,7 @@ export default class AddDeviceScreen extends Component {
 
       if(!savedDevices){
         let addDevice = [{
-          key: this.state.user.name + "_" + this.state.accessCode,
+          key: this.state.user.uid + "_" + new Date().getTime() +  "_"+ this.state.accessCode,
           name: this.state.type + '_' + this.state.accessCode,
           code: this.state.accessCode,
           type: this.state.type,
@@ -128,7 +129,7 @@ export default class AddDeviceScreen extends Component {
       }
       else{
         let addDevice = {
-          key: this.state.user.name + "_" + this.state.accessCode,
+          key: this.state.user.name + "_" + new Date().getTime() + "_" + this.state.accessCode,
           name: this.state.type + '_' + this.state.accessCode,
           code: this.state.accessCode,
           type: this.state.type,

@@ -1,38 +1,43 @@
 import React, { Component } from 'react';
-import {Platform, StyleSheet, Text,  View, TouchableHighlight, Image, FlatList, Alert } from 'react-native';
+import {Platform, StyleSheet, Linking, Text,  View, ImageBackground, TouchableHighlight, Image, FlatList, Alert, Dimensions } from 'react-native';
 import firebase from 'react-native-firebase';
-//import gameListData from './GamesList'
 
+
+const widthScreen = Dimensions.get('window').width
+const heightScreen =  Dimensions.get('window').height
 
 class FlatListItem extends Component {
-    _onPress = () => {
-        Alert.alert("You have pressed " + this.props.item.name)
-     };
 
+    
+    _onPress = () => {
+        Alert.alert(
+            'Go to Google Play Store to download ' + this.props.item.name +'?',
+            '' + this.props.item.description,
+            [
+              {text: 'No', onPress: () => console.log('Canceled Game Selection')},
+              {},
+              {text: 'Yes', onPress: () => Linking.openURL(this.props.item.link)},
+            ],
+            { cancelable: true }
+          )
+
+        
+     };
+  
     render(){
       return(
         
-        <View style ={{
-            flex: 1, 
-            flexDirection: 'column'
-        }}> 
+        <View style ={{flexDirection: 'column'}}> 
             <TouchableHighlight onPress={this._onPress}>  
-                <View style = {{
-                    flex:1, backgroundColor: '#00acea', flexDirection: 'row'
-                }}>
+                <View style = {{ backgroundColor: '#00acea', flexDirection: 'row'}}>
+                <ImageBackground
 
-                    <Image
                         source = {{uri: this.props.item.imageURL}}
-                        style= {{width: 100, height: 100, margin: 5}}/>
-                    <View style={{
-                     flex: 1,
-                        flexDirection: 'column'
-                    }}>
-
-                    <Text> {this.props.item.name} </Text>
-                    <Text> {this.props.item.description} </Text>
+                        style= {{width: widthScreen, height: 100, margin: 5}}>
+                    <View style = {styles.backdrop} >
+                        <Text style = {styles.displayText}> {this.props.item.name} </Text>
                     </View>
-
+                </ImageBackground>
                 </View>
             </TouchableHighlight>    
             <View style ={{
@@ -75,6 +80,7 @@ export default class Games extends Component {
         </View>
         <FlatList
                 data = {this.state.dataSource}
+                contentContainerStyle={{paddingBottom:50}}
                 renderItem ={({item,index})=>{
                     return(
                             <FlatListItem item ={item} index={index}/>
@@ -97,6 +103,14 @@ const styles = StyleSheet.create({
         fontFamily : "Klavika Bold",
         fontSize: 40, 
         color: '#1c3d72'
+    },
+    displayText : {
+        fontSize: 32, 
+        color: '#ffffff'
+    },
+    backdrop : {
+        backgroundColor: 'rgba(0,0,0,0.4)',
+        height: 100,
     }
   });
   
