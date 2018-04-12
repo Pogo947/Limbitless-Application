@@ -4,6 +4,8 @@ const Login = "LOGIN";
 const Logout = "LOGOUT";
 const NavigateToLogoutScreen = "NAVIGATE_TO_LOGOUT_SCREEN";
 const Level = "LEVEL";
+const Register = "REGISTER";
+const RegisterSuccess = "REGISTER_SUCCESS";
 
 export {
   incrementCounter,
@@ -11,5 +13,7 @@ export {
   Login,
   Logout,
   NavigateToLogoutScreen,
-  Level
+  Level,
+  Register,
+  RegisterSuccess
 };

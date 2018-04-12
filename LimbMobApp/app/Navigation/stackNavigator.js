@@ -6,6 +6,7 @@ import Games from '../screen/GameScreen/Games.js'
 import Profile from '../screen/ProfileScreen/Profile.js'
 import LevelScreen from '../screen/LevelScreen.js'
 import AddDeviceScreen from '../screen/AddDeviceScreen.js'
+import Signup from '../screen/SignupScreen/Signup.js'
 
 
 // Manifest of possible screens
@@ -96,6 +97,14 @@ const navigator = StackNavigator({
 	},
 	mainScreens: {
 		screen: Tabs,
+		navigationOptions: {
+			gesturesEnabled: false,
+			headerLeft: null,
+			header: null
+		}
+	},
+	signup: {
+		screen: Signup,
 		navigationOptions: {
 			gesturesEnabled: false,
 			headerLeft: null,

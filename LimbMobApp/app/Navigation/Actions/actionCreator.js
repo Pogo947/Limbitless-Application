@@ -4,7 +4,9 @@ import {
   Login,
   Logout,
   NavigateToLogoutScreen,
-  Level
+  Level,
+  Register,
+  RegisterSuccess
 } from "./actionTypes";
 
 const incrementAction = () => ({
@@ -15,6 +17,13 @@ const decrementAction = () => ({
   type: decrementCounter
 });
 
+const registersuccess = () => ({
+	type: RegisterSuccess
+});
+
+const register = () => ({
+	type: Register
+});
 const login = () => ({
   type: Login
 });
@@ -37,5 +46,7 @@ export {
   login,
   logout,
   navigateToLogoutScreen,
-  level
+  level,
+  register,
+  registersuccess
 };

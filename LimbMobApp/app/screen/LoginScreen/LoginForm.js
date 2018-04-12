@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { View, Text, Button, Alert, TextInput, AsyncStorage } from 'react-native';
 import firebase from 'react-native-firebase';
-import {login} from "../../Navigation/Actions/actionCreator";
+import {login, register} from "../../Navigation/Actions/actionCreator";
 import {connect} from "react-redux"
 class LoginFormView extends Component {
     state = { email: '', password: '', error: '', loading: false};
@@ -51,11 +51,21 @@ class LoginFormView extends Component {
                 this.setState({ error: 'Authentication failed.', loading: false });
             });
     }
+	
+	onRegisterPress() {
+		this.props.register();
+	}
     renderButtonOrLoading() {
         if (this.state.loading) {
             <Text>Loading</Text>
         }
         return <Button onPress={this.onLoginPress.bind(this)} title="Log in" />;
+    }
+	renderButtonOrLoading2() {
+        if (this.state.loading) {
+            <Text>Loading</Text>
+        }
+        return <Button onPress={this.onRegisterPress.bind(this)} title="Register" />;
     }
     render() {
         return (
@@ -84,6 +94,7 @@ class LoginFormView extends Component {
                     />
                     <Text style={styles.errorTextStyle}>{this.state.error}</Text>
                     {this.renderButtonOrLoading()}
+					{this.renderButtonOrLoading2()}
             </View>
         );
     }
@@ -110,7 +121,8 @@ const styles = {
 };
 
 const mapDispatchToProps = {
-	login
+	login,
+	register
 };
 
 const LoginForm = connect(null, mapDispatchToProps)(LoginFormView)
