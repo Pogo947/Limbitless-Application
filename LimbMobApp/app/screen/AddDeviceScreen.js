@@ -35,12 +35,8 @@ export default class AddDeviceScreen extends Component {
           let userData = await AsyncStorage.getItem('userData');
           let lastConnectedDevice = await AsyncStorage.getItem('lastConnectedDevice')
           
-          
-
           userData = JSON.parse(userData)
           lastConnectedDevice = JSON.parse(lastConnectedDevice)
-
-          alert(lastConnectedDevice)
 
           this.setState({
               user: userData, lastConnectedDevice: lastConnectedDevice, loading: false});

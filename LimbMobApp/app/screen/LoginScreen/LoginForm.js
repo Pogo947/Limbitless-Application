@@ -59,12 +59,7 @@ class LoginFormView extends Component {
         }
         return <Button onPress={this.onLoginPress.bind(this)} title="Log in" />;
     }
-	renderButtonOrLoading2() {
-        if (this.state.loading) {
-            <Text>Loading</Text>
-        }
-        return <Button onPress={this.onRegisterPress.bind(this)} title="Register" />;
-    }
+
     render() {
         return (
             <View style={styles.formStyle}>
@@ -92,7 +87,10 @@ class LoginFormView extends Component {
                     />
                     <Text style={styles.errorTextStyle}>{this.state.error}</Text>
                     {this.renderButtonOrLoading()}
-					{this.renderButtonOrLoading2()}
+                    <View style = {{flexDirection: 'row'}}>
+                        <Text style= {{margin: 5, color: 'rgba(255,255,255,0.8)', fontFamily : "MuseoSans",}}> Don't have an account? </Text>
+                        <Text style={styles.signUpText} onPress = {()=> this.onRegisterPress()}> Sign up!</Text>
+                    </View>
             </View>
         );
     }
@@ -113,9 +111,15 @@ const styles = {
     },
     inputBox: {
         paddingVertical: 10,
+        fontFamily : "MuseoSans",
         color: '#ffffff',
         backgroundColor: 'rgba(0,0,0,0)',
     },
+    signUpText: {
+        color : '#06a7e2',
+        fontFamily : "MuseoSans",
+        margin: 5
+    }
 };
 
 const mapDispatchToProps = {

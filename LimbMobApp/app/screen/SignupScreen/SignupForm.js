@@ -7,7 +7,6 @@ import {connect} from 'react-redux';
  class ProfileFormView extends Component {
 
     state = {name: '', nickname:'', email: '', password: '', confirmPassword: '', loading: false, error: ''};
-<<<<<<< HEAD
 
     loadingText(){
         if(this.state.loading == true){
@@ -17,11 +16,9 @@ import {connect} from 'react-redux';
             return 
         }
     }
-=======
 	static navigationOptions = {
 		title: "ProfileForm"
 	};
->>>>>>> 64a13078035c7e5fd613ea2de096ec69fe04c838
     createAccountPress() {
 
         if(this.state.email == '' || this.state.password == ''  || this.state.username == '' || this.state.name == ''){
@@ -97,8 +94,8 @@ import {connect} from 'react-redux';
             <View style={styles.formStyle}>
             <Text style = {styles.titleText}> Signup </Text>
                     <TextInput style = {styles.inputBox}
-                        underlineColorAndroid='white'
-                        placeholderTextColor='white'
+                        underlineColorAndroid='rgba(255,255,255,0.5)'
+                        placeholderTextColor='rgba(255,255,255,0.8)'
                         autoCapitalize="none"
                         autoCorrect = {false}
                         label='Name'
@@ -108,8 +105,8 @@ import {connect} from 'react-redux';
                         onSubmitEditing={() => this.nickname.focus()}
                     />
                     <TextInput style = {styles.inputBox}
-                        underlineColorAndroid='white'
-                        placeholderTextColor='white'
+                        underlineColorAndroid='rgba(255,255,255,0.5)'
+                        placeholderTextColor='rgba(255,255,255,0.8)'
                         autoCapitalize="none"
                         autoCorrect = {false}
                         label='Nickname'
@@ -120,8 +117,8 @@ import {connect} from 'react-redux';
                         onSubmitEditing={() => this.email.focus()}
                     />
                     <TextInput style = {styles.inputBox}
-                        underlineColorAndroid='white'
-                        placeholderTextColor='white'
+                        underlineColorAndroid='rgba(255,255,255,0.5)'
+                        placeholderTextColor='rgba(255,255,255,0.8)'
                         autoCapitalize="none"
                         autoCorrect = {false}
                         label='Email'
@@ -132,8 +129,8 @@ import {connect} from 'react-redux';
                         onSubmitEditing={() => this.passwordInput.focus()}
                     />
                     <TextInput style = {styles.inputBox}
-                        underlineColorAndroid='white'
-                        placeholderTextColor='white'
+                        underlineColorAndroid='rgba(255,255,255,0.5)'
+                        placeholderTextColor='rgba(255,255,255,0.8)'
                         autoCapitalize="none"
                         autoCorrect = {false}
                         label='Password'
@@ -144,8 +141,8 @@ import {connect} from 'react-redux';
                         secureTextEntry
                     />
                     <TextInput style = {styles.inputBox}
-                        underlineColorAndroid='white'
-                        placeholderTextColor='white'
+                        underlineColorAndroid='rgba(255,255,255,0.5)'
+                        placeholderTextColor='rgba(255,255,255,0.8)'
                         autoCapitalize="none"
                         autoCorrect = {false}
                         label='Confirm Password'
@@ -164,6 +161,7 @@ import {connect} from 'react-redux';
 const styles = {
     errorTextStyle: {
         color: '#E64A19',
+        fontFamily : "MuseoSans",
         alignSelf: 'center',
         paddingTop: 10,
         paddingBottom: 10
@@ -178,6 +176,7 @@ const styles = {
     },
     inputBox: {
         color: '#ffffff',
+        fontFamily : "MuseoSans",
         paddingVertical: 8,
         paddingHorizontal: 10,
         fontSize: 16
@@ -186,7 +185,7 @@ const styles = {
     titleText: {
         alignItems: 'center',
         justifyContent: 'center',
-        fontWeight : 'bold',
+        fontFamily : "MuseoSans",
         fontSize: 30, 
         color: '#ffffff'
     }

@@ -4,6 +4,7 @@ import {Platform, StyleSheet, KeyboardAvoidingView, Text,  View, ImageBackground
 import firebase from 'react-native-firebase';
 import SignupForm from './SignupForm'
 
+
 export default class Signup extends Component  {
 
    render(){
