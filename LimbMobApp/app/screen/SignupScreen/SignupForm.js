@@ -2,10 +2,12 @@ import React, { Component } from 'react';
 import { View, Text, Button, Alert, TextInput, AsyncStorage} from 'react-native';
 import firebase from 'react-native-firebase';
 import AvatarComponent from '../../components/AvatarComponent'
-
-export default class ProfileForm extends Component {
+import {registersuccess} from "../../Navigation/Actions/actionCreator";
+import {connect} from 'react-redux';
+ class ProfileFormView extends Component {
 
     state = {name: '', nickname:'', email: '', password: '', confirmPassword: '', loading: false, error: ''};
+<<<<<<< HEAD
 
     loadingText(){
         if(this.state.loading == true){
@@ -15,6 +17,11 @@ export default class ProfileForm extends Component {
             return 
         }
     }
+=======
+	static navigationOptions = {
+		title: "ProfileForm"
+	};
+>>>>>>> 64a13078035c7e5fd613ea2de096ec69fe04c838
     createAccountPress() {
 
         if(this.state.email == '' || this.state.password == ''  || this.state.username == '' || this.state.name == ''){
@@ -57,6 +64,7 @@ export default class ProfileForm extends Component {
                 });
             //quickly logs onto user and sends email verfication, then logs off
             this.sendmail();
+			this.props.registersuccess();
                 
         }
         else{
@@ -183,3 +191,11 @@ const styles = {
         color: '#ffffff'
     }
 };
+
+const mapDispatchToProps = {
+	registersuccess
+};
+
+const ProfileForm = connect(null, mapDispatchToProps)(ProfileFormView)
+
+export default ProfileForm;

@@ -4,7 +4,9 @@ import AppNavigator, { Tabs } from "../stackNavigator";
 import {
   Login,
   Logout,
-  NavigateToLogoutScreen
+  NavigateToLogoutScreen,
+  Register,
+  RegisterSuccess
 } from "../Actions/actionTypes";
 
 const ActionForLoggedOut = AppNavigator.router.getActionForPathAndParams(
@@ -39,7 +41,7 @@ const navigationReducer = (state = initialState, action) => {
         )
       };
 
-    /*case Register:
+    case Register:
       return {
         ...state,
         stateForLoggedOut: AppNavigator.router.getStateForAction(
@@ -47,22 +49,18 @@ const navigationReducer = (state = initialState, action) => {
           stateForLoggedOut
         )
       };
-
+	
     case RegisterSuccess:
       return {
         ...state,
-        stateForLoggedIn: AppNavigator.router.getStateForAction(
+        stateForLoggedOut: AppNavigator.router.getStateForAction(
           NavigationActions.reset({
-            index: 2,
-            actions: [
-              NavigationActions.navigate({ routeName: "login" }),
-              NavigationActions.navigate({ routeName: "signup" }),
-              NavigationActions.navigate({ routeName: "mainScreens" })
-            ]
-          })
-        )
-      };
-
+            key: null,
+			index: 0,
+            actions: [NavigationActions.navigate({ routeName: "login" })]
+          }),
+      )};
+	/*
        Another option for RegisterSuccess
         nextState = {
           ...state,
