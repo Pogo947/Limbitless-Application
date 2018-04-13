@@ -19,6 +19,14 @@ export default class EmgScreen extends Component {
         this.fetchData().done()
     }
 
+    navigateToSavedDevice = () => {
+        const navigateToSavedDevice = NavigationActions.navigate({
+          routeName: "screenDevice",
+          params: {}
+        });
+        this.props.navigation.dispatch(navigateToSavedDevice);
+      };
+
     fetchData = async ()=> {
 
         try{
@@ -59,6 +67,8 @@ export default class EmgScreen extends Component {
             .child("devices").child("savedDevices").child(index).child("emg").set(this.state.value1)
 
         AsyncStorage.setItem('savedDevices', JSON.stringify(devices))
+
+        this.navigateToSavedDevice()
         
     }
 

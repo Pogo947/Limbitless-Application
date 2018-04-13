@@ -60,7 +60,8 @@ class ProfileFormView extends Component {
                 }, function(error) {
                     alert("unable to update name")
                 });
-            
+                
+                await firebase.database().ref().child("users").child(this.state.user.uid).child(name).set({name : newName})
                 var newUserData = this.state.user
 
                 newUserData.name = newName
@@ -75,18 +76,19 @@ class ProfileFormView extends Component {
                 }, function(error) {
                     alert("unable to update email")
             });
-
-        var newUserData = this.state.user
-
-        newUserData.email.setItem(newEmail)
+            await firebase.database().ref().child("users").child(this.state.user.uid).child(name).set({email : newName})
+            var newUserData = this.state.user
             
-        await AsyncStorage.setItem('userData',JSON.stringify(newUserData))
-        }
+            newUserData.email = newEmail
+            
+            await AsyncStorage.setItem('userData',JSON.stringify(newUserData))
+            }
 
-        alert("user profile updated!")
-        }
-        catch(error) {
-            alert(error);
+            alert("user profile updated!")
+
+            }
+            catch(error) {
+                alert(error);
         }
     }
 

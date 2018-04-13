@@ -9,7 +9,7 @@ class LoginFormView extends Component {
 		title: "LoginForm"
 	};
 	
-    async onLoginPress() {
+    onLoginPress = async ()=> {
         this.setState({ error: '', loading: true});
 
         const { email, password} = this.state;
@@ -30,7 +30,6 @@ class LoginFormView extends Component {
                 else{
                     
                     //Alert.alert("Verified")
-
                     var userData = {
                         name : user.displayName,
                         email : user.email,
@@ -41,7 +40,6 @@ class LoginFormView extends Component {
 
                     AsyncStorage.setItem('userData', JSON.stringify(userData))
                     
-
                     this.props.login(); 
                 }
 

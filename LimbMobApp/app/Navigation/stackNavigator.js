@@ -1,13 +1,14 @@
 import { TabNavigator, StackNavigator, TabView } from 'react-navigation'
 import Login from '../screen/LoginScreen/Login.js'
 import Home from '../screen/HomeScreen.js'
-import DeviceScreen from '../screen/DeviceScreen.js'
+import SavedDeviceScreen from '../screen/SavedDeviceScreen.js'
 import Games from '../screen/GameScreen/Games.js'
 import Profile from '../screen/ProfileScreen/Profile.js'
 import LevelScreen from '../screen/LevelScreen.js'
 import AddDeviceScreen from '../screen/AddDeviceScreen.js'
 import EmgScreen from '../screen/EmgScreen.js';
-
+import DeviceScanScreen from '../screen/DeviceScanScreen.js'
+import DeviceGraphScreen from '../screen/DeviceGraphScreen.js'
 
 // Manifest of possible screens
 
@@ -30,8 +31,22 @@ const HomeScreenNavigator = StackNavigator({
 });
 
 const DeviceScreenNavigator = StackNavigator({
+	screenScanDevice: {
+		screen: DeviceScanScreen,
+		navigationOptions: {
+			gesturesEnabled: false,
+			header: null
+		}
+	},
+	screenGraphDevice: {
+		screen: DeviceGraphScreen,
+		navigationOptions: {
+			gesturesEnabled: false,
+			header: null
+		}
+	},
 	screenDevice: {
-		screen: DeviceScreen,
+		screen: SavedDeviceScreen,
 		navigationOptions: {
 			gesturesEnabled: false,
 			header: null

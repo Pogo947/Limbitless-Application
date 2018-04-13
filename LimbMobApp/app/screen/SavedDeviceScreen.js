@@ -21,12 +21,20 @@ export default class DeviceScreen extends Component {
         }
     }
 
-    navigate = () => {
+    navigateAddDevice = () => {
 		const navigateToAddDevice = NavigationActions.navigate({
 			routeName: "screenAddDevice",
 			params: {}
 		});
 		this.props.navigation.dispatch(navigateToAddDevice);
+    };
+
+    navigateToScanDevice = () => {
+		const navigateToScanDevice = NavigationActions.navigate({
+			routeName: "screenScanDevice",
+			params: {}
+		});
+		this.props.navigation.dispatch(navigateToScanDevice);
     };
 
     navigateLevel = () => {
@@ -120,12 +128,13 @@ export default class DeviceScreen extends Component {
         <View>
         <View style ={{alignItems: 'center'}}>
             <Text style = {styles.titleText}>
-                DEVICES
+                SAVED DEVICES
             </Text>
         </View>
         <View>
             <View style={{flexDirection: 'row', justifyContent: 'space-between', margin: 10}}>
-                <Button onPress={this.navigate} title="Add New Device" />
+                <Button onPress={this.navigateAddDevice} title="Add New Device" />
+                <Button onPress={this.navigateToScanDevice} title="Scan Devices" />
             </View>
        </View>
         <FlatList

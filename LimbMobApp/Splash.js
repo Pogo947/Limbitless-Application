@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import {Platform, StyleSheet, Text,  View, TouchableHighlight, Image, ActivityIndicator } from 'react-native';
 
-export default class LoadingScreen extends Component {
+export default class Splash extends Component {
     
     render(){
 
@@ -9,11 +9,11 @@ export default class LoadingScreen extends Component {
         <View style={styles.MainContainer}>
 
         <Text style = {styles.loadingText}>
-            Syncing...
+           
         </Text>
         
 
-        <ActivityIndicator size={150} color='white' style= {styles.loading} />
+        <ActivityIndicator size={100} color='white' style= {styles.loading} />
 
         <Text style = {styles.loadingText}>
             Please Wait...

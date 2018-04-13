@@ -7,6 +7,14 @@ export default class ProfileForm extends Component {
 
     state = {name: '', nickname:'', email: '', password: '', confirmPassword: '', loading: false, error: ''};
 
+    loadingText(){
+        if(this.state.loading == true){
+            return "Loading... Please wait"
+        }
+        else {
+            return 
+        }
+    }
     createAccountPress() {
 
         if(this.state.email == '' || this.state.password == ''  || this.state.username == '' || this.state.name == ''){
@@ -37,9 +45,9 @@ export default class ProfileForm extends Component {
                                 currentlevel: 1,
                                 maxlevel: 5
                          })
-
-                        AsyncStorage.setItem('level', 1)
-                        AsyncStorage.setItem('maxlevel', 5)
+                         this.setState({loading: true})
+                        AsyncStorage.setItem('level', "1")
+                        AsyncStorage.setItem('maxlevel', "5")
                         }
                     }
                 })
@@ -68,6 +76,7 @@ export default class ProfileForm extends Component {
         }, 5000);
 
         setTimeout(function(){
+           this.setState({loading: false})
            firebase.auth().signOut()
            // Alert.alert("Signed Out")
         }, 10000);
@@ -137,6 +146,7 @@ export default class ProfileForm extends Component {
                         onChangeText={confirmPassword => this.setState({ confirmPassword })}
                         secureTextEntry
                     />
+                    <Text style = {{color: 'white'}}>{this.loadingText()}</Text>
                     <Text style={styles.errorTextStyle}>{this.state.error}</Text>
                     <Button onPress={this.createAccountPress.bind(this)} title= "Create Account" />
             </View>

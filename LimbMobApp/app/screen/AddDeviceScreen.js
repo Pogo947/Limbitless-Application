@@ -17,6 +17,7 @@ export default class AddDeviceScreen extends Component {
           user: null,
           accessCode: "",
           deviceData: null,
+          
          }
     }
 
@@ -32,11 +33,17 @@ export default class AddDeviceScreen extends Component {
       try{
 
           let userData = await AsyncStorage.getItem('userData');
+          let lastConnectedDevice = await AsyncStorage.getItem('lastConnectedDevice')
           
+          
+
           userData = JSON.parse(userData)
+          lastConnectedDevice = JSON.parse(lastConnectedDevice)
+
+          alert(lastConnectedDevice)
 
           this.setState({
-              user: userData, loading: false});
+              user: userData, lastConnectedDevice: lastConnectedDevice, loading: false});
       }
       catch(error) {
           alert(error);
@@ -109,13 +116,13 @@ export default class AddDeviceScreen extends Component {
       }
       else{
       var savedDevices = this.state.deviceData 
-      
       var iconType = this.pickIconType()
 
       if(!savedDevices){
         let addDevice = [{
-          key: this.state.user.uid + "_" + new Date().getTime() +  "_"+ this.state.accessCode,
-          name: this.state.type + '_' + this.state.accessCode,
+          key: this.state.lastConnectedDevice.id + "_" + this.state.lastConnectedDevice.name ,
+          id : this.state.lastConnectedDevice.id,
+          name: this.state.lastConnectedDevice.name,
           code: this.state.accessCode,
           type: this.state.type,
           emg: 0,
@@ -129,8 +136,9 @@ export default class AddDeviceScreen extends Component {
       }
       else{
         let addDevice = {
-          key: this.state.user.name + "_" + new Date().getTime() + "_" + this.state.accessCode,
-          name: this.state.type + '_' + this.state.accessCode,
+          key: this.state.lastConnectedDevice.id + "_" + this.state.lastConnectedDevice.name ,
+          id : this.state.lastConnectedDevice.id,
+          name: this.state.lastConnectedDevice.name,
           code: this.state.accessCode,
           type: this.state.type,
           emg: 0,

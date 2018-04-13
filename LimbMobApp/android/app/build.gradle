@@ -99,7 +99,7 @@ android {
 
     defaultConfig {
         applicationId "com.limbmobapp"
-        minSdkVersion 16
+        minSdkVersion 19
         targetSdkVersion 22
         versionCode 1
         versionName "1.0"
@@ -153,7 +153,12 @@ dependencies {
     compile "com.google.firebase:firebase-auth:11.8.0"
     compile "com.google.firebase:firebase-storage:11.8.0"
 
+    compile project(':react-native-ble-manager')
+    
     compile project(':react-native-prompt-android')
+
+    compile project(':react-native-svg')
+
 }
 
 // Run this once to be able to run the application with BUCK
