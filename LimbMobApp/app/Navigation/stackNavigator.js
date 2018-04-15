@@ -7,7 +7,8 @@ import Profile from '../screen/ProfileScreen/Profile.js'
 import LevelScreen from '../screen/LevelScreen.js'
 import AddDeviceScreen from '../screen/AddDeviceScreen.js'
 import Signup from '../screen/SignupScreen/Signup.js'
-import EmgScreen from '../screen/EmgScreen.js';
+import SignupScreen from '../screen/SignupScreen/Signup.js'
+import EmgScreen from '../screen/EmgScreen.js'
 import DeviceScanScreen from '../screen/DeviceScanScreen.js'
 import DeviceGraphScreen from '../screen/DeviceGraphScreen.js'
 
@@ -128,6 +129,14 @@ const navigator = StackNavigator({
 	},
 	signup: {
 		screen: Signup,
+		navigationOptions: {
+			gesturesEnabled: false,
+			headerLeft: null,
+			header: null
+		}
+	},
+	signupScreen: {
+		screen: SignupScreen,
 		navigationOptions: {
 			gesturesEnabled: false,
 			headerLeft: null,
