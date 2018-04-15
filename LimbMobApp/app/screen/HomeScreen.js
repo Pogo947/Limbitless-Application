@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {Platform, StyleSheet, ActivityIndicator, Text,  View, TouchableOpacity, Image, AsyncStorage, Alert } from 'react-native';
+import {Platform, StyleSheet, ActivityIndicator, Text,  View, TouchableOpacity, Image, AsyncStorage, Alert, Button } from 'react-native';
 import firebase from 'react-native-firebase';
 import AvatarComponent from '../components/AvatarComponent'
 import {logout} from "../Navigation/Actions/actionCreator";
@@ -63,7 +63,9 @@ class HomeScreenView extends Component {
         return(
         
         <View style={styles.MainContainer}>
-
+		<View style={styles.ProfileButtonStyle}>
+		<Button onPress={this.navigate} title='Settings'/>
+		</View>
         <View style = {{alignItems: 'center'}}>
             <Text style = {styles.titleText}>
             WELCOME!
@@ -89,9 +91,14 @@ class HomeScreenView extends Component {
 
 const styles = StyleSheet.create({
     MainContainer: {
-        flex: 1,
+        flex: 1
      
       },
+	ProfileButtonStyle: {
+		alignSelf: 'flex-start',
+		position: 'absolute',
+		top: 0
+	},
     titleText: {
         alignItems: 'center',
         justifyContent: 'center',
@@ -102,7 +109,7 @@ const styles = StyleSheet.create({
     avatar:{
         height:256,
         width: 256,
-        borderRadius: 64, 
+        borderRadius: 64
     },
 
   });

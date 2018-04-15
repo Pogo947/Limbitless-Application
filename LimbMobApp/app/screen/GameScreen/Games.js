@@ -1,14 +1,13 @@
 import React, { Component } from 'react';
-import {Platform, StyleSheet, Linking, Text,  View, ImageBackground, TouchableHighlight, Image, FlatList, Alert, Dimensions } from 'react-native';
+import {Platform, Button, StyleSheet, Linking, Text,  View, ImageBackground, TouchableHighlight, Image, FlatList, Alert, Dimensions } from 'react-native';
 import firebase from 'react-native-firebase';
-
+import {NavigationActions} from 'react-navigation'
 
 const widthScreen = Dimensions.get('window').width
 const heightScreen =  Dimensions.get('window').height
 
 class FlatListItem extends Component {
 
-    
     _onPress = () => {
         Alert.alert(
             'Go to Google Play Store to download ' + this.props.item.name +'?',
@@ -26,7 +25,6 @@ class FlatListItem extends Component {
   
     render(){
       return(
-        
         <View style ={{flexDirection: 'column'}}> 
             <TouchableHighlight onPress={this._onPress}>  
                 <View style = {{ backgroundColor: '#00acea', flexDirection: 'row'}}>
@@ -53,6 +51,14 @@ class FlatListItem extends Component {
 
 export default class Games extends Component {
 
+	navigate = () => {
+		const navigateToProfile = NavigationActions.navigate({
+			routeName: "Profile",
+			params: {}
+		});
+		this.props.navigation.dispatch(navigateToProfile);
+	};
+	
     constructor(){
         super()
         this.state = {
@@ -72,7 +78,9 @@ export default class Games extends Component {
 
         return(
         <View style={styles.MainContainer}>
-
+        <View style={styles.ProfileButtonStyle}>
+		<Button onPress={this.navigate} title='Settings'/>
+		</View>
         <View style = {{alignItems: 'center'}}>
         <Text style = {styles.titleText}>
            GAMES
@@ -111,6 +119,11 @@ const styles = StyleSheet.create({
     backdrop : {
         backgroundColor: 'rgba(0,0,0,0.4)',
         height: 100,
-    }
+    },
+	ProfileButtonStyle: {
+		alignSelf: 'flex-start',
+		position: 'absolute',
+		top: 0
+	},
   });
   
