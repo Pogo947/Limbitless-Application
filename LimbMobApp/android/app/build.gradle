@@ -154,10 +154,10 @@ dependencies {
     compile "com.google.firebase:firebase-storage:11.8.0"
 
     compile project(':react-native-ble-manager')
-    
     compile project(':react-native-prompt-android')
-
     compile project(':react-native-svg')
+    compile project(':react-native-fetch-blob')         
+    compile project(':react-native-image-picker')
 
 }
 

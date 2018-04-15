@@ -41,22 +41,6 @@ const HomeScreenNavigator = StackNavigator({
 });
 
 const DeviceScreenNavigator = StackNavigator({
-	screenScanDevice: {
-		screen: DeviceScanScreen,
-		navigationOptions: {
-			gesturesEnabled: false,
-			header: null,
-			tabBarVisible: true
-		}
-	},
-	screenGraphDevice: {
-		screen: DeviceGraphScreen,
-		navigationOptions: {
-			gesturesEnabled: false,
-			header: null,
-			tabBarVisible: true
-		}
-	},
 	screenDevice: {
 		screen: SavedDeviceScreen,
 		navigationOptions: {
@@ -71,6 +55,22 @@ const DeviceScreenNavigator = StackNavigator({
 			gesturesEnabled: false,
 			header: null,
 			tabBarVisible: false
+		}
+	},
+	screenScanDevice: {
+		screen: DeviceScanScreen,
+		navigationOptions: {
+			gesturesEnabled: false,
+			header: null,
+			tabBarVisible: true
+		}
+	},
+	screenGraphDevice: {
+		screen: DeviceGraphScreen,
+		navigationOptions: {
+			gesturesEnabled: false,
+			header: null,
+			tabBarVisible: true
 		}
 	},
 	screenLevel: {

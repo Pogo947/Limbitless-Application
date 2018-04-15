@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { View, Text, Button, Alert, TextInput, AsyncStorage} from 'react-native';
 import firebase from 'react-native-firebase';
-import AvatarComponent from '../../components/AvatarComponent'
 import {registersuccess, logout} from "../../Navigation/Actions/actionCreator";
 import {connect} from 'react-redux';
 import {NavigationActions} from "react-navigation";
@@ -166,7 +165,7 @@ import {NavigationActions} from "react-navigation";
                     <Text style = {{color: 'white'}}>{this.loadingText()}</Text>
                     <Text style={styles.errorTextStyle}>{this.state.error}</Text>
                     <Button onPress={this.createAccountPress.bind(this)} title= "Create Account" />
-					<View style = {{flexDirection: 'row'}}>
+                    <View style = {{flexDirection: 'row', padding: 20, justifyContent: 'center'}}>
                         <Text style= {{margin: 5, color: 'rgba(255,255,255,0.8)', fontFamily : "MuseoSans",}}> Already have an account? </Text>
                         <Text style={styles.signUpText} onPress = {() => this.props.logout()}> Log in!</Text>
                     </View>

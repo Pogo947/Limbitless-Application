@@ -1,13 +1,15 @@
 import React, { Component } from 'react';
-import { View, Text, Button, Alert, TextInput, ImageBackground, AsyncStorage } from 'react-native';
+import { View, Text, Button, Alert, TextInput, Platform, Image, ActivityIndicator,TouchableOpacity, AsyncStorage, PermissionsAndroid } from 'react-native';
 import firebase from 'react-native-firebase';
-import AvatarComponent from '../../components/AvatarComponent'
 import { logout, navigateToLogoutScreen, login } from "../../Navigation/Actions/actionCreator";
 import { connect } from 'react-redux';
 import { withNavigation } from 'react-navigation';
+import RNFetchBlob from 'react-native-fetch-blob' 
+import ImagePicker from 'react-native-image-picker'
+
 
 class ProfileFormView extends Component {
-
+    
     constructor() {
         super();
         this.state = {
@@ -20,15 +22,84 @@ class ProfileFormView extends Component {
           },
           newName : "",
           newEmail : "",
+          uploadURL: "",
+          newPic : false, 
+          changePic: false,
+          loading: false, 
           };
+    }
+
+    _pickImage = async () => {
+
+        await this.setState({loading: true})
+    
+        await ImagePicker.launchImageLibrary({}, response  => {
+          this.uploadImage(response.uri)
+            .then(url => this.setState({ uploadURL: url, changePic: true, loading: false }))
+            .catch(error => alert(error))
+        })
+
+        await this.storeUploadURL()
+    }
+
+    uploadImage = async (uri, mime = 'application/octet-stream') => {
+        const Blob = RNFetchBlob.polyfill.Blob
+        const fs = RNFetchBlob.fs
+        window.XMLHttpRequest = RNFetchBlob.polyfill.XMLHttpRequest
+        window.Blob = Blob
+
+        var uid = this.state.user.uid
+
+        return new Promise((resolve, reject) => {
+          const uploadUri = Platform.OS === 'ios' ? uri.replace('file://', '') : uri
+          let uploadBlob = null
+          const sessionId = this.state.user.uid
+          const imageRef = firebase.storage().ref('images/').child(uid)
+      
+          fs.readFile(uploadUri, 'base64')
+            .then((data) => {
+              return Blob.build(data, { type: `${mime};BASE64` })
+            })
+            .then((blob) => {
+              uploadBlob = blob
+              return imageRef.put(uri, { contentType: mime });
+            })
+            .then(() => {
+              uploadBlob.close()
+              return imageRef.getDownloadURL()
+            })
+            .then((url) => {
+              resolve(url)
+            })
+            .catch((error) => {
+              reject(error)
+          })
+        })
       }
+
+    storeUploadURL = async () => {
+      try{
+        
+       const photoURL = this.state.uploadURL
+       await AsyncStorage.setItem('uploadURL', photoURL)
+
+        this.setState({changePic: false})
+
+        alert("profile picture saved!")
+        }
+        catch(error){
+            alert(error)
+        }
+    }
 
     fetchDataLocal = async ()=> {
         try{
             let userData = await AsyncStorage.getItem('userData');
+            let uploadURL = await AsyncStorage.getItem('uploadURL');
+
             userData = JSON.parse(userData)
 
-            this.setState({ user: userData});
+            this.setState({ user: userData, uploadURL: uploadURL});
         }
         catch(error) {
             alert(error);
@@ -49,9 +120,9 @@ class ProfileFormView extends Component {
             let newName = this.state.newName
             let newEmail = this.state.newEmail
 
+
             if(newEmail == "" && newName == ""){
                 return alert("nothing to update")
-				this.props.login();
             }
 
             if(newName){
@@ -85,7 +156,6 @@ class ProfileFormView extends Component {
             }
 
             alert("user profile updated!")
-			this.props.login();
             }
             catch(error) {
                 alert(error);
@@ -106,12 +176,66 @@ class ProfileFormView extends Component {
         }
     }	
 
+    changeAvatar(){
+        if(this.state.changePic == true){
+        return (
+            <View style = {{flexDirection: "row" ,justifyContent: 'space-between'}}>
+                <Text style={{margin: 10, color : '#06a7e2',fontFamily : "MuseoSans"}} onPress = {()=> this._pickImage()}> 
+                    Choose Profile Picture
+                </Text>
+                <Text style={{margin: 10, color : '#06a7e2',fontFamily : "MuseoSans"}} onPress = {()=> this.storeUploadURL()}> 
+                    Save Profile Picture
+                </Text>
+            </View>
+        )
+        }
+        else 
+            return (
+            <View style = {{flexDirection: "row" ,justifyContent: 'space-between'}}>
+                <Text style={{margin: 10, color : '#06a7e2',fontFamily : "MuseoSans"}} onPress = {()=> this._pickImage()}> 
+                    Choose Profile Picture
+                </Text>
+            </View>
+            )
+    }
+    checkUploadURL(){
+        if(this.state.uploadURL == "" || this.state.uploadURL == null){
+            return (require('../../resources/testAvatar.png'))
+        }
+        else
+            return ({uri: this.state.uploadURL})
+    }
+    showLoadingorPicture(){
+        if(this.state.loading == true){
+            return <ActivityIndicator size="large"/>
+        }
+        else if(this.state.newPic == true){
+            return (
+            <View style= {{alignItems: 'center',justifyContent: 'center',}}>
+            <Image
+                style ={{height:128, width: 128, borderRadius: 128/2, borderColor:'#0b2c60', 
+                        borderWidth: 4}}
+                source={{uri: this.state.uploadURL}}/>
+            </View>)
+        }
+        else {
+            return (
+            <View style= {{alignItems: 'center',justifyContent: 'center',}}>
+            <Image
+                style ={{height:128, width: 128, borderRadius: 128/2, borderColor:'#0b2c60', 
+                        borderWidth: 4}}
+                source={this.checkUploadURL()}/>
+            </View>
+            )
+        }
+    }
+
     render() {
         return (
             
             <View style={styles.formStyle}>
-            <AvatarComponent/>
-
+                {this.changeAvatar()}
+                {this.showLoadingorPicture()}
                     <Text style = {{fontFamily : "Klavika-Regular",fontSize: 20}}> Name </Text>
                     <TextInput style = {styles.inputBox}
                         underlineColorAndroid='rgba(0,0,0,0.5)'
@@ -154,7 +278,7 @@ const styles = {
         paddingBottom: 10
     },
     formStyle: {
-        flex: 1,
+        flex: 0.9,
         alignItems: 'stretch',
         justifyContent: 'center',
         paddingHorizontal: 25,
@@ -167,7 +291,12 @@ const styles = {
         paddingVertical: 10,
         paddingHorizontal: 10,
         //backgroundColor: 'rgba(240, 240,240,1)',
-    }
+    },
+    loading: {
+        justifyContent: 'center',
+        alignItems: 'center',
+        height: 128
+     }
 };
 
 const mapDispatchToProps = {

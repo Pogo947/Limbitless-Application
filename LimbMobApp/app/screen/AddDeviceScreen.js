@@ -195,7 +195,7 @@ export default class AddDeviceScreen extends Component {
         <View style={styles.MainContainer}>
         <View style = {{alignItems: 'center'}}>
         <Text style = {styles.titleText}>
-           SELECT TO ADD DEVICE
+           SELECT DEVICE
         </Text>
         </View>
           <View style = {{flexDirection: 'row'}}>
@@ -232,10 +232,12 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
       },
     titleText: {
-      alignItems: 'center',
-      fontFamily : "Klavika Bold",
-      fontSize: 40, 
-      color: '#1c3d72'
+        marginTop: 40,
+        alignItems: 'center',
+        justifyContent: 'center',
+        fontFamily : "Klavika Bold",
+        fontSize: 40, 
+        color: '#1c3d72'
     },
     touchableIcon: {
         margin: 10, 

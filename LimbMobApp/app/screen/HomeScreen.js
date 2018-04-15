@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import {Platform, StyleSheet, ActivityIndicator, Text,  View, TouchableOpacity, Image, AsyncStorage, Alert, Button } from 'react-native';
 import firebase from 'react-native-firebase';
-import AvatarComponent from '../components/AvatarComponent'
 import {logout} from "../Navigation/Actions/actionCreator";
 import {connect} from "react-redux"
 import { NavigationActions } from "react-navigation";
@@ -14,20 +13,28 @@ class HomeScreenView extends Component {
             name : "",
             email : "",
             photoUrl : "",
-            emailVerified : true,
+            emailVerified : "",
             uid : "",  
         },
+        uploadURL: ""
         };
       }
 
+    checkUploadURL(){
+        if(this.state.uploadURL == "" || this.state.uploadURL == null){
+            return (require('../resources/testAvatar.png'))
+        }
+        else
+            return ({uri: this.state.uploadURL})
+    }
     fetchDataLocal = async ()=> {
         try{
             let userData = await AsyncStorage.getItem('userData');
-            
+            let uploadURL = await AsyncStorage.getItem('uploadURL');
+
             userData = JSON.parse(userData)
 
-            this.setState({
-                user: userData});
+            this.setState({user: userData, uploadURL: uploadURL });
 
             firebase.auth().onAuthStateChanged(function(user) {
                     if (user) {
@@ -75,15 +82,18 @@ class HomeScreenView extends Component {
         </View>
         <View>
         <TouchableOpacity onPress={this.navigate}>
-            <View style = {{justifyContent: 'center'}}>
-                <AvatarComponent/>
+            <View style= {{alignItems: 'center',justifyContent: 'center',}}>
+            <Image
+                style ={{height:128, width: 128, borderRadius: 128/2, borderColor:'#0b2c60', 
+                        borderWidth: 4}}
+                source={this.checkUploadURL()}/>
             </View>
 		</TouchableOpacity>
 
         <View style = {{ alignItems: 'center', justifyContent: 'center'}}> 
 
             <Text style = {styles.titleText}>
-                {this.state.user.name}
+                {this.state.user.name} 
             </Text>
         </View>
         </View>

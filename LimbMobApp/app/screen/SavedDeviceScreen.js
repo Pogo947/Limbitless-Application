@@ -3,11 +3,11 @@ import {Platform, StyleSheet, Text,  View, TouchableHighlight, TouchableOpacity,
 import {NavigationActions} from 'react-navigation';
 import firebase from 'react-native-firebase';
 
-headIcon = require('../resources/device_icons/headIcon.png')
-bandIcon = require('../resources/device_icons/bandIcon.png')
-wheelIcon = require('../resources/device_icons/wheelIcon.png')
-armIcon = require('../resources/device_icons/armIcon.png')
-deleteIcon = require('../resources/device_icons/deleteIcon.png')
+var headIcon = require('../resources/device_icons/headIcon.png')
+var bandIcon = require('../resources/device_icons/bandIcon.png')
+var wheelIcon = require('../resources/device_icons/wheelIcon.png')
+var armIcon = require('../resources/device_icons/armIcon.png')
+var deleteIcon = require('../resources/device_icons/deleteIcon.png')
 
 const deviceImages = [headIcon, bandIcon, wheelIcon, armIcon];
 
@@ -231,8 +231,8 @@ const styles = StyleSheet.create({
     MainContainer: {
         alignItems: 'center',
         justifyContent: 'center',
-      },
-      titleText: {
+    },
+    titleText: {
         marginTop: 40,
         alignItems: 'center',
         justifyContent: 'center',

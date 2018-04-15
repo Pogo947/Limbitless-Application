@@ -3,7 +3,6 @@ import {Platform, StyleSheet, KeyboardAvoidingView, Text,  View, ImageBackground
         Keyboard} from 'react-native';
 import firebase from 'react-native-firebase';
 import ProfileForm from './ProfileForm'
-import AvatarComponent from '../../components/AvatarComponent'
 import { NavigationActions, withNavigation } from "react-navigation";
 import { connect } from "react-redux";
 
@@ -48,13 +47,15 @@ const styles = StyleSheet.create({
         height: Dimensions.get('window').height,
     }, 
     titleText: {
-        marginTop: 100,
+        marginTop: 70,
         alignItems: 'center',
+        justifyContent: 'center',
         fontFamily : "Klavika Bold",
         fontSize: 40, 
         color: '#1c3d72',
-
-    }
+        marginBottom: -10,
+        
+    },
   });
   
   const Profile = connect(null, null)(ProfileView);

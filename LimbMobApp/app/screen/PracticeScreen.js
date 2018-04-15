@@ -25,11 +25,14 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
       },
-    titleText: {
+      titleText: {
+        marginTop: 100,
         alignItems: 'center',
+        justifyContent: 'center',
         fontFamily : "Klavika Bold",
         fontSize: 40, 
-        color: '#1c3d72'
-    }
+        color: '#1c3d72',
+        marginBottom: 20,
+    },
   });
   

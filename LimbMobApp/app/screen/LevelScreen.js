@@ -143,11 +143,13 @@ const styles = StyleSheet.create({
     MainContainer: {
         justifyContent: 'center'
       },
-    titleText: {
+      titleText: {
+        marginTop: 100,
         alignItems: 'center',
+        justifyContent: 'center',
         fontFamily : "Klavika Bold",
         fontSize: 40, 
         color: '#1c3d72'
-    }
+    },
   });
   

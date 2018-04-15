@@ -50,10 +50,11 @@ class LoginFormView extends Component {
                 
             })
             .catch(() => {
-                this.setState({ error: 'Authentication failed.', loading: false });
+                this.setState({ error: 'Login failed. Please recheck your information', loading: false });
             });
     }
-	forgotPasswordPress(){
+	forgotPasswordPress = async() => {
+      try{
         prompt(
             'Enter your email address',
             'A reset password email will be sent to this address',
@@ -62,13 +63,23 @@ class LoginFormView extends Component {
              {text: 'OK', onPress: email => this.sendPasswordReset(email)},
             ],
             {   
+                type: "email-address",
                 cancelable: true,
                 placeholder: 'Email',
             }
           )
+        }
+        catch(error){
+            alert(error)
+        }
     }
     sendPasswordReset = async(email) =>{
         try{
+
+            if(email == null || email == ""){
+                return alert("Please enter an email for password reset")
+            }
+
             await firebase.auth().sendPasswordResetEmail(email)
         }
         catch(error){
@@ -117,7 +128,7 @@ class LoginFormView extends Component {
                     </View>
                     <Text style={styles.errorTextStyle}>{this.state.error}</Text>
                     {this.renderButtonOrLoading()}
-                    <View style = {{flexDirection: 'row', padding: 20}}>
+                    <View style = {{flexDirection: 'row', padding: 20, justifyContent: 'center'}}>
                         <Text style= {{margin: 5, color: 'rgba(255,255,255,0.8)', fontFamily : "MuseoSans",}}> Don't have an account? </Text>
                         <Text style={{margin: 5, color : '#06a7e2',fontFamily : "MuseoSans"}} onPress = {()=> this.onRegisterPress()}> Sign up!</Text>
                     </View>
