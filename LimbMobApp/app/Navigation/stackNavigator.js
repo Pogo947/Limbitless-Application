@@ -1,4 +1,5 @@
 import { TabNavigator, StackNavigator, TabView } from 'react-navigation'
+import { NavigationActions } from 'react-navigation'
 import Login from '../screen/LoginScreen/Login.js'
 import Home from '../screen/HomeScreen.js'
 import SavedDeviceScreen from '../screen/SavedDeviceScreen.js'
@@ -11,6 +12,7 @@ import SignupScreen from '../screen/SignupScreen/Signup.js'
 import EmgScreen from '../screen/EmgScreen.js'
 import DeviceScanScreen from '../screen/DeviceScanScreen.js'
 import DeviceGraphScreen from '../screen/DeviceGraphScreen.js'
+import customTabs from './customTabs.js'
 
 // Manifest of possible screens
 
@@ -27,9 +29,15 @@ const HomeScreenNavigator = StackNavigator({
 		navigationOptions: {
 			gesturesEnabled: false,
 			header: null,
-			tabBarVisible: false
+			tabBarVisible: true
 		}
 	},
+},{
+	componentDidMount() {
+		this.subs = BackHandler.addEventListener('hardwareBackPress', () =>
+      this.props.navigation.dispatch(NavigationActions.back()),
+    );
+	}
 });
 
 const DeviceScreenNavigator = StackNavigator({
@@ -37,21 +45,24 @@ const DeviceScreenNavigator = StackNavigator({
 		screen: DeviceScanScreen,
 		navigationOptions: {
 			gesturesEnabled: false,
-			header: null
+			header: null,
+			tabBarVisible: true
 		}
 	},
 	screenGraphDevice: {
 		screen: DeviceGraphScreen,
 		navigationOptions: {
 			gesturesEnabled: false,
-			header: null
+			header: null,
+			tabBarVisible: true
 		}
 	},
 	screenDevice: {
 		screen: SavedDeviceScreen,
 		navigationOptions: {
 			gesturesEnabled: false,
-			header: null
+			header: null,
+			tabBarVisible: true
 		}
 	},
 	screenAddDevice: {
@@ -81,25 +92,70 @@ const DeviceScreenNavigator = StackNavigator({
 export const Tabs = TabNavigator({
     screenHome: {
 		screen: HomeScreenNavigator,
-		navigationOptions: {
-			gesturesEnabled: false,
+		navigationOptions: ({navigation}) => ({
+			swipeEnabled: false,
 			tabBarLabel: "Home",
-			header: null
+			header: null,
+			tabBarOnPress: ({ previousScene, scene, jumpToIndex }) => {
+      const { route, focused, index } = scene;
 
-		}
+        if (route.index > 0) {
+          const tabRoute = route.routeName;
+          const { routeName, key } = route.routes[0];
+          navigation.dispatch(
+            NavigationActions.navigate({ routeName: tabRoute })
+          );
+          navigation.dispatch(
+            NavigationActions.reset({
+              index: 0,
+              key,
+              actions: [
+                NavigationActions.navigate({ routeName })
+              ]
+            })
+          );
+        } else {
+          jumpToIndex(index);
+        }
+     
+    },
+  })
 	},
 	screenDevice: {
 		screen: DeviceScreenNavigator,
-		navigationOptions: {
-			gesturesEnabled: false,
+		navigationOptions: ({navigation}) => ({
+			swipeEnabled: false,
 			tabBarLabel: "Devices",
-			header: null
-		}
+			header: null,
+			tabBarOnPress: ({ previousScene, scene, jumpToIndex }) => {
+      const { route, focused, index } = scene;
+
+        if (route.index > 0) {
+          const tabRoute = route.routeName;
+          const { routeName, key } = route.routes[0];
+          navigation.dispatch(
+            NavigationActions.navigate({ routeName: tabRoute })
+          );
+          navigation.dispatch(
+            NavigationActions.reset({
+              index: 0,
+              key,
+              actions: [
+                NavigationActions.navigate({ routeName })
+              ]
+            })
+          );
+        } else {
+          jumpToIndex(index);
+        }
+     
+    },
+		})
 	},
 	screenGames: {
 		screen: Games,
 		navigationOptions: {
-			gesturesEnabled: false,
+			swipeEnabled: false,
 			tabBarLabel: "Games",
 			header: null
 		}

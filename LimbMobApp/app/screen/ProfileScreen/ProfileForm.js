@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { View, Text, Button, Alert, TextInput, AsyncStorage } from 'react-native';
 import firebase from 'react-native-firebase';
 import AvatarComponent from '../../components/AvatarComponent'
-import { logout, navigateToLogoutScreen } from "../../Navigation/Actions/actionCreator";
+import { logout, navigateToLogoutScreen, login } from "../../Navigation/Actions/actionCreator";
 import { connect } from 'react-redux';
 import { withNavigation } from 'react-navigation';
 
@@ -52,6 +52,7 @@ class ProfileFormView extends Component {
 
             if(newEmail == "" && newName == ""){
                 return alert("nothing to update")
+				this.props.login();
             }
 
             if(newName){
@@ -85,7 +86,7 @@ class ProfileFormView extends Component {
             }
 
             alert("user profile updated!")
-
+			this.props.login();
             }
             catch(error) {
                 alert(error);
@@ -103,6 +104,7 @@ class ProfileFormView extends Component {
           });
         }
         alert("Password Changed!")
+		this.props.login();
     }
 
     render() {
@@ -178,7 +180,8 @@ const styles = {
 
 const mapDispatchToProps = {
 	navigateToLogoutScreen,
-	logout
+	logout,
+	login
 };
 
 

@@ -12,7 +12,7 @@ class ProfileView extends Component  {
 		title: "Profile"
 	};
    render(){
-
+	
        return(
         <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
         <KeyboardAvoidingView  style={styles.MainContainer}>
