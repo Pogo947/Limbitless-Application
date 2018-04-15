@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { View, Text, Button, Alert, TextInput, AsyncStorage } from 'react-native';
 import firebase from 'react-native-firebase';
+import prompt from 'react-native-prompt-android';
 import {login, register} from "../../Navigation/Actions/actionCreator";
 import {connect} from "react-redux"
 class LoginFormView extends Component {
@@ -24,8 +25,9 @@ class LoginFormView extends Component {
                 user = firebase.auth().currentUser
 
                 if(!user.emailVerified){
-                    this.setState({ error: 'Account is not verified.', loading: false });
-                    firebase.auth().signOut()
+                    this.setState({ error: 'Account is not verified. Another email verification has been sent', loading: false });
+                    firebase.auth().currentUser.sendEmailVerification()
+
                 }
                 else{
                     
@@ -38,6 +40,8 @@ class LoginFormView extends Component {
                         uid : user.uid,  
                     }
 
+                    firebase.database().ref().child("users/" + user.uid + "/email").set(user.email)
+
                     AsyncStorage.setItem('userData', JSON.stringify(userData))
                     
                     this.props.login(); 
@@ -49,7 +53,28 @@ class LoginFormView extends Component {
                 this.setState({ error: 'Authentication failed.', loading: false });
             });
     }
-	
+	forgotPasswordPress(){
+        prompt(
+            'Enter your email address',
+            'A reset password email will be sent to this address',
+            [
+             {text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
+             {text: 'OK', onPress: email => this.sendPasswordReset(email)},
+            ],
+            {   
+                cancelable: true,
+                placeholder: 'Email',
+            }
+          )
+    }
+    sendPasswordReset = async(email) =>{
+        try{
+            await firebase.auth().sendPasswordResetEmail(email)
+        }
+        catch(error){
+            alert(error)
+        }
+    }
 	onRegisterPress() {
 		this.props.register();
 	}
@@ -74,6 +99,7 @@ class LoginFormView extends Component {
                         onChangeText={email => this.setState({ email })}
                         onSubmitEditing={() => this.passwordInput.focus()}
                     />
+                    <Text style = {styles.signUpText}> Forgot Username? Please contact us! </Text>
                     <TextInput style = {styles.inputBox}
                         underlineColorAndroid='rgba(255,255,255,0.5)'
                         placeholderTextColor='rgba(255,255,255,0.8)'
@@ -86,6 +112,10 @@ class LoginFormView extends Component {
                         secureTextEntry
                     />
                     <Text style={styles.errorTextStyle}>{this.state.error}</Text>
+                    <View style = {{flexDirection: 'row'}}>
+                        <Text style= {{margin: 5, color: 'rgba(255,255,255,0.8)', fontFamily : "MuseoSans",}}> Don't have an account? </Text>
+                        <Text style={styles.signUpText} onPress = {()=> this.onRegisterPress()}> Reset Password </Text>
+                    </View>
                     {this.renderButtonOrLoading()}
                     <View style = {{flexDirection: 'row'}}>
                         <Text style= {{margin: 5, color: 'rgba(255,255,255,0.8)', fontFamily : "MuseoSans",}}> Don't have an account? </Text>
