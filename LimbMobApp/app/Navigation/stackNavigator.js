@@ -12,7 +12,6 @@ import SignupScreen from '../screen/SignupScreen/Signup.js'
 import EmgScreen from '../screen/EmgScreen.js'
 import DeviceScanScreen from '../screen/DeviceScanScreen.js'
 import DeviceGraphScreen from '../screen/DeviceGraphScreen.js'
-import customTabs from './customTabs.js'
 
 // Manifest of possible screens
 

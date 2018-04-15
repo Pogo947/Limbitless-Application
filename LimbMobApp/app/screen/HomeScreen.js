@@ -66,7 +66,7 @@ class HomeScreenView extends Component {
 
         <View style = {{alignItems: 'center'}}>
             <Text style = {styles.titleText}>
-            HOME 
+            WELCOME!
             </Text>
         </View>
         <View>
@@ -77,9 +77,7 @@ class HomeScreenView extends Component {
 		</TouchableOpacity>
 
         <View style = {{ alignItems: 'center', justifyContent: 'center'}}> 
-            <Text style = {styles.titleText}>
-                WELCOME!
-            </Text>
+
             <Text style = {styles.titleText}>
                 {this.state.user.name}
             </Text>
