@@ -20,7 +20,13 @@ export default class DeviceScreen extends Component {
             deletedDeviceRow: null,
         }
     }
-
+	navigate = () => {
+		const navigateToProfile = NavigationActions.navigate({
+			routeName: "Profile",
+			params: {}
+		});
+		this.props.navigation.dispatch(navigateToProfile);
+	};
     navigateAddDevice = () => {
 		const navigateToAddDevice = NavigationActions.navigate({
 			routeName: "screenAddDevice",
@@ -126,6 +132,9 @@ export default class DeviceScreen extends Component {
 
         return(
         <View>
+		<View style={styles.ProfileButtonStyle}>
+		<Button onPress={this.navigate} title='Settings'/>
+		</View>
         <View style ={{alignItems: 'center'}}>
             <Text style = {styles.titleText}>
                 SAVED DEVICES
@@ -185,6 +194,11 @@ const styles = StyleSheet.create({
         fontFamily : "Klavika Bold",
         fontSize: 40, 
         color: '#1c3d72'
-    }
+    },
+	ProfileButtonStyle: {
+		alignSelf: 'flex-start',
+		position: 'absolute',
+		top: 0
+	}
   });
   

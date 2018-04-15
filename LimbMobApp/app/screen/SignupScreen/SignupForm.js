@@ -2,9 +2,10 @@ import React, { Component } from 'react';
 import { View, Text, Button, Alert, TextInput, AsyncStorage} from 'react-native';
 import firebase from 'react-native-firebase';
 import AvatarComponent from '../../components/AvatarComponent'
-import {registersuccess} from "../../Navigation/Actions/actionCreator";
+import {registersuccess, logout} from "../../Navigation/Actions/actionCreator";
 import {connect} from 'react-redux';
- class ProfileFormView extends Component {
+import {NavigationActions} from "react-navigation";
+ class SignupFormView extends Component {
 
     state = {name: '', nickname:'', email: '', password: '', confirmPassword: '', loading: false, error: ''};
 
@@ -17,7 +18,15 @@ import {connect} from 'react-redux';
         }
     }
 	static navigationOptions = {
-		title: "ProfileForm"
+		title: "SignupForm"
+	};
+	
+	navigate = () => {
+		const navigateToLogin = NavigationActions.navigate({
+			routeName: "login",
+			params: {}
+		});
+		this.props.navigation.dispatch(navigateToLogin);
 	};
     createAccountPress() {
 
@@ -61,7 +70,6 @@ import {connect} from 'react-redux';
                 });
             //quickly logs onto user and sends email verfication, then logs off
             this.sendmail();
-			this.props.registersuccess();
                 
         }
         else{
@@ -154,6 +162,10 @@ import {connect} from 'react-redux';
                     <Text style = {{color: 'white'}}>{this.loadingText()}</Text>
                     <Text style={styles.errorTextStyle}>{this.state.error}</Text>
                     <Button onPress={this.createAccountPress.bind(this)} title= "Create Account" />
+					<View style = {{flexDirection: 'row'}}>
+                        <Text style= {{margin: 5, color: 'rgba(255,255,255,0.8)', fontFamily : "MuseoSans",}}> Already have an account? </Text>
+                        <Text style={styles.signUpText} onPress = {() => this.props.logout()}> Log in!</Text>
+                    </View>
             </View>
         );
     }
@@ -188,13 +200,19 @@ const styles = {
         fontFamily : "MuseoSans",
         fontSize: 30, 
         color: '#ffffff'
+    },
+	signUpText: {
+        color : '#06a7e2',
+        fontFamily : "MuseoSans",
+        margin: 5
     }
 };
 
 const mapDispatchToProps = {
-	registersuccess
+	registersuccess,
+	logout
 };
 
-const ProfileForm = connect(null, mapDispatchToProps)(ProfileFormView)
+const SignupForm = connect(null, mapDispatchToProps)(SignupFormView)
 
-export default ProfileForm;
+export default SignupForm;
