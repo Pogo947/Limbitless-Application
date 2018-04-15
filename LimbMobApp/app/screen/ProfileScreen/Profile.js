@@ -48,11 +48,12 @@ const styles = StyleSheet.create({
         height: Dimensions.get('window').height,
     }, 
     titleText: {
+        marginTop: 100,
         alignItems: 'center',
         fontFamily : "Klavika Bold",
         fontSize: 40, 
         color: '#1c3d72',
-        margin: 10
+
     }
   });
   

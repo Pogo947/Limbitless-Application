@@ -64,7 +64,9 @@ class HomeScreenView extends Component {
         
         <View style={styles.MainContainer}>
 		<View style={styles.ProfileButtonStyle}>
-		<Button onPress={this.navigate} title='Settings'/>
+            <TouchableOpacity onPress={this.navigate}>
+                <Image style = {{width: 70, height: 70}}source = {require("../resources/tab_icons/Settings_Button_Topleft.png")}/> 
+            </TouchableOpacity>
 		</View>
         <View style = {{alignItems: 'center'}}>
             <Text style = {styles.titleText}>
@@ -100,17 +102,14 @@ const styles = StyleSheet.create({
 		top: 0
 	},
     titleText: {
+        marginTop: 40,
         alignItems: 'center',
         justifyContent: 'center',
         fontFamily : "Klavika Bold",
         fontSize: 40, 
         color: '#1c3d72'
     },
-    avatar:{
-        height:256,
-        width: 256,
-        borderRadius: 64
-    },
+
 
   });
 

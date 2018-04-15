@@ -12,6 +12,7 @@ import SignupScreen from '../screen/SignupScreen/Signup.js'
 import EmgScreen from '../screen/EmgScreen.js'
 import DeviceScanScreen from '../screen/DeviceScanScreen.js'
 import DeviceGraphScreen from '../screen/DeviceGraphScreen.js'
+import WheelChairScreen from '../screen/WheelChairScreen.js'
 
 // Manifest of possible screens
 
@@ -81,6 +82,13 @@ const DeviceScreenNavigator = StackNavigator({
 	},
 	screenEMG: {
 		screen: EmgScreen,
+		navigationOptions: {
+			gesturesEnabled: false,
+			header:null,
+		}
+	},
+	screenWheel: {
+		screen: WheelChairScreen,
 		navigationOptions: {
 			gesturesEnabled: false,
 			header:null,

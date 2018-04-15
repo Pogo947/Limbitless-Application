@@ -28,7 +28,8 @@ import {NavigationActions} from "react-navigation";
 		});
 		this.props.navigation.dispatch(navigateToLogin);
 	};
-    createAccountPress() {
+    createAccountPress = async ()=> {
+      try{
 
         if(this.state.email == '' || this.state.password == ''  || this.state.username == '' || this.state.name == ''){
             return Alert.alert("Please fill in the text fields")
@@ -41,7 +42,7 @@ import {NavigationActions} from "react-navigation";
             const name = this.state.name
             const nickname = this.state.nickname
 
-            firebase.auth().createUserAndRetrieveDataWithEmailAndPassword(email, password)
+            await firebase.auth().createUserAndRetrieveDataWithEmailAndPassword(email, password)
                 .then((user) => {
                     if (firebase.auth().currentUser) {
                         const userId = firebase.auth().currentUser.uid;
@@ -49,7 +50,7 @@ import {NavigationActions} from "react-navigation";
                         firebase.auth().currentUser.updateProfile({displayName: this.state.name})
 
                         if (userId) {
-                            firebase.database().ref().child("users").child(userId).set({
+                             firebase.database().ref().child("users").child(userId).set({
                                 uid: userId,
                                 name: name,
                                 email: email,
@@ -59,8 +60,8 @@ import {NavigationActions} from "react-navigation";
                                 maxlevel: 5
                          })
                          this.setState({loading: true})
-                        AsyncStorage.setItem('level', "1")
-                        AsyncStorage.setItem('maxlevel', "5")
+                         AsyncStorage.setItem('level', "1")
+                         AsyncStorage.setItem('maxlevel', "5")
                         }
                     }
                 })
@@ -69,32 +70,35 @@ import {NavigationActions} from "react-navigation";
                     return
                 });
             //quickly logs onto user and sends email verfication, then logs off
-            this.sendmail();
-                
+            await this.sendmail();
+
+            }
         }
-        else{
-           return this.setState({error: 'Account creation failed, please recheck the information or connection'})
-        }
+      catch(error) {
+            alert(error);
+      }
     }
 
-    sendmail=()=>{
+    sendmail= async ()=>{
+      try{
         const LogEmail = this.state.email
         const LogPassword = this.state.password
-        setTimeout(function(){
-            firebase.auth().signInAndRetrieveDataWithEmailAndPassword(LogEmail, LogPassword)
+  
+        await firebase.auth().signInAndRetrieveDataWithEmailAndPassword(LogEmail, LogPassword)
             .then(firebase.auth().currentUser.sendEmailVerification())
             .catch(() => { Alert.alert("Email verfication was not sent")});
 
-            Alert.alert("Verfication Email has been sent! Please check your email.")
-        }, 5000);
+        Alert.alert("Verfication Email has been sent! Please check your email.")
+        
+        this.setState({loading: false})
 
-        setTimeout(function(){
-           this.setState({loading: false})
-           firebase.auth().signOut()
-           // Alert.alert("Signed Out")
-        }, 10000);
+        }
+      catch(error) {
+            alert(error);
+      }
 
     }
+
 
     render() {
         return (

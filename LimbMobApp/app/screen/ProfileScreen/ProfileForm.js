@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, Button, Alert, TextInput, AsyncStorage } from 'react-native';
+import { View, Text, Button, Alert, TextInput, ImageBackground, AsyncStorage } from 'react-native';
 import firebase from 'react-native-firebase';
 import AvatarComponent from '../../components/AvatarComponent'
 import { logout, navigateToLogoutScreen, login } from "../../Navigation/Actions/actionCreator";
@@ -20,7 +20,6 @@ class ProfileFormView extends Component {
           },
           newName : "",
           newEmail : "",
-          newPassword : "",
           };
       }
 
@@ -62,7 +61,7 @@ class ProfileFormView extends Component {
                     alert("unable to update name")
                 });
                 
-                await firebase.database().ref().child("users").child(this.state.user.uid).child(name).set({name : newName})
+                await firebase.database().ref('users/'+ this.state.user.uid + '/name').set(newName)
                 var newUserData = this.state.user
 
                 newUserData.name = newName
@@ -77,7 +76,7 @@ class ProfileFormView extends Component {
                 }, function(error) {
                     alert("unable to update email")
             });
-            await firebase.database().ref().child("users").child(this.state.user.uid).child(name).set({email : newName})
+            await firebase.database().ref('users/'+ this.state.user.uid + '/email').set(newEmail)
             var newUserData = this.state.user
             
             newUserData.email = newEmail
@@ -93,26 +92,27 @@ class ProfileFormView extends Component {
         }
     }
 
-    async changePassword(){
-        const newPassword = this.state.newPassword
-
-        if(!newPassword == ""){
-        await firebase.auth().currentUser.updatePassword(newPassword).then(function() {
-            // Update successful.
-          }, function(error) {
-            alert("unable to update password")
-          });
+    changePassword = async ()=>{
+        try{
+          //const newPassword = this.state.newPassword
+         
+          await firebase.auth().sendPasswordResetEmail(this.state.user.email)
+          
+          alert("Email sent to change your password!")
+          this.props.login();
         }
-        alert("Password Changed!")
-		this.props.login();
-    }
+        catch(error) {
+          alert(error);
+        }
+    }	
 
     render() {
         return (
             
             <View style={styles.formStyle}>
             <AvatarComponent/>
-                    <Text> Name </Text>
+
+                    <Text style = {{fontFamily : "Klavika-Regular",fontSize: 20}}> Name </Text>
                     <TextInput style = {styles.inputBox}
                         underlineColorAndroid='rgba(0,0,0,0.5)'
                         placeholderTextColor='rgba(0,0,0,0.8)'
@@ -123,7 +123,7 @@ class ProfileFormView extends Component {
                         value={this.state.newName}
                         onChangeText={newName => this.setState({ newName })}
                     />
-                    <Text> Email </Text>
+                    <Text style = {{fontFamily : "Klavika-Regular",fontSize: 20}}> Email </Text>
                     <TextInput style = {styles.inputBox}
                         underlineColorAndroid='rgba(0,0,0,0.5)'
                         placeholderTextColor='rgba(0,0,0,0.8)'
@@ -134,24 +134,14 @@ class ProfileFormView extends Component {
                         value={this.state.newEmail}
                         onChangeText={newEmail => this.setState({ newEmail })}
                     />
-                    <Text> Password </Text>
-                    <TextInput style = {styles.inputBox}
-                        underlineColorAndroid='rgba(0,0,0,0.5)'
-                        placeholderTextColor='rgba(0,0,0,0.8)'
-                        autoCapitalize="none"
-                        autoCorrect = {false}
-                        label='Password'
-                        ref={(input)=> this.passwordInput = input}
-                        placeholder= {'******'}
-                        onChangeText={newPassword => this.setState({ newPassword })}
-                        secureTextEntry
-                    />
+
                     <Text style={styles.errorTextStyle}>{this.state.error}</Text>
                     <View style={{flexDirection: 'row', justifyContent: 'space-between', margin: 10}}>
                         <Button onPress={this.onUpdateProfilePress.bind(this)} title="Update Profile"/>
                         <Button onPress={this.changePassword.bind(this)} title="Change Password"/>
                     </View>
                     <Button onPress={this.onLogOut.bind(this)} title= "Sign out" />
+                
             </View>
         );
     }
@@ -168,13 +158,15 @@ const styles = {
         alignItems: 'stretch',
         justifyContent: 'center',
         paddingHorizontal: 25,
-        paddingTop: 10,
         paddingBottom: 10,
+
     },
     inputBox: {
+        fontFamily : "Klavika-Regular",
+        fontSize: 20,
         paddingVertical: 10,
         paddingHorizontal: 10,
-        backgroundColor: 'rgba(240, 240,240,1)',
+        //backgroundColor: 'rgba(240, 240,240,1)',
     }
 };
 

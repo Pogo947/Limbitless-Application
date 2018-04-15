@@ -99,7 +99,7 @@ class LoginFormView extends Component {
                         onChangeText={email => this.setState({ email })}
                         onSubmitEditing={() => this.passwordInput.focus()}
                     />
-                    <Text style = {styles.signUpText}> Forgot Username? Please contact us! </Text>
+                    <Text style = {{paddingBottom: 40, color: 'rgba(255,255,255,0.8)', fontFamily : "MuseoSans", fontSize: 10}}> Forgot Username? Please contact us! </Text>
                     <TextInput style = {styles.inputBox}
                         underlineColorAndroid='rgba(255,255,255,0.5)'
                         placeholderTextColor='rgba(255,255,255,0.8)'
@@ -111,15 +111,15 @@ class LoginFormView extends Component {
                         onChangeText={password => this.setState({ password })}
                         secureTextEntry
                     />
-                    <Text style={styles.errorTextStyle}>{this.state.error}</Text>
                     <View style = {{flexDirection: 'row'}}>
-                        <Text style= {{margin: 5, color: 'rgba(255,255,255,0.8)', fontFamily : "MuseoSans",}}> Don't have an account? </Text>
-                        <Text style={styles.signUpText} onPress = {()=> this.onRegisterPress()}> Reset Password </Text>
+                        <Text style= {{margin: 5, color: 'rgba(255,255,255,0.8)', fontFamily : "MuseoSans", fontSize: 10}}> Forgot your password?? </Text>
+                        <Text style={styles.signUpText} onPress = {()=> this.forgotPasswordPress()}> Reset Password </Text>
                     </View>
+                    <Text style={styles.errorTextStyle}>{this.state.error}</Text>
                     {this.renderButtonOrLoading()}
-                    <View style = {{flexDirection: 'row'}}>
+                    <View style = {{flexDirection: 'row', padding: 20}}>
                         <Text style= {{margin: 5, color: 'rgba(255,255,255,0.8)', fontFamily : "MuseoSans",}}> Don't have an account? </Text>
-                        <Text style={styles.signUpText} onPress = {()=> this.onRegisterPress()}> Sign up!</Text>
+                        <Text style={{margin: 5, color : '#06a7e2',fontFamily : "MuseoSans"}} onPress = {()=> this.onRegisterPress()}> Sign up!</Text>
                     </View>
             </View>
         );
@@ -143,12 +143,13 @@ const styles = {
         paddingVertical: 10,
         fontFamily : "MuseoSans",
         color: '#ffffff',
-        backgroundColor: 'rgba(0,0,0,0)',
+        backgroundColor: 'rgba(0,0,0,0.2)',
     },
     signUpText: {
         color : '#06a7e2',
         fontFamily : "MuseoSans",
-        margin: 5
+        margin: 5,
+        fontSize: 10
     }
 };
 

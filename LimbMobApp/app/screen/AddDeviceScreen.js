@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {Platform, StyleSheet, Text,  View, TouchableHighlight, Image, Alert, Button, AsyncStorage } from 'react-native';
+import {Platform, StyleSheet, Text,  View, TouchableHighlight, TouchableOpacity, Image, Alert, Button, AsyncStorage } from 'react-native';
 import prompt from 'react-native-prompt-android';
 import deviceImages from '../resources/device_icons/deviceImages'
 import firebase from 'react-native-firebase';
@@ -72,7 +72,7 @@ export default class AddDeviceScreen extends Component {
          {text: 'OK', onPress: code => this.confirmCode(code)},
         ],
         {   
-            type: 'numeric',
+            type: 'phone-pad',
             cancelable: true,
             defaultValue: this.state.accessCode,
             placeholder: '12345',

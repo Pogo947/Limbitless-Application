@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {Platform, Button, StyleSheet, Linking, Text,  View, ImageBackground, TouchableHighlight, Image, FlatList, Alert, Dimensions } from 'react-native';
+import {Platform, Button, StyleSheet, Linking, Text, TouchableOpacity,  View, ImageBackground, TouchableHighlight, Image, FlatList, Alert, Dimensions } from 'react-native';
 import firebase from 'react-native-firebase';
 import {NavigationActions} from 'react-navigation'
 
@@ -79,7 +79,9 @@ export default class Games extends Component {
         return(
         <View style={styles.MainContainer}>
         <View style={styles.ProfileButtonStyle}>
-		<Button onPress={this.navigate} title='Settings'/>
+            <TouchableOpacity onPress={this.navigate}>
+                <Image style = {{width: 70, height: 70}}source = {require("../../resources/tab_icons/Settings_Button_Topleft.png")}/> 
+            </TouchableOpacity>
 		</View>
         <View style = {{alignItems: 'center'}}>
         <Text style = {styles.titleText}>
@@ -106,8 +108,10 @@ const styles = StyleSheet.create({
     MainContainer: {
         flex: 1,
       },
-    titleText: {
+      titleText: {
+        marginTop: 40,
         alignItems: 'center',
+        justifyContent: 'center',
         fontFamily : "Klavika Bold",
         fontSize: 40, 
         color: '#1c3d72'

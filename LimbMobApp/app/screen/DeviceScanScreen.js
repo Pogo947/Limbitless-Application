@@ -461,9 +461,11 @@ const styles = StyleSheet.create({
     margin: 10
   },
   titleText: {
+    marginTop: 40,
     alignItems: 'center',
+    justifyContent: 'center',
     fontFamily : "Klavika Bold",
     fontSize: 40, 
     color: '#1c3d72'
-  },
+},
 });

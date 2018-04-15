@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {Platform, StyleSheet, Text,  View, TouchableHighlight, Image, Button, FlatList, AsyncStorage, Alert } from 'react-native';
+import {Platform, StyleSheet, Text,  View, TouchableHighlight, TouchableOpacity, Image, Button, FlatList, AsyncStorage, Alert } from 'react-native';
 import {NavigationActions} from 'react-navigation';
 import firebase from 'react-native-firebase';
 
@@ -7,6 +7,7 @@ headIcon = require('../resources/device_icons/headIcon.png')
 bandIcon = require('../resources/device_icons/bandIcon.png')
 wheelIcon = require('../resources/device_icons/wheelIcon.png')
 armIcon = require('../resources/device_icons/armIcon.png')
+deleteIcon = require('../resources/device_icons/deleteIcon.png')
 
 const deviceImages = [headIcon, bandIcon, wheelIcon, armIcon];
 
@@ -17,7 +18,7 @@ export default class DeviceScreen extends Component {
         this.state = {
             user: null,
             dataSource: [],
-            deletedDeviceRow: null,
+            delete: false
         }
     }
 	navigate = () => {
@@ -51,12 +52,20 @@ export default class DeviceScreen extends Component {
 		this.props.navigation.dispatch(navigateToLevel);
     }; 
 
-    navigateEMG = (emgvalue, thresholds) => {
+    navigateEMG = () => {
         const navigateToEMG = NavigationActions.navigate({
 			routeName: "screenEMG",
-			params: {emgvalue, thresholds}
+			params: {}
 		});
 		this.props.navigation.dispatch(navigateToEMG);
+    }
+
+    navigateWheel = () => {
+        const navigateWheel = NavigationActions.navigate({
+			routeName: "screenWheel",
+			params: {}
+		});
+		this.props.navigation.dispatch(navigateWheel);
     }
     
     fetchData = async ()=> {
@@ -79,7 +88,24 @@ export default class DeviceScreen extends Component {
     async componentWillMount(){
         this.fetchData().done()
     }
-
+    setDeletion(){
+        if(this.state.delete == false){
+            this.setState({delete: true})
+        }
+        else
+            this.setState({delete: false})
+    }
+    showDeviceDeletion(item){
+        if(this.state.delete == true){
+            return (
+                <TouchableOpacity onPress={()=> this.chooseDeviceDeletion(item.name, item.key)}>
+                    <Image style = {{paddingLeft: 20, width: 20, height:20}} source= {deleteIcon} />
+                </TouchableOpacity>
+            )
+        }
+        else 
+            return (<View style = {{paddingLeft: 20}}/>) 
+    }
     chooseDeviceDeletion(name, key){
         Alert.alert(
             'Delete device ' + name,
@@ -112,28 +138,42 @@ export default class DeviceScreen extends Component {
         }
     }
 
-    gotoEMGSettingsButton(item){
+    gotoEMGServiceButton(item){
         if(item.type == 'arm' || item.type == 'band' || item.type == 'head'){
-            return <Button onPress={() => this.navEMG(item)} title="EMG setting" />
+            return <Button onPress={() => this.navEMG(item)} title="EMG Service" />
         }
      }
  
 
     navEMG = async (item)=> {
-
         await AsyncStorage.setItem('currentDevice', JSON.stringify(item))
-            
         this.navigateEMG()
-            
     }
-        
+
+    gotoWheelButton(item){
+        if(item.type == 'wheel'){
+            return <Button onPress={() => this.navigateWheel(item)} title="Control" />
+        }
+    }
+
+    showUpdates(item){
+        //if require updates ...
+
+        return <Button onPress={() => this.doUpdates(item)} title="Updates" />
+    }
+    doUpdates(item){
+        //do something with update button
+        return
+    }
 
     render(){
 
         return(
         <View>
 		<View style={styles.ProfileButtonStyle}>
-		<Button onPress={this.navigate} title='Settings'/>
+            <TouchableOpacity onPress={this.navigate}>
+                <Image style = {{width: 70, height: 70}}source = {require("../resources/tab_icons/Settings_Button_Topleft.png")}/> 
+            </TouchableOpacity>
 		</View>
         <View style ={{alignItems: 'center'}}>
             <Text style = {styles.titleText}>
@@ -143,7 +183,7 @@ export default class DeviceScreen extends Component {
         <View>
             <View style={{flexDirection: 'row', justifyContent: 'space-between', margin: 10}}>
                 <Button onPress={this.navigateAddDevice} title="Add New Device" />
-                <Button onPress={this.navigateToScanDevice} title="Scan Devices" />
+                <Button color = '#E09999' onPress={()=> this.setDeletion()} title="Remove Device" />
             </View>
        </View>
         <FlatList
@@ -156,21 +196,24 @@ export default class DeviceScreen extends Component {
                         <View style = {{flex: 1, backgroundColor: '#ffffff', flexDirection: 'row'}}>
                             <TouchableHighlight>
                                 <View style={{flex: 1,flexDirection: 'column'}}>
-                                    <Text style ={{marginLeft: 20}}> {item.name} </Text>
-                    
+                                    <View style = {{flexDirection: 'row'}}>
+                                        {this.showDeviceDeletion(item)}
+                                        <Text style ={{marginLeft: 20, marginBottom:10}}> {item.name} </Text>
+                                    </View>
                                     <Image
                                         source = {deviceImages[item.iconPath]}
                                         style= {{width: 120, height: 120, margin: 5, borderRadius:10, borderColor: 'black', borderWidth: 2}}/>
 
-                                    <Button color = '#E09999' onPress={()=> this.chooseDeviceDeletion(item.name, item.key)} title="Delete Device" />
-
                                 </View>
                             </TouchableHighlight>
 
-                            <View style={{flexDirection: 'column', justifyContent: 'space-between', margin: 10}}> 
+                            <View style={{flexDirection: 'column', justifyContent: 'space-between', padding: 10}}> 
+                                {this.gotoEMGServiceButton(item)}
+                                {this.gotoWheelButton(item)}
+                            </View> 
+                            <View style={{flexDirection: 'column', justifyContent: 'space-between', padding: 10}}> 
+                                {this.showUpdates(item)}
                                 {this.levelButton(item.type)}
-                                {this.gotoEMGSettingsButton(item)}
-                                
                             </View> 
                         </View>
 
@@ -189,8 +232,10 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
       },
-    titleText: {
+      titleText: {
+        marginTop: 40,
         alignItems: 'center',
+        justifyContent: 'center',
         fontFamily : "Klavika Bold",
         fontSize: 40, 
         color: '#1c3d72'
