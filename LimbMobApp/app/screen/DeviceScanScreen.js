@@ -24,6 +24,7 @@ import BleManager from 'react-native-ble-manager';
 import '../../shim'
 import { NavigationActions } from "react-navigation";
 import $ from 'buffer';
+import GraphComponent from '../components/GraphComponent'
 
 const window = Dimensions.get('window');
 const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
@@ -36,6 +37,7 @@ var gyros = [0.0,0.0,0.0];
 var temp = 0.0;
 var name = "name";
 var led = 0;
+var count = 0
 var curItem;
 var savedAccels = [];
 var savedAccelsx = [];
@@ -87,7 +89,6 @@ export default class App extends Component {
       });
     }
 
-    this.startScan()
   }
 
   handleAppStateChange(nextAppState) {
@@ -102,9 +103,9 @@ export default class App extends Component {
 
   componentWillUnmount() {
     this.handlerDiscover.remove();
-    this.handlerStop.remove();
-    this.handlerDisconnect.remove();
-    this.handlerUpdate.remove();
+    //this.handlerStop.remove();
+    //this.handlerDisconnect.remove();
+    //this.handlerUpdate.remove();
   }
 
   handleDisconnectedPeripheral(data) {
@@ -142,33 +143,6 @@ export default class App extends Component {
     else{
       return this.handleWriteCharacteristic(curItem, command, input)
     }
-  }
-
-  latestArrayData(accels, gyros, temp){
-
-    var tempaccels = [];
-
-    tempaccels[0] = accels[0].toFixed(2)
-    tempaccels[1] = accels[1].toFixed(2)
-    tempaccels[2] = accels[2].toFixed(2)
-
-    //gyros[0] = gyros[0].toFixed(5)
-    //gyros[1] = gyros[1].toFixed(5)
-    //gyros[2] = gyros[2].toFixed(5)
-
-    if(savedAccels.length > 20){
-      savedAccels.pop()
-      savedAccelsx.pop()
-      savedGyros.pop()
-      savedTemps.pop()
-    }
-    else{
-      savedAccels.unshift(tempaccels)
-      savedAccelsx.unshift(tempaccels[0])
-      savedGyros.unshift(gyros)
-      savedTemps.unshift(temp)
-      }
-    
   }
 
   handleWriteCharacteristic(peripheral, command, input) {
@@ -243,6 +217,35 @@ export default class App extends Component {
     "\nGyro: "+gyros[0]+" "+gyros[1]+" "+gyros[2]+"\nTemp: "+temp);
     
   this.latestArrayData(accels, gyros, temp)
+  }
+
+  latestArrayData(accels, gyros, temp){
+
+    var tempaccels = [];
+
+    tempaccels[0] = accels[0].toFixed(2)
+    tempaccels[1] = accels[1].toFixed(2)
+    tempaccels[2] = accels[2].toFixed(2)
+
+    if(savedAccels.length > 20){
+      savedAccels.pop()
+      savedAccelsx.pop()
+      savedGyros.pop()
+      savedTemps.pop()
+    }
+    else if(count == 25){
+      savedAccels.unshift(tempaccels)
+      savedAccelsx.unshift(tempaccels[0])
+      savedGyros.unshift(gyros)
+      savedTemps.unshift(temp)
+      count = 0
+      
+      this.setState({savedAccelsx: savedAccelsx})
+      }
+    
+      count = count + 1;
+
+    
   }
 
   handleStopScan() {
@@ -362,20 +365,12 @@ export default class App extends Component {
     }
   }
 
-  navigateToSavedDevice = () => {
-    const navigateToSavedDevice = NavigationActions.navigate({
+  navigateToDevice = () => {
+    const navigateToDevice = NavigationActions.navigate({
       routeName: "screenDevice",
       params: {}
     });
-    this.props.navigation.dispatch(navigateToSavedDevice);
-  };
-
-  navigateToGraphDevice = () => {
-    const navigateToGraphDevice = NavigationActions.navigate({
-      routeName: "screenGraphDevice",
-      params: {}
-    });
-    this.props.navigation.dispatch(navigateToGraphDevice);
+    this.props.navigation.dispatch(navigateToDevice);
   };
 
   storehere(){
@@ -396,7 +391,6 @@ export default class App extends Component {
     const list = Array.from(this.state.peripherals.values());
     const dataSource = ds.cloneWithRows(list);
 
-
     return (
       <View style={styles.container}>
       <View style ={{alignItems: 'center'}}>
@@ -404,18 +398,22 @@ export default class App extends Component {
                 SCAN DEVICES
             </Text>
         </View>
-        <Button onPress={() => this.navigateToSavedDevice()} title="Saved Devices" />
-        <Button onPress={() => this.navigateToGraphDevice()} title="View graphs of data" />
 
-        <View style = {{justifyContent: 'center', margin:10}}>
-          <Button onPress={() => this.startScan() } title= {this.state.scanning ? "Scan Bluetooth (on)" : "Scan Bluetooth (off)"} />
-          <Button onPress={() => this.retrieveConnected() } title= "Retrieve connected peripherals" />
-          <Button onPress={() => this.handleWriteCharacteristic(curItem, 1) } title= "Toggle Orange LED On/Off" />
+        <View style = {{flexDirection: 'row', justifyContent: 'center', margin:10}}>
+          <TouchableHighlight style={{margin: 10, padding:10, backgroundColor:'#06a7e2'}} onPress={() => this.startScan() }>
+              <Text style = {styles.buttontext}>Scan Bluetooth ({this.state.scanning ? 'on' : 'off'})</Text>
+          </TouchableHighlight>
+          <TouchableHighlight style={{margin: 10, padding:10, backgroundColor:'#06a7e2'}} onPress={() => this.handleWriteCharacteristic(curItem, 1) }>
+              <Text style = {styles.buttontext}>Toggle Orange LED On/Off</Text>
+          </TouchableHighlight>
         </View>
 
-        <Button onPress={this.confirmDevicePrompt.bind(this)} title="Start reading values" />
-
-        <Text> Last 20 accel values :[{savedAccels}] </Text>
+         <TouchableHighlight style={{margin: 10, padding:10, backgroundColor:'#06a7e2', justifyContent:'center'}} onPress={this.confirmDevicePrompt.bind(this)}>
+              <Text style = {styles.buttontext}>Sync Device</Text>
+        </TouchableHighlight>
+        
+          <Text style = {{ fontFamily : "MuseoSans", fontSize: 14, justifyContent: "center"}}> Live Data </Text> 
+        <GraphComponent data = {this.state.savedAccelsx}/>
 
         <ScrollView style={styles.scroll}>
           {(list.length == 0) &&
@@ -428,12 +426,12 @@ export default class App extends Component {
             contentContainerStyle={{paddingBottom:100}}
             dataSource={dataSource}
             renderRow={(item) => {
-              const color = item.connected ? 'green' : '#fff';
+              const color = item.connected ? '#06a7e2' : '#fff';
               return (
                 <TouchableHighlight onPress={() => this.test(item) }>
                   <View style={[styles.row, {backgroundColor: color}]}>
-                    <Text style={{fontSize: 12, textAlign: 'center', color: '#333333', padding: 10}}>{item.name}</Text>
-                    <Text style={{fontSize: 8, textAlign: 'center', color: '#333333', padding: 10}}>{item.id}</Text>
+                    <Text style={{fontSize: 12, textAlign: 'center', color: item.connected ? '#ffffff' : '#333333', padding: 10}}>{item.name}</Text>
+                    <Text style={{fontSize: 8, textAlign: 'center', color: item.connected ? '#ffffff' : '#333333', padding: 10}}>{item.id}</Text>
                   </View>
                 </TouchableHighlight>
               );
@@ -467,5 +465,9 @@ const styles = StyleSheet.create({
     fontFamily : "Klavika Bold",
     fontSize: 40, 
     color: '#1c3d72'
+},
+buttontext: {
+  fontFamily : "MuseoSans",
+  color: '#ffffff',
 },
 });

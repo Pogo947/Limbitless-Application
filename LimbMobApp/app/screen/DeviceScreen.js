@@ -36,14 +36,6 @@ export default class DeviceScreen extends Component {
 		this.props.navigation.dispatch(navigateToAddDevice);
     };
 
-    navigateToScanDevice = () => {
-		const navigateToScanDevice = NavigationActions.navigate({
-			routeName: "screenScanDevice",
-			params: {}
-		});
-		this.props.navigation.dispatch(navigateToScanDevice);
-    };
-
     navigateLevel = () => {
 		const navigateToLevel = NavigationActions.navigate({
 			routeName: "screenLevel",
@@ -59,6 +51,14 @@ export default class DeviceScreen extends Component {
 		});
 		this.props.navigation.dispatch(navigateToEMG);
     }
+
+    navigateToScanDevice = () => {
+        const navigateToScanDevice = NavigationActions.navigate({
+          routeName: "screenScanDevice",
+          params: {}
+        });
+        this.props.navigation.dispatch(navigateToScanDevice);
+        };
 
     navigateWheel = () => {
         const navigateWheel = NavigationActions.navigate({
@@ -147,7 +147,9 @@ export default class DeviceScreen extends Component {
 
     navEMG = async (item)=> {
         await AsyncStorage.setItem('currentDevice', JSON.stringify(item))
-        this.navigateEMG()
+
+        this.navigateToScanDevice()
+        //this.navigateEMG()
     }
 
     gotoWheelButton(item){
@@ -177,7 +179,7 @@ export default class DeviceScreen extends Component {
 		</View>
         <View style ={{alignItems: 'center'}}>
             <Text style = {styles.titleText}>
-                SAVED DEVICES
+                DEVICES
             </Text>
         </View>
         <View>
@@ -233,7 +235,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     titleText: {
-        marginTop: 40,
+        marginTop: 50,
         alignItems: 'center',
         justifyContent: 'center',
         fontFamily : "Klavika Bold",

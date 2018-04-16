@@ -24,7 +24,9 @@ class LevelScreen extends Component {
     });
     this.props.navigation.dispatch(navigateToDevice);
   };
-    async componentWillMount() {
+
+  
+  async componentWillMount() {
         await this.fetchDataLocal()
         await this.fetchLevel()
     }

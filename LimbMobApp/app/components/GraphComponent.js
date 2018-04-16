@@ -4,19 +4,24 @@ import { AreaChart  } from 'react-native-svg-charts'
 import { Path } from 'react-native-svg'
 import * as shape from 'd3-shape'
 
-export default class DeviceGraphsScreen extends Component {
-    constructor() {
-        super();
+export default class GraphComponent extends Component {
+    constructor(props) {
+        super(props);
         this.state = { 
             data: [0,1,2,3,4,5],
-            lastConnectedDevice: null 
+            //lastConnectedDevice: null 
         } 
       }
-    
+    componentWillReceiveProps(nextProps) {
+        this.setState({
+          data: nextProps.data,
+        })
+    }
+    /*
     async componentWillMount(){
         this.fetchDataLocal().done()
     }
-
+    
     fetchDataLocal = async ()=> {
         try{
   
@@ -40,12 +45,12 @@ export default class DeviceGraphsScreen extends Component {
             alert(error);
         }
     }
-
+    */
 
     render() {
 
         var data= []
-        var temp = this.state.data
+        var temp = this.props.data
 
         for(i = 0; i < temp.length; i++){
             data[i] = Number.parseFloat(temp[i])

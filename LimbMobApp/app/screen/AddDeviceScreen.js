@@ -29,6 +29,14 @@ export default class AddDeviceScreen extends Component {
       this.props.navigation.dispatch(navigateToDevice);
     };
 
+    navigateToScanDevice = () => {
+      const navigateToScanDevice = NavigationActions.navigate({
+        routeName: "screenScanDevice",
+        params: {}
+      });
+      this.props.navigation.dispatch(navigateToScanDevice);
+      };
+
     fetchDataLocal = async ()=> {
       try{
 
@@ -63,7 +71,7 @@ export default class AddDeviceScreen extends Component {
     }
 
     confirmDevicePrompt(){
-
+      //<Button onPress={this.confirmDevicePrompt.bind(this)} title="Confirm Access Code" />
       prompt(
         'Enter Access code',
         'Access codes are 5 digits long, only numbers are allowed',
@@ -78,6 +86,7 @@ export default class AddDeviceScreen extends Component {
             placeholder: '12345',
         }
       )
+      
 
     }
 
@@ -105,8 +114,9 @@ export default class AddDeviceScreen extends Component {
         return 3
       }
     }
-
+    
     async createDevice(){
+      
       if(this.state.accessCode == ""){
         return alert("Please confirm access code")
       }
@@ -127,8 +137,9 @@ export default class AddDeviceScreen extends Component {
         }]
         savedDevices = addDevice
         firebase.database().ref().child("users").child(this.state.user.uid).child("devices").set({savedDevices})
+        AsyncStorage.setItem('accessCode', JSON.stringify(this.state.accessCode))
         AsyncStorage.setItem('savedDevices', JSON.stringify(savedDevices))
-        this.navigate();
+        this.navigateToScanDevice();
       }
       else{
         let addDevice = {
@@ -146,15 +157,16 @@ export default class AddDeviceScreen extends Component {
 
         var userID = this.state.user.uid
 
-        firebase.database().ref().child("users").child(this.state.user.uid).child("devices").set({savedDevices})
-       
+      firebase.database().ref().child("users").child(this.state.user.uid).child("devices").set({savedDevices})
+      AsyncStorage.setItem('accessCode', JSON.stringify(this.state.accessCode))
       AsyncStorage.setItem('savedDevices', JSON.stringify(savedDevices))
+      
+      this.navigateToScanDevice();
+    }
+    }
+    }
+    
 
-      alert("Device created!")
-      this.navigate();
-    }
-    }
-    }
 
     selectToAddNewArm(){
       if(this.state.type == "arm"){

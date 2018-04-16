@@ -4,6 +4,7 @@ import firebase from 'react-native-firebase';
 import {logout} from "../Navigation/Actions/actionCreator";
 import {connect} from "react-redux"
 import { NavigationActions } from "react-navigation";
+import AvatarComponent from '../components/AvatarComponent'
 
 class HomeScreenView extends Component {
     constructor() {
@@ -20,21 +21,13 @@ class HomeScreenView extends Component {
         };
       }
 
-    checkUploadURL(){
-        if(this.state.uploadURL == "" || this.state.uploadURL == null){
-            return (require('../resources/testAvatar.png'))
-        }
-        else
-            return ({uri: this.state.uploadURL})
-    }
     fetchDataLocal = async ()=> {
         try{
             let userData = await AsyncStorage.getItem('userData');
-            let uploadURL = await AsyncStorage.getItem('uploadURL');
 
             userData = JSON.parse(userData)
 
-            this.setState({user: userData, uploadURL: uploadURL });
+            this.setState({user: userData,});
 
             firebase.auth().onAuthStateChanged(function(user) {
                     if (user) {
@@ -50,7 +43,6 @@ class HomeScreenView extends Component {
     }
 
     async componentWillMount(){
-
         this.fetchDataLocal().done()
         
     }
@@ -81,15 +73,7 @@ class HomeScreenView extends Component {
             </Text>
         </View>
         <View>
-        <TouchableOpacity onPress={this.navigate}>
-            <View style= {{alignItems: 'center',justifyContent: 'center',}}>
-            <Image
-                style ={{height:128, width: 128, borderRadius: 128/2, borderColor:'#0b2c60', 
-                        borderWidth: 4}}
-                source={this.checkUploadURL()}/>
-            </View>
-		</TouchableOpacity>
-
+        <AvatarComponent/>
         <View style = {{ alignItems: 'center', justifyContent: 'center'}}> 
 
             <Text style = {styles.titleText}>
@@ -112,7 +96,8 @@ const styles = StyleSheet.create({
 		top: 0
 	},
     titleText: {
-        marginTop: 40,
+        marginTop: 50,
+        marginBottom: 30,
         alignItems: 'center',
         justifyContent: 'center',
         fontFamily : "Klavika Bold",

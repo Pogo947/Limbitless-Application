@@ -2,7 +2,7 @@ import { TabNavigator, StackNavigator, TabView } from 'react-navigation'
 import { NavigationActions } from 'react-navigation'
 import Login from '../screen/LoginScreen/Login.js'
 import Home from '../screen/HomeScreen.js'
-import SavedDeviceScreen from '../screen/SavedDeviceScreen.js'
+import DeviceScreen from '../screen/DeviceScreen.js'
 import Games from '../screen/GameScreen/Games.js'
 import Profile from '../screen/ProfileScreen/Profile.js'
 import LevelScreen from '../screen/LevelScreen.js'
@@ -11,7 +11,6 @@ import Signup from '../screen/SignupScreen/Signup.js'
 import SignupScreen from '../screen/SignupScreen/Signup.js'
 import EmgScreen from '../screen/EmgScreen.js'
 import DeviceScanScreen from '../screen/DeviceScanScreen.js'
-import DeviceGraphScreen from '../screen/DeviceGraphScreen.js'
 import WheelChairScreen from '../screen/WheelChairScreen.js'
 
 // Manifest of possible screens
@@ -42,7 +41,7 @@ const HomeScreenNavigator = StackNavigator({
 
 const DeviceScreenNavigator = StackNavigator({
 	screenDevice: {
-		screen: SavedDeviceScreen,
+		screen: DeviceScreen,
 		navigationOptions: {
 			gesturesEnabled: false,
 			header: null,
@@ -59,14 +58,6 @@ const DeviceScreenNavigator = StackNavigator({
 	},
 	screenScanDevice: {
 		screen: DeviceScanScreen,
-		navigationOptions: {
-			gesturesEnabled: false,
-			header: null,
-			tabBarVisible: true
-		}
-	},
-	screenGraphDevice: {
-		screen: DeviceGraphScreen,
 		navigationOptions: {
 			gesturesEnabled: false,
 			header: null,

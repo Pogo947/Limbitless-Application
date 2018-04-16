@@ -109,7 +109,7 @@ const styles = StyleSheet.create({
         flex: 1,
       },
       titleText: {
-        marginTop: 40,
+        marginTop: 50,
         alignItems: 'center',
         justifyContent: 'center',
         fontFamily : "Klavika Bold",

@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
-import { View, Text, Button, Alert, TextInput, Platform, Image, ActivityIndicator,TouchableOpacity, AsyncStorage, PermissionsAndroid } from 'react-native';
+import { View, Text, Button, Alert, TextInput, Platform, Image, ImageBackground, ActivityIndicator,TouchableOpacity, AsyncStorage, PermissionsAndroid } from 'react-native';
 import firebase from 'react-native-firebase';
 import { logout, navigateToLogoutScreen, login } from "../../Navigation/Actions/actionCreator";
 import { connect } from 'react-redux';
 import { withNavigation } from 'react-navigation';
 import RNFetchBlob from 'react-native-fetch-blob' 
 import ImagePicker from 'react-native-image-picker'
+import AvatarComponent from '../../components/AvatarComponent'
 
 
 class ProfileFormView extends Component {
@@ -31,7 +32,7 @@ class ProfileFormView extends Component {
 
     _pickImage = async () => {
 
-        await this.setState({loading: true})
+        this.setState({loading: true})
     
         await ImagePicker.launchImageLibrary({}, response  => {
           this.uploadImage(response.uri)
@@ -39,7 +40,6 @@ class ProfileFormView extends Component {
             .catch(error => alert(error))
         })
 
-        await this.storeUploadURL()
     }
 
     uploadImage = async (uri, mime = 'application/octet-stream') => {
@@ -47,13 +47,13 @@ class ProfileFormView extends Component {
         const fs = RNFetchBlob.fs
         window.XMLHttpRequest = RNFetchBlob.polyfill.XMLHttpRequest
         window.Blob = Blob
-
+        const session = new Date().getTime()
         var uid = this.state.user.uid
+        var user =  firebase.auth().currentUser;
 
         return new Promise((resolve, reject) => {
           const uploadUri = Platform.OS === 'ios' ? uri.replace('file://', '') : uri
           let uploadBlob = null
-          const sessionId = this.state.user.uid
           const imageRef = firebase.storage().ref('images/').child(uid)
       
           fs.readFile(uploadUri, 'base64')
@@ -69,6 +69,8 @@ class ProfileFormView extends Component {
               return imageRef.getDownloadURL()
             })
             .then((url) => {
+              user.updateProfile({photoURL: url})
+              firebase.database().ref("users/" + uid + "/photoUri" ).set(url);
               resolve(url)
             })
             .catch((error) => {
@@ -80,7 +82,8 @@ class ProfileFormView extends Component {
     storeUploadURL = async () => {
       try{
         
-       const photoURL = this.state.uploadURL
+       let photoURL = this.state.uploadURL
+
        await AsyncStorage.setItem('uploadURL', photoURL)
 
         this.setState({changePic: false})
@@ -119,10 +122,11 @@ class ProfileFormView extends Component {
         try{
             let newName = this.state.newName
             let newEmail = this.state.newEmail
-
+            
 
             if(newEmail == "" && newName == ""){
                 return alert("nothing to update")
+                this.props.login();
             }
 
             if(newName){
@@ -156,6 +160,8 @@ class ProfileFormView extends Component {
             }
 
             alert("user profile updated!")
+
+            this.props.login();
             }
             catch(error) {
                 alert(error);
@@ -213,7 +219,7 @@ class ProfileFormView extends Component {
             return (
             <View style= {{alignItems: 'center',justifyContent: 'center',}}>
             <Image
-                style ={{height:128, width: 128, borderRadius: 128/2, borderColor:'#0b2c60', 
+                style ={{height:50, width: 50, borderRadius: 50/2, borderColor:'#0b2c60', 
                         borderWidth: 4}}
                 source={{uri: this.state.uploadURL}}/>
             </View>)
@@ -222,7 +228,7 @@ class ProfileFormView extends Component {
             return (
             <View style= {{alignItems: 'center',justifyContent: 'center',}}>
             <Image
-                style ={{height:128, width: 128, borderRadius: 128/2, borderColor:'#0b2c60', 
+                style ={{height:50, width: 50, borderRadius: 50/2, borderColor:'#0b2c60', 
                         borderWidth: 4}}
                 source={this.checkUploadURL()}/>
             </View>
