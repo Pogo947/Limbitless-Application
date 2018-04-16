@@ -77,10 +77,14 @@ const navigationReducer = (state = initialState, action) => {
     case 'Navigation/BACK':
       return {
         ...state,
-        stateForLoggedOut: AppNavigator.router.getStateForAction(
+        stateForLoggedIn: AppNavigator.router.getStateForAction(
           ActionForLoggedIn,
-          stateForLoggedOut
-        )
+          stateForLoggedIn
+        ),
+		stateForLoggedOut: AppNavigator.router.getStateForAction(
+		  ActionForLoggedOut,
+		  stateForLoggedOut
+		  )
       };
 
     case Logout:

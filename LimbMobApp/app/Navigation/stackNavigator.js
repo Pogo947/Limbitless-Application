@@ -93,10 +93,9 @@ export const Tabs = TabNavigator({
     screenHome: {
 		screen: HomeScreenNavigator,
 		navigationOptions: ({navigation}) => ({
-			swipeEnabled: false,
-			tabBarLabel: "Home",
+			showLabel: false,
 			tabBarIcon: (
-				<Image style={{ width: 40, height: 40 }} source={require('../resources/tab_icons/Home_Button.png')}/>
+				<Image style={{ width: 25, height: 25 }} source={require('../resources/tab_icons/Home_Button.png')}/>
 			),
 			header: null,
 			tabBarOnPress: ({ previousScene, scene, jumpToIndex }) => {
@@ -127,11 +126,10 @@ export const Tabs = TabNavigator({
 	screenDevice: {
 		screen: DeviceScreenNavigator,
 		navigationOptions: ({navigation}) => ({
-			swipeEnabled: false,
-			tabBarLabel: "Devices",
+			showLabel: false,
 			header: null,
 			tabBarIcon: (
-				<Image style={{ width: 40, height: 40 }} source={require('../resources/tab_icons/Device_Button.png')}/>
+				<Image style={{ width: 30, height: 30 }} source={require('../resources/tab_icons/Device_Button.png')}/>
 			),
 			tabBarOnPress: ({ previousScene, scene, jumpToIndex }) => {
       const { route, focused, index } = scene;
@@ -160,12 +158,12 @@ export const Tabs = TabNavigator({
 	},
 	screenGames: {
 		screen: Games,
+
 		navigationOptions: {
-			swipeEnabled: false,
-			tabBarLabel: "Games",
 			header: null,
+			showLabel: false,
 			tabBarIcon: (
-				<Image style={{ width: 40, height: 40 }} source={require('../resources/tab_icons/Game_Button.png')}/>
+				<Image style={{ width: 30, height: 30 }} source={require('../resources/tab_icons/Game_Button.png')}/>
 		),
 		}
 	}
@@ -173,6 +171,7 @@ export const Tabs = TabNavigator({
 	tabBarPosition: 'bottom',
 	tabBarOptions: {
 		showIcon: true,
+		showLabel: false
 	}
 });
 
