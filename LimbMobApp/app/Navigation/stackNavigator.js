@@ -1,5 +1,6 @@
 import { TabNavigator, StackNavigator, TabView } from 'react-navigation'
 import { NavigationActions } from 'react-navigation'
+import { Image } from 'react-native'
 import Login from '../screen/LoginScreen/Login.js'
 import Home from '../screen/HomeScreen.js'
 import DeviceScreen from '../screen/DeviceScreen.js'
@@ -12,6 +13,7 @@ import SignupScreen from '../screen/SignupScreen/Signup.js'
 import EmgScreen from '../screen/EmgScreen.js'
 import DeviceScanScreen from '../screen/DeviceScanScreen.js'
 import WheelChairScreen from '../screen/WheelChairScreen.js'
+import React from 'react'
 
 // Manifest of possible screens
 
@@ -93,6 +95,9 @@ export const Tabs = TabNavigator({
 		navigationOptions: ({navigation}) => ({
 			swipeEnabled: false,
 			tabBarLabel: "Home",
+			tabBarIcon: (
+				<Image style={{ width: 40, height: 40 }} source={require('../resources/tab_icons/Home_Button.png')}/>
+			),
 			header: null,
 			tabBarOnPress: ({ previousScene, scene, jumpToIndex }) => {
       const { route, focused, index } = scene;
@@ -125,6 +130,9 @@ export const Tabs = TabNavigator({
 			swipeEnabled: false,
 			tabBarLabel: "Devices",
 			header: null,
+			tabBarIcon: (
+				<Image style={{ width: 40, height: 40 }} source={require('../resources/tab_icons/Device_Button.png')}/>
+			),
 			tabBarOnPress: ({ previousScene, scene, jumpToIndex }) => {
       const { route, focused, index } = scene;
 
@@ -155,11 +163,17 @@ export const Tabs = TabNavigator({
 		navigationOptions: {
 			swipeEnabled: false,
 			tabBarLabel: "Games",
-			header: null
+			header: null,
+			tabBarIcon: (
+				<Image style={{ width: 40, height: 40 }} source={require('../resources/tab_icons/Game_Button.png')}/>
+		),
 		}
 	}
-},{
-	tabBarPosition: 'bottom'
+},{ 
+	tabBarPosition: 'bottom',
+	tabBarOptions: {
+		showIcon: true,
+	}
 });
 
 
