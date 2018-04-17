@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import {Platform, StyleSheet, Text,  View, TouchableHighlight, Image, AsyncStorage} from 'react-native';
 
-const avatarSize = 176
+const avatarSize = 226
 
 export default class AvatarComponent extends Component {
     constructor(props) {
@@ -57,8 +57,8 @@ export default class AvatarComponent extends Component {
         <Image
                 key={sentKey}
                 fadeDuration={1}
-                style ={{height:avatarSize, width: avatarSize, borderRadius: avatarSize/2, borderColor:'#0b2c60', 
-                        borderWidth: 4}}
+                style ={{height:avatarSize, width: avatarSize, borderRadius: avatarSize/2, borderColor:'#06a7e2', 
+                        borderWidth: 10}}
                 source={this.checkUploadURL()}/>
          
         </View>

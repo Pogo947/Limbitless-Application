@@ -30,6 +30,7 @@ class ProfileFormView extends Component {
           };
     }
 
+    /*
     _pickImage = async () => {
 
         this.setState({loading: true})
@@ -41,7 +42,8 @@ class ProfileFormView extends Component {
         })
 
     }
-
+    
+    
     uploadImage = async (uri, mime = 'application/octet-stream') => {
         const Blob = RNFetchBlob.polyfill.Blob
         const fs = RNFetchBlob.fs
@@ -78,7 +80,8 @@ class ProfileFormView extends Component {
           })
         })
       }
-
+    */
+      /*
     storeUploadURL = async () => {
       try{
         
@@ -94,15 +97,18 @@ class ProfileFormView extends Component {
             alert(error)
         }
     }
+    */
+    
 
     fetchDataLocal = async ()=> {
         try{
             let userData = await AsyncStorage.getItem('userData');
-            let uploadURL = await AsyncStorage.getItem('uploadURL');
+            //let uploadURL = await AsyncStorage.getItem('uploadURL');
 
             userData = JSON.parse(userData)
 
-            this.setState({ user: userData, uploadURL: uploadURL});
+            //this.setState({ user: userData, uploadURL: uploadURL});
+            this.setState({ user: userData})
         }
         catch(error) {
             alert(error);
@@ -114,7 +120,7 @@ class ProfileFormView extends Component {
     }
 
 	onLogOut() {
-		firebase.auth().signOut();
+        firebase.auth().signOut();
 		this.props.logout();
     }
     
@@ -219,7 +225,7 @@ class ProfileFormView extends Component {
             return (
             <View style= {{alignItems: 'center',justifyContent: 'center',}}>
             <Image
-                style ={{height:50, width: 50, borderRadius: 50/2, borderColor:'#0b2c60', 
+                style ={{height:128, width: 128, borderRadius: 128/2, borderColor:'#06a7e2', 
                         borderWidth: 4}}
                 source={{uri: this.state.uploadURL}}/>
             </View>)
@@ -228,7 +234,7 @@ class ProfileFormView extends Component {
             return (
             <View style= {{alignItems: 'center',justifyContent: 'center',}}>
             <Image
-                style ={{height:50, width: 50, borderRadius: 50/2, borderColor:'#0b2c60', 
+                style ={{height:128, width: 128, borderRadius: 128/2, borderColor:'#06a7e2', 
                         borderWidth: 4}}
                 source={this.checkUploadURL()}/>
             </View>
@@ -240,7 +246,6 @@ class ProfileFormView extends Component {
         return (
             
             <View style={styles.formStyle}>
-                {this.changeAvatar()}
                 {this.showLoadingorPicture()}
                     <Text style = {{fontFamily : "Klavika-Regular",fontSize: 20}}> Name </Text>
                     <TextInput style = {styles.inputBox}

@@ -90,7 +90,6 @@ class LevelScreen extends Component {
     updateSelectedLevel = (selectedLevel) => {
       this.setState({ selectedLevel: selectedLevel})
     }
-
     render(){
         return(
         <View style={styles.MainContainer}>

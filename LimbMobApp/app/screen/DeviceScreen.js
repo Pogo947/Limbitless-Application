@@ -87,7 +87,9 @@ export default class DeviceScreen extends Component {
 
     async componentWillMount(){
         this.fetchData().done()
+        
     }
+
     setDeletion(){
         if(this.state.delete == false){
             this.setState({delete: true})
