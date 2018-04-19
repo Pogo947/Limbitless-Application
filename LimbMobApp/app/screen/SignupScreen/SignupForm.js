@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
-import { View, Text, Button, Alert, TextInput, AsyncStorage} from 'react-native';
+import { View, Text, Button, Alert, TextInput, AsyncStorage, Image, TouchableOpacity} from 'react-native';
 import firebase from 'react-native-firebase';
 import {registersuccess, logout} from "../../Navigation/Actions/actionCreator";
 import {connect} from 'react-redux';
 import {NavigationActions} from "react-navigation";
  class SignupFormView extends Component {
 
-    state = {name: '', nickname:'', email: '', password: '', confirmPassword: '', loading: false, error: ''};
+    state = {name: '', nickname:'', email: '', password: '', confirmPassword: '', loading: false, error: '', agree: false};
 
     loadingText(){
         if(this.state.loading == true){
@@ -32,6 +32,10 @@ import {NavigationActions} from "react-navigation";
 
         if(this.state.email == '' || this.state.password == ''  || this.state.username == '' || this.state.name == ''){
             return Alert.alert("Please fill in the text fields")
+        }
+
+        if(this.state.agree == false){
+            return Alert.alert("Please accept our terms and conditions")
         }
 
         if(this.state.password == this.state.confirmPassword){
@@ -96,6 +100,50 @@ import {NavigationActions} from "react-navigation";
             alert(error);
       }
 
+    }
+
+    setTermsandConditions(){
+        if(this.state.agree == true){
+            this.setState({agree: false})
+        }
+        else{
+            this.setState({agree: true})
+        }
+        
+    }
+    showTermsandConditions(){
+
+        if(this.state.agree == true){
+
+            return (
+                <TouchableOpacity onPress={()=> this.setTermsandConditions()}>
+                    <Image
+                        source = {require('../../resources/checkbox_yes.png')} 
+                        style= {{width: 30, height: 30, margin: 5}}/>
+                </TouchableOpacity>)
+        }
+        else{
+
+            return (
+                <TouchableOpacity onPress={()=> this.setTermsandConditions()}>
+                    <Image
+                        source = {require('../../resources/checkbox_no.png')} 
+                        style= {{width: 30, height: 30, margin: 5}}/>
+                </TouchableOpacity>)
+        }
+
+    }
+
+    textTermsandConditions(){
+        Alert.alert(
+            'Terms and Conditions',
+            'Terms and conditions go here, Vivamus vitae sodales neque. Duis eu urna sit amet augue faucibus ultrices in vel lectus. Curabitur est dui, tempus sit amet libero quis, ullamcorper viverra arcu. Nam et risus ac sapien hendrerit luctus. Curabitur commodo magna vel mi tempor, eu cursus libero molestie. Curabitur commodo pharetra iaculis. Suspendisse eleifend porta risus sed semper. Phasellus sollicitudin, nibh pharetra tincidunt posuere, erat massa iaculis ipsum, a aliquet eros lorem eu nibh. Mauris turpis nunc, iaculis ac sem id, scelerisque faucibus dolor. Sed at augue neque. Mauris at dolor at velit ultricies gravida. Aliquam semper lacus non convallis vehicula. In hac habitasse platea dictumst. Vivamus ultricies tellus quis libero tincidunt, at aliquam justo blandit.',
+            [
+              {text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
+              {text: 'Accept', onPress: () => this.setTermsandConditions()},
+            ],
+            { cancelable: true }
+          )
     }
 
 
@@ -163,6 +211,13 @@ import {NavigationActions} from "react-navigation";
                         secureTextEntry
                     />
                     <Text style = {{color: 'white'}}>{this.loadingText()}</Text>
+                    <View style = {{flexDirection: 'row', padding: 5, justifyContent: 'center'}}>
+                        {this.showTermsandConditions()}
+                        <View style = {{flexDirection: 'row', padding: 5, justifyContent: 'center'}}>
+                            <Text style= {{color: 'rgba(255,255,255,0.8)', fontFamily : "MuseoSans", marginTop: 5}} >Please accept our </Text>
+                            <Text style = {styles.signUpText} onPress = {() => this.textTermsandConditions()}>terms and conditions  </Text>
+                        </View>
+                    </View>
                     <Text style={styles.errorTextStyle}>{this.state.error}</Text>
                     <Button onPress={this.createAccountPress.bind(this)} title= "Create Account" />
                     <View style = {{flexDirection: 'row', padding: 20, justifyContent: 'center'}}>

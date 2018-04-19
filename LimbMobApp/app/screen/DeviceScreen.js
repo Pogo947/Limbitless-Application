@@ -101,12 +101,12 @@ export default class DeviceScreen extends Component {
         if(this.state.delete == true){
             return (
                 <TouchableOpacity onPress={()=> this.chooseDeviceDeletion(item.name, item.key)}>
-                    <Image style = {{paddingLeft: 20, width: 20, height:20}} source= {deleteIcon} />
+                    <Image style = {{paddingLeft: 0, width: 40, height:40}} source= {deleteIcon} />
                 </TouchableOpacity>
             )
         }
         else 
-            return (<View style = {{paddingLeft: 20}}/>) 
+            return (<View style = {{paddingLeft: 40, paddingBottom: 20}}/>) 
     }
     chooseDeviceDeletion(name, key){
         Alert.alert(
