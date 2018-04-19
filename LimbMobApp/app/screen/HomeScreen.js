@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
-import {Platform, StyleSheet, ActivityIndicator, Text,  View, TouchableOpacity, Image, AsyncStorage, Alert, Button } from 'react-native';
+import {Platform, StyleSheet, ActivityIndicator, Text,  View, Dimensions, TouchableOpacity, Image, AsyncStorage, Alert, Button, ImageBackground } from 'react-native';
 import firebase from 'react-native-firebase';
 import {logout} from "../Navigation/Actions/actionCreator";
 import {connect} from "react-redux"
 import { NavigationActions } from "react-navigation";
 import AvatarComponent from '../components/AvatarComponent'
 
+const width1 = Dimensions.get('window').width
+const height1 = Dimensions.get('window').height
 class HomeScreenView extends Component {
     constructor() {
         super();
@@ -60,6 +62,7 @@ class HomeScreenView extends Component {
 	};
     render(){
         return(
+		<ImageBackground style={styles.BGImage} source={require("../resources/background/BackgroundOther.png")}>
         
         <View style={styles.MainContainer}>
 		<View style={styles.ProfileButtonStyle}>
@@ -82,6 +85,7 @@ class HomeScreenView extends Component {
         </View>
         </View>
        </View>
+	   </ImageBackground>
     )}
 }
 
@@ -95,6 +99,10 @@ const styles = StyleSheet.create({
 		position: 'absolute',
 		top: 0
 	},
+	BGImage:{
+        width: width1,
+        height: height1,
+    },
     titleText: {
         marginTop: 50,
         marginBottom: 30,
