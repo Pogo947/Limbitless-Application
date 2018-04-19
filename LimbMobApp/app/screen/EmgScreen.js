@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
-import {Platform, StyleSheet, Text,  View, TouchableOpacity, Image, Slider, AsyncStorage, Button } from 'react-native';
+import {Platform, StyleSheet, Text,  View, TouchableOpacity, Image, Slider, AsyncStorage, Button, Dimensions, ImageBackground } from 'react-native';
 import firebase from 'react-native-firebase';
 import {NavigationActions} from 'react-navigation';
 
+const width1 = Dimensions.get('window').width
+const height1 = Dimensions.get('window').height
 export default class EmgScreen extends Component {
     constructor(props){
         super(props)
@@ -117,6 +119,7 @@ export default class EmgScreen extends Component {
 
 
         return(
+		<ImageBackground style={styles.BGImage} source={require("../resources/background/BackgroundOther.png")}>
         <View style={styles.MainContainer}>
 
         <Text style = {styles.titleText}>
@@ -177,7 +180,7 @@ export default class EmgScreen extends Component {
             </TouchableOpacity>
 
         </View>
-
+		</ImageBackground>
          )
     }
 }
@@ -212,5 +215,9 @@ const styles = StyleSheet.create({
         fontSize: 20,
         textAlign: 'center',
       },
+	BGImage:{
+        width: width1,
+        height: height1,
+    },
   });
   

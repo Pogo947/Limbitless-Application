@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {Platform, StyleSheet, Text,  View, TouchableHighlight, TouchableOpacity, Image, Button, FlatList, AsyncStorage, Alert } from 'react-native';
+import {Platform, StyleSheet, Text,  View, TouchableHighlight, TouchableOpacity, Image, Button, FlatList, AsyncStorage, Alert, Dimensions, ImageBackground } from 'react-native';
 import {NavigationActions} from 'react-navigation';
 import firebase from 'react-native-firebase';
 
@@ -10,7 +10,8 @@ var armIcon = require('../resources/device_icons/armIcon.png')
 var deleteIcon = require('../resources/device_icons/deleteIcon.png')
 
 const deviceImages = [headIcon, bandIcon, wheelIcon, armIcon];
-
+const width1 = Dimensions.get('window').width
+const height1 = Dimensions.get('window').height
 export default class DeviceScreen extends Component {
 
     constructor(){
@@ -173,6 +174,7 @@ export default class DeviceScreen extends Component {
     render(){
 
         return(
+		<ImageBackground style={styles.BGImage} source={require("../resources/background/BackgroundOther.png")}>
         <View>
 		<View style={styles.ProfileButtonStyle}>
             <TouchableOpacity onPress={this.navigate}>
@@ -227,6 +229,7 @@ export default class DeviceScreen extends Component {
                 )}
         />
        </View> 
+	   </ImageBackground>
          )
     }
 }
@@ -235,6 +238,10 @@ const styles = StyleSheet.create({
     MainContainer: {
         alignItems: 'center',
         justifyContent: 'center',
+    },
+	BGImage:{
+        width: width1,
+        height: height1,
     },
     titleText: {
         marginTop: 50,
